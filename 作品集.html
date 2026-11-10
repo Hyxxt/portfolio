@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黄佑雄 · AI 全栈开发作品集</title>
+<meta name="description" content="黄佑雄的项目作品集：AI 报价工作台、RAG 知识库问答、AI 求职作战台、AI 订单跟进助手四个 Next.js 全栈项目，以及质检、订单、RPA、电商广告数据分析等可运行自动化原型。算钱与判合格交给代码，模型只负责听懂人话。">
+<meta name="author" content="黄佑雄">
+<meta name="theme-color" content="#16324a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="黄佑雄 · AI 全栈开发作品集">
+<meta property="og:description" content="4 个 Next.js 全栈项目（AI 报价、RAG、求职匹配、订单跟进）+ 5 个业务自动化与数据分析工具。能演示、能复核、能交出操作单。">
+<meta property="og:url" content="https://huangyouxiong.pages.dev/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://huangyouxiong.pages.dev/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="黄佑雄 · AI 全栈开发作品集">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://huangyouxiong.pages.dev/img/og.png">
+<link rel="canonical" href="https://huangyouxiong.pages.dev/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "黄佑雄",
+  "description": "2027 届大专在读，AI 全栈开发方向求职者",
+  "url": "https://huangyouxiong.pages.dev/",
+  "image": "https://huangyouxiong.pages.dev/img/og.png",
+  "sameAs": ["https://github.com/Hyxxt"],
+  "email": "mailto:3490882124@qq.com",
+  "knowsAbout": ["Next.js", "React", "TypeScript", "RAG", "LLM", "Python", "SQLite", "Turso"]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%2316324a'/%3E%3Ctext%20x='32'%20y='45'%20font-size='36'%20text-anchor='middle'%20fill='%23fffdf9'%20font-family='SimSun,serif'%3E%E9%BB%84%3C/text%3E%3C/svg%3E">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f7f5f0;
+    --card:#fffdf9;
+    --ink:#1b232b;
+    --body:#3b4652;
+    --grey:#5f6b77;
+    --muted:#626d78;
+    --rule:#e4dfd5;
+    --navy:#16324a;
+    --navy-2:#21486a;
+    --accent:#96661c;
+    --accent-soft:#f3e9d6;
+    --serif:"Noto Serif SC","Source Han Serif SC","Songti SC",STSong,"STZhongsong",SimSun,serif;
+    --sans:"Noto Sans SC","Source Han Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    font-family:var(--sans);
+    font-size:15.5px;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  img{max-width:100%}
+  a{color:inherit}
+  [hidden]{display:none!important}
+  ::selection{background:#e8d6b5;color:var(--navy)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  .skip{
+    position:absolute;left:16px;top:-60px;z-index:200;
+    background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;
+    font-size:13px;text-decoration:none;transition:top .2s ease;
+  }
+  .skip:focus{top:12px}
+
+  /* 阅读进度 */
+  .progress{position:fixed;left:0;top:0;width:100%;height:2px;z-index:80;background:transparent;pointer-events:none}
+  .progress i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+
+  /* 顶栏 */
+  .topbar{
+    position:sticky;top:0;z-index:60;
+    background:rgba(247,245,240,.88);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .25s ease, background .25s ease;
+  }
+  .topbar.scrolled{border-bottom-color:var(--rule);background:rgba(247,245,240,.94)}
+  .topbar-in{display:flex;align-items:center;gap:24px;min-height:64px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto}
+  .mono{
+    width:30px;height:30px;border-radius:7px;background:var(--navy);color:#fffdf9;
+    display:grid;place-items:center;font-family:var(--serif);font-size:17px;font-weight:600;
+    letter-spacing:0;line-height:1;padding-top:1px;
+  }
+  .brand-name{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.15;letter-spacing:.04em}
+  .brand-name small{display:block;font-size:9.5px;font-weight:500;color:var(--grey);letter-spacing:.08em;margin-top:3px}
+  .nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .nav a{
+    position:relative;font-size:12.5px;color:var(--grey);text-decoration:none;
+    letter-spacing:.04em;padding:4px 0;transition:color .2s ease;
+  }
+  .nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;
+    background:var(--navy);transform:scaleX(0);transform-origin:0 50%;transition:transform .25s ease;
+  }
+  .nav a:hover{color:var(--navy)}
+  .nav a:hover::after{transform:scaleX(1)}
+  .nav a.active{color:var(--navy);font-weight:600}
+  .nav a.active::after{transform:scaleX(1)}
+  .print-btn{
+    display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;
+    border:1px solid #d8d2c5;background:transparent;color:var(--navy);
+    font-family:var(--sans);font-size:11.5px;letter-spacing:.04em;
+    padding:7px 11px;border-radius:7px;cursor:pointer;transition:background .2s ease,border-color .2s ease;
+  }
+  .print-btn:hover{background:#efebe2;border-color:#c9c0af}
+  .print-btn svg{width:13px;height:13px}
+
+  /* 头部 */
+  .hero{padding:70px 0 8px}
+  .eyebrow{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--accent);font-weight:700;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent);opacity:.7}
+  .hero h1{
+    margin-top:16px;
+    font-family:var(--serif);font-size:clamp(34px,6.4vw,50px);font-weight:600;
+    letter-spacing:.12em;line-height:1.16;color:var(--navy);
+  }
+  .role{
+    margin-top:12px;font-size:13px;font-weight:700;color:var(--navy);
+    letter-spacing:.16em;
+  }
+  .role i{font-style:normal;color:#b9a88c;padding:0 7px;font-weight:400}
+  .contact{display:flex;flex-wrap:wrap;gap:9px 20px;list-style:none;margin-top:16px}
+  .contact li{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--grey);letter-spacing:.02em}
+  .contact .ico{width:13px;height:13px;color:#8c8172;flex:0 0 auto}
+  .contact a{text-decoration:none;border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease}
+  .contact a:hover{color:var(--navy);border-bottom-color:#c9bda8}
+  .lead{
+    margin-top:28px;max-width:760px;
+    font-size:15.5px;line-height:2;color:#303b46;
+  }
+  .lead b{color:var(--navy);font-weight:700}
+
+  /* 数据条 */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    margin-top:34px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  .stat{padding:19px 20px 18px;border-left:1px solid var(--rule)}
+  .stat:first-child{border-left:0;padding-left:0}
+  .stat b{
+    display:block;font-family:var(--serif);font-size:30px;font-weight:600;
+    color:var(--navy);line-height:1;letter-spacing:-.01em;
+  }
+  .stat span{display:block;margin-top:8px;font-size:11.5px;color:var(--grey);letter-spacing:.05em}
+
+  /* 工具 */
+  .toolbox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px}
+  .tb-label{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.2em;color:var(--accent)}
+  .tb-list{display:flex;flex-wrap:wrap;gap:7px;list-style:none}
+  .tb-list li{
+    font-size:11px;color:#4c5865;background:#f1ede4;border:1px solid #e5dfd2;
+    border-radius:999px;padding:3px 10px;letter-spacing:.02em;
+  }
+
+  /* 分节标题 */
+  .sec{
+    display:flex;align-items:center;gap:12px;
+    margin-top:66px;padding-bottom:12px;border-bottom:1px solid var(--rule);
+  }
+  .sec .num{font-family:var(--serif);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+  .sec-title{font-size:15px;font-weight:700;color:var(--navy);letter-spacing:.12em}
+  .sec .en{
+    margin-left:auto;font-family:var(--mono);font-size:9.5px;font-weight:500;
+    letter-spacing:.2em;color:var(--muted);
+  }
+  .sec-lead{margin:14px 0 22px;font-size:13.5px;color:var(--grey);letter-spacing:.01em}
+
+  /* 主项目卡 */
+  .card{
+    background:var(--card);border:1px solid var(--rule);border-radius:16px;
+    padding:30px 32px;margin-bottom:18px;
+    box-shadow:0 1px 2px rgba(22,50,74,.03);
+    transition:box-shadow .3s ease,border-color .3s ease;
+  }
+  .card:hover{box-shadow:0 10px 30px -18px rgba(22,50,74,.28);border-color:#d9d2c4}
+  .card-links{display:flex;gap:14px;margin-top:12px;font-size:13px;font-weight:600}
+  .card-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(150,102,28,.35);padding-bottom:1px}
+  .card-links a:hover{border-color:var(--accent)}
+  .card-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .idx{font-family:var(--serif);font-size:12.5px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+  .card h3{font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.35}
+  .stack{font-family:var(--mono);font-size:10.5px;color:var(--grey);letter-spacing:.02em}
+  .when{margin-left:auto;font-family:var(--serif);font-size:11.5px;color:var(--grey);letter-spacing:.02em}
+  .card-inner{display:grid;gap:38px}
+  .card.has-shot .card-inner{grid-template-columns:minmax(0,1fr) 348px}
+  .desc{margin-top:14px;font-size:14.5px;line-height:1.95;color:var(--body)}
+  .desc b,.pts b{color:var(--navy);font-weight:700}
+  .card:not(.has-shot) .desc,.card:not(.has-shot) .pts,.card:not(.has-shot) .nums{max-width:740px}
+  .pts{list-style:none;margin-top:12px}
+  .pts li{
+    position:relative;padding-left:16px;margin-top:6px;
+    font-size:13.5px;line-height:1.8;color:#414c58;
+  }
+  .pts li::before{content:"";position:absolute;left:0;top:.78em;width:7px;height:1.5px;background:#b3a58c;border-radius:1px}
+  .nums{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .nums span{
+    font-family:var(--mono);font-size:10.5px;line-height:1.5;color:#4f5964;
+    background:#f5f1e8;border:1px solid #e8e1d3;border-radius:6px;padding:4px 9px;
+  }
+  .nums b{color:var(--navy)}
+
+  /* 操作卡截图 */
+  .shot{min-width:0}
+  .shot-open{
+    display:block;position:relative;width:100%;padding:0;
+    border:1px solid var(--rule);border-radius:10px;overflow:hidden;
+    background:var(--bg);cursor:zoom-in;font:inherit;color:inherit;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .shot-open img{
+    display:block;width:100%;height:auto;aspect-ratio:4/5;
+    object-fit:cover;object-position:top center;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .shot-open:hover img{transform:scale(1.025)}
+  .shot-open:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .shot-overlay{
+    position:absolute;left:0;right:0;bottom:0;padding:46px 12px 12px;
+    background:linear-gradient(transparent,rgba(14,26,38,.52));
+    display:flex;justify-content:center;pointer-events:none;
+  }
+  .shot-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,253,249,.95);color:var(--navy);
+    font-size:11px;font-weight:600;letter-spacing:.02em;
+    padding:6px 12px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 2px 10px rgba(0,0,0,.16);
+  }
+  .shot-pill svg{width:11px;height:11px}
+  .shot .cap{margin-top:9px;padding-left:2px;font-size:11.5px;line-height:1.65;color:var(--grey)}
+
+  /* 其他项目 */
+  .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+  .mini{
+    background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 22px 20px;
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  }
+  .mini:hover{transform:translateY(-2px);border-color:#d3cabb;box-shadow:0 12px 26px -20px rgba(22,50,74,.35)}
+  .mini-head{display:flex;align-items:baseline;gap:9px}
+  .mini .idx{font-size:11.5px}
+  .mini h3{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.4;letter-spacing:-.01em}
+  .mini p{margin-top:8px;font-size:13.2px;line-height:1.8;color:var(--body)}
+  .mini p b{color:var(--navy)}
+  .mini .mini-link{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(150,102,28,.35)}
+  .mini .mini-link:hover{border-color:var(--accent)}
+  @media (min-width:641px){
+    .mini:last-child{
+      grid-column:1/-1;display:grid;align-items:start;
+      grid-template-columns:minmax(0,238px) minmax(0,1fr);column-gap:28px;
+    }
+    .mini:last-child .mini-head{grid-column:1;grid-row:1}
+    .mini:last-child p{grid-column:2;grid-row:1;margin-top:0}
+    .mini:last-child .tags{grid-column:2;grid-row:2;margin-top:10px}
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .tags span{
+    font-size:10px;color:#63707c;background:#f5f2ea;border:1px solid #e8e2d6;
+    border-radius:999px;padding:2.5px 8px;letter-spacing:.03em;
+  }
+
+  /* 边界说明 */
+  .edge{
+    background:#fbf6ea;border:1px solid #eadfc6;border-left:4px solid #b9923f;
+    border-radius:4px 12px 12px 4px;padding:26px 30px;
+  }
+  .edge-lead{font-size:16px;font-weight:700;color:#5a4a25;line-height:1.6}
+  .edge p.body{margin-top:10px;font-size:13.5px;line-height:1.9;color:#5c5034}
+  .gaps{display:flex;align-items:flex-start;gap:14px;margin-top:16px;padding-top:15px;border-top:1px dashed #e3d4b3}
+  .gaps-label{
+    flex:0 0 auto;font-family:var(--mono);font-size:9.5px;font-weight:700;
+    letter-spacing:.14em;color:#855d13;padding-top:5px;
+  }
+  .gaps ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
+  .gaps li{
+    font-size:11.5px;color:#6e5a2e;background:#fffaf0;border:1px solid #e6d7b8;
+    border-radius:999px;padding:3px 9px;line-height:1.6;
+  }
+  .edge-tail{margin-top:16px;font-size:13.5px;line-height:1.9;color:#5c5034}
+  .edge-tail b{color:#7d5a14}
+
+  /* 联系 */
+  .cta{
+    position:relative;overflow:hidden;margin-top:66px;
+    background:linear-gradient(135deg,#16324a 0%,#1c3d59 58%,#21486a 100%);
+    border-radius:18px;padding:46px 44px 42px;color:#fff;
+  }
+  .cta::after{
+    content:"黄";position:absolute;right:-12px;bottom:-62px;
+    font-family:var(--serif);font-size:230px;line-height:1;
+    color:rgba(255,255,255,.045);pointer-events:none;user-select:none;
+  }
+  .cta .eyebrow{color:#d8b271}
+  .cta .eyebrow::before{background:#d8b271}
+  .cta h2{
+    margin-top:14px;font-family:var(--serif);font-size:clamp(25px,4vw,32px);
+    font-weight:600;letter-spacing:.04em;line-height:1.35;color:#fff;
+  }
+  .cta p.sub{margin-top:12px;font-size:14px;line-height:1.8;color:#c6d3df;max-width:560px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;position:relative;z-index:1}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    height:42px;padding:0 18px;border-radius:8px;
+    font-size:13px;font-weight:600;letter-spacing:.02em;
+    transition:transform .2s ease,background .2s ease,border-color .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn svg{width:15px;height:15px}
+  .btn.primary{background:#fffdf9;color:var(--navy)}
+  .btn.primary:hover{background:#f1e9db}
+  .btn.ghost{border:1px solid rgba(255,255,255,.34);color:#fff}
+  .btn.ghost:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
+  .cta-meta{margin-top:22px;font-size:11.5px;color:#9fb2c2;letter-spacing:.04em}
+
+  /* 页脚 */
+  footer{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:34px auto 64px}
+  footer p{font-size:11.5px;color:var(--grey);line-height:1.8}
+  footer .top-link{
+    margin-left:auto;font-size:11.5px;color:var(--grey);text-decoration:none;
+    border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
+  }
+  footer .top-link:hover{color:var(--navy);border-bottom-color:#c9bda8}
+
+  /* 回到顶部 */
+  .to-top{
+    position:fixed;right:24px;bottom:24px;z-index:50;
+    width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+    background:var(--navy);color:#fff;display:grid;place-items:center;
+    box-shadow:0 8px 22px -8px rgba(22,50,74,.6);
+    opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease,background .2s ease;
+  }
+  .to-top.show{opacity:1;transform:none}
+  .to-top:hover{background:var(--navy-2)}
+  .to-top svg{width:17px;height:17px}
+
+  /* 大图 */
+  .lightbox{
+    position:fixed;inset:0;z-index:100;background:rgba(10,16,22,.94);
+    display:grid;place-items:center;padding:26px;
+    opacity:0;animation:lbIn .22s ease forwards;
+  }
+  @keyframes lbIn{to{opacity:1}}
+  .lb-close{
+    position:fixed;top:18px;right:18px;z-index:2;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);
+    color:#fff;display:grid;place-items:center;cursor:pointer;
+    transition:background .2s ease;
+  }
+  .lb-close:hover{background:rgba(255,255,255,.18)}
+  .lb-close svg{width:20px;height:20px}
+  .lb-figure{display:flex;flex-direction:column;align-items:center;max-width:100%}
+  .lb-figure img{
+    display:block;max-width:min(92vw,720px);max-height:calc(100vh - 120px);
+    width:auto;height:auto;border-radius:8px;background:#fff;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+  }
+  .lb-figure figcaption{margin-top:12px;font-size:12px;color:#c3ccd4;text-align:center;line-height:1.6;max-width:640px}
+  body.lb-open{overflow:hidden}
+
+  /* 入场 */
+  .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .65s ease,transform .65s ease}
+  .js .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:900px){
+    .card.has-shot .card-inner{grid-template-columns:1fr;gap:24px}
+    .card.has-shot .shot{max-width:500px}
+  }
+  @media (max-width:760px){
+    .wrap{padding:0 18px}
+    .nav{display:none}
+    .topbar-in{min-height:58px}
+    .hero{padding-top:44px}
+    .lead{font-size:15px}
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stat{padding:15px 16px 14px}
+    .stat:first-child{padding-left:0}
+    .stat:nth-child(odd){border-left:0;padding-left:0}
+    .stat:nth-child(n+3){border-top:1px solid var(--rule)}
+    .stat b{font-size:26px}
+    .sec{margin-top:52px}
+    .card{padding:24px 22px;border-radius:14px}
+    .card h3{font-size:17.5px}
+    .card .when{margin-left:0;width:auto}
+    .card.has-shot .shot{max-width:100%}
+    .mini-grid{grid-template-columns:1fr}
+    .edge{padding:22px 20px}
+    .gaps{flex-direction:column;gap:8px}
+    .cta{margin-top:52px;padding:32px 24px 30px;border-radius:14px}
+    .cta::after{font-size:150px;bottom:-34px;right:-6px}
+    .actions{flex-direction:column;align-items:stretch}
+    .btn{justify-content:center}
+    footer{margin-bottom:44px}
+    .to-top{right:16px;bottom:16px;width:40px;height:40px}
+  }
+  @media (max-width:420px){
+    .contact{gap:8px 14px}
+    .contact li{font-size:11.5px}
+    .shot-open img{aspect-ratio:3/4}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    .js .reveal{opacity:1;transform:none}
+  }
+
+  @media print{
+    @page{margin:14mm}
+    html{scroll-behavior:auto}
+    body{background:#fff;font-size:10.5pt}
+    .wrap{max-width:none;padding:0}
+    .topbar,.progress,.to-top,.lightbox,.skip,.print-btn,.shot-overlay,.cta .actions{display:none!important}
+    .hero{padding-top:0}
+    .card,.mini{background:#fff;border-color:#ccc;box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+    .card{margin-bottom:10mm;padding:6mm}
+    .card.has-shot .card-inner{grid-template-columns:1fr 62mm;gap:7mm}
+    .shot-open img{aspect-ratio:auto;max-height:82mm;object-fit:cover}
+    .shot .cap{font-size:8.5pt}
+    .mini-grid{grid-template-columns:1fr 1fr}
+    .mini{break-inside:avoid}
+    .js .reveal{opacity:1!important;transform:none!important}
+    .cta{background:#fff;color:#000;border:1px solid #bbb;padding:8mm;margin-top:10mm}
+    .cta h2{color:#000}
+    .cta p.sub,.cta-meta{color:#333}
+    .cta::after{display:none}
+    .cta .eyebrow{color:#555}
+    .edge{background:#fff;border:1px solid #ccc;border-left:3px solid #999;break-inside:avoid}
+    a{text-decoration:none;color:inherit}
+    footer{margin-bottom:0}
+    footer .top-link{display:none}
+  }
+</style>
+<script>document.documentElement.classList.replace('no-js','js');</script>
+</head>
+<body>
+
+<a class="skip" href="#main">跳到主要内容</a>
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+<header class="topbar" id="top">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#top" aria-label="黄佑雄作品集，回到顶部">
+      <span class="mono" aria-hidden="true">黄</span>
+      <span class="brand-name">黄佑雄<small>AI 全栈 · 应用与自动化</small></span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#work">主项目</a>
+      <a href="#other">其他项目</a>
+      <a href="#scope">边界说明</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <button class="print-btn" id="printBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V3h10v5"/><rect x="4" y="8" width="16" height="8" rx="1.5"/><path d="M7 14h10v7H7z"/></svg>
+      <span>存为 PDF</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <p class="eyebrow">PORTFOLIO · 2026</p>
+    <h1 id="hero-title">黄佑雄</h1>
+    <p class="role">AI 全栈开发<i>·</i>RAG<i>·</i>流程自动化</p>
+    <ul class="contact" aria-label="联系方式">
+      <li>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>
+        广州 白云
+      </li>
+      <li>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.2l1.1 3.2-1.7 1.2a12.5 12.5 0 0 0 5.9 5.9l1.2-1.7 3.2 1.1v2.2c0 1.1-.9 2-2 2A15.9 15.9 0 0 1 4.6 5.5c0-1.1.9-2 2-2Z"/></svg>
+        <a href="tel:18148856185">181 4885 6185</a>
+      </li>
+      <li>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        <a href="mailto:3490882124@qq.com">3490882124@qq.com</a>
+      </li>
+      <li>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg>
+        大专在读 · 2027.06 毕业
+      </li>
+    </ul>
+    <p class="lead">
+      做过 <b>16 个能跑的项目</b>，其中四个已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>和<b>AI 订单跟进助手</b>，都能直接打开。
+      做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
+      因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
+    </p>
+    <div class="stats" role="list" aria-label="项目数据">
+      <div class="stat" role="listitem"><b>16</b><span>个能跑的项目</span></div>
+      <div class="stat" role="listitem"><b>4</b><span>个已上线全栈项目</span></div>
+      <div class="stat" role="listitem"><b>10/10</b><span>RAG 检索评测</span></div>
+      <div class="stat" role="listitem"><b>39</b><span>项单元测试（质检）</span></div>
+    </div>
+    <div class="toolbox" aria-label="页面项目中实际用到的工具">
+      <span class="tb-label">TOOLBOX</span>
+      <ul class="tb-list">
+        <li>Next.js 16 / React 19</li>
+        <li>TypeScript</li>
+        <li>Tailwind CSS</li>
+        <li>DeepSeek API</li>
+        <li>SQLite / Turso</li>
+        <li>Render</li>
+        <li>Python（标准库优先）</li>
+        <li>Coze / 影刀 RPA</li>
+        <li>openpyxl</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap" id="work" aria-labelledby="work-title">
+    <h2 class="sec" id="work-title">
+      <span class="num">01</span><span class="sec-title">主项目</span><span class="en">SELECTED WORK</span>
+    </h2>
+    <p class="sec-lead">八个项目：四个已上线的 Next.js AI 全栈应用，加上四个从业务现场长出来的自动化工具；每个都能跑、能复核。</p>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">01</span>
+        <h3>AI 报价工作台</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso · Render</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            客户口语询价 → 大模型提取结构化 JSON → 确定性代码查价目表算钱 → 逐行报价、合计、阻断/待确认清单，历史报价可回看。已部署为公开演示站。
+          </p>
+          <ul class="pts">
+            <li>模型只做结构化提取：用 JSON 模式解析产品、规格、颜色、数量、交期，返回值经服务端校验；<b>价格、MOQ、色卡、SKU 白名单全在代码里</b>，模型输出不含价格字段，返回的价格不会被采用。</li>
+            <li>型号不在价目表直接「阻断」不出价；无 Key、网络失败或 JSON 解析失败时<b>自动回退规则提取</b>，页面明确标注当前模式。</li>
+            <li>本地 node:sqlite 零配置，配置 TURSO_DATABASE_URL 可切 Turso；处理 Next.js 16 Cache Components 预渲染陷阱，GET 接口先 await connection()。</li>
+          </ul>
+          <div class="nums">
+            <span>3 个样例金额回归</span>
+            <span>无 Key 可降级</span>
+            <span>已部署 <b>Render</b></span>
+          </div>
+          <p class="card-links"><a href="https://ai-quote-app.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-quote-app" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 报价工作台大图">
+            <img src="img/quote-result.png" alt="AI 报价工作台：客户询价与逐行报价结果" loading="lazy" width="1416" height="1508" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">客户询价 → 逐行报价与待确认清单；截图中的价目表和客户均为虚构示例。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">02</span>
+        <h3>RAG 知识库问答</h3>
+        <span class="stack">Next.js 16 · TypeScript · DeepSeek · BM25 · SQLite / Turso · Render</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            上传或粘贴文档后自动切块、建中文倒排索引；提问时先检索 Top-4 片段，再让 DeepSeek 基于片段回答，并标注 [编号] 引用；资料不足时明确拒答。
+          </p>
+          <ul class="pts">
+            <li>中文不引入分词服务：按<b>字符二元组（bigram）</b>建倒排索引，英文和数字按词切分；自己实现 <b>BM25</b>（k1=1.5、b=0.75）排序。</li>
+            <li>提示词限定只使用给定片段，回答带引用；<b>资料不足时拒答</b>，不补外部知识；无 Key、模型超时或报错时自动退回检索结果。</li>
+            <li>本地 node:sqlite / 线上可切 Turso；空库自动载入 3 份虚构示例文档；内置 10 题评测，检索与答案命中均 <b>10/10</b>。</li>
+          </ul>
+          <div class="nums">
+            <span>10/10 检索命中</span>
+            <span>10/10 答案命中</span>
+            <span>Top-4 <b>引用片段</b></span>
+          </div>
+          <p class="card-links"><a href="https://rag-kb-nr1a.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/rag-kb" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 RAG 知识库问答大图">
+            <img src="img/rag-home.png" alt="RAG 知识库问答：回答带引用来源与 BM25 分数" loading="lazy" width="1416" height="1008" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">回答带 [1] 引用与 4 条来源片段；示例文档均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">03</span>
+        <h3>AI 求职作战台</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            JD + 简历 → 大模型只提取岗位和候选人画像 → 确定性代码算<b>六维匹配分、技能缺口和原句证据</b> → 生成简历改写、面试追问与 7 天计划。已部署为公开演示站，已开源；无 Key 时自动走规则模式。
+          </p>
+          <ul class="pts">
+            <li>模型不参与打分：六维权重固定在代码里，同一输入同一分数；技能命中必须能在简历原文找到句子。</li>
+            <li>修正过“js”误命中 Next.js / React.js 的别名问题；年限、学历只信规则，避免把“2027 届”读成 7 年经验。</li>
+            <li>模型提取的假技能、假项目会回查原文丢弃；无 Key、超时、JSON 异常自动回退规则提取。</li>
+          </ul>
+          <div class="nums">
+            <span><b>6</b> 维匹配诊断</span>
+            <span>高/低匹配样例 <b>79 / 45</b></span>
+            <span>无 Key 可降级</span>
+          </div>
+          <p class="card-links"><a href="https://ai-job-match-8d6w.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-job-match" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 求职作战台大图">
+            <img src="img/job-match-result.png" alt="AI 求职作战台：JD 与简历的匹配分、六维诊断、技能缺口和行动建议" loading="lazy" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">JD + 简历 → 匹配分与六维诊断；示例 JD、公司、简历均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">04</span>
+        <h3>AI 订单跟进助手</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            客户发来“拉链改 6000 米、交期提前 25 天、扣子换藏青” → 大模型只提取意图和变更 → 规则改单、重算金额、检查交期与单位 → 给出<b>可编辑回复草稿和跟进待办</b>。已部署为公开演示站，两个虚构订单、六条示例消息。
+          </p>
+          <ul class="pts">
+            <li>金额、生产周期、订金比例全由规则计算；数量单位“米 / 粒”不一致直接阻断，不按错误口径改单。</li>
+            <li>整单取消金额归零并提示订金退款；交期早于最长生产周期直接阻断；数量变动超过 20% 要求确认。</li>
+            <li>无 Key 完整跑规则模式；CI 覆盖 11 组冒烟，包括取消、问进度、多变更和确定性。</li>
+          </ul>
+          <div class="nums">
+            <span><b>11</b> 组接口冒烟</span>
+            <span>样例金额 <b>14960 → 17760</b></span>
+            <span>交期风险 <b>直接阻断</b></span>
+          </div>
+          <p class="card-links"><a href="https://ai-order-followup.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-order-followup" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 订单跟进助手大图">
+            <img src="img/order-followup-result.png" alt="AI 订单跟进助手：数量、颜色、交期变更对照，交期风险阻断和回复草稿" loading="lazy" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">3 项变更 + 1 个交期阻断 + 回复草稿；订单、客户、地址均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">05</span>
+        <h3>质检报告自动整理</h3>
+        <span class="stack">Python · DeepSeek API · openpyxl</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            检验员在群里发口语记录，工具出四张 Excel 表：<b>汇总 / 缺陷明细 / 判定依据 / 原始记录</b>。
+            判定全在代码里，按 <b>GB/T 2828.1 一般检验水平 II、正常一次抽样</b>查表：批量→字码→样本量→Ac/Re。
+            模型的提示词里连“严重”“轻微”都不出现，它只负责把“拉起来卡卡的”对成标准缺陷名。
+          </p>
+          <ul class="pts">
+            <li>「判定依据」表把抽样口径写全：批量 3000 → 字码 K → 抽 125 → Ac 7 / Re 8，谁质疑结论都能手工复核</li>
+            <li>拿不准的一律标「待确认」，不替业务猜；实抽不足标「待补抽」，四个状态互斥</li>
+            <li>真实模型犯过的错写成了回归用例：把“抽 125”填成“批量 125”</li>
+          </ul>
+          <div class="nums">
+            <span>7 条样例 → <b>4 种判定全对</b></span>
+            <span><b>39</b> 项单元测试</span>
+            <span>四张 Excel 表</span>
+          </div>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看质检报告工具完整操作卡大图">
+            <img src="img/qc.png" alt="质检报告工具的四步操作卡：改记录、拖到 bat 上、拿报告、只看红黄两色" loading="lazy" decoding="async" width="2160" height="3054">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看完整操作卡
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">业务同事的实际使用路径：改记录 → 拖到 bat 上 → 看红黄两色 → 摘要发群</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">06</span>
+        <h3>服装辅料订单流水线</h3>
+        <span class="stack">Python · 标准库 · SQLite</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            一条从“业务员发来的脏 Excel”到“能发客户的报价单”的完整链路：
+            <b>台账清洗 → 对账报表 → 交期预警 → 报价单与购销合同</b>，一条命令跑完六段并自检。
+            脏数据包括缺客户名、错价、特价、小样混单、同一订单号出现在两个平台。
+          </p>
+          <ul class="pts">
+            <li>去重用<b>联合键（订单号 + 平台）</b>，只用订单号会把两个平台各一单误删一条</li>
+            <li>金额按<b>分</b>存整数，避免浮点误差；对账时两边都转分比对</li>
+            <li>出单前六道校验，60 单里拦下 24 单</li>
+          </ul>
+          <div class="nums">
+            <span>六段流程 → <b>5 段通过</b>（推送缺 webhook）</span>
+            <span>五张报表</span>
+            <span>拦下 <b>24</b> 单</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">07</span>
+        <h3>电商订单 RPA 自测项目</h3>
+        <span class="stack">影刀 RPA · Python · SQLite</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            本地模拟三个平台的订单页（<b>20 条订单、待审核 9 条、合计 2792.30 元</b>），
+            用影刀和 Python 各实现一套采集，做联合键去重、逐字段对账、<b>三类故障注入</b>与失败表。
+            不是客户交付项目，但流程、异常处理和六份文档是按交付标准做的。
+          </p>
+          <ul class="pts">
+            <li>错误分三类，<b>只有一类值得重试</b>：元素超时可重试，数据错误和结构错误不重试</li>
+            <li>同一字段在 ≥80% 行缺失 → 判定「疑似页面改版」，整批失败告警，而不是把 20 行空值写进库</li>
+            <li>失败表 22 条，可按批次 / 订单号 / 错误类型查询</li>
+          </ul>
+          <div class="nums">
+            <span>DAY1 / DAY2 / DAY3 <b>全部 PASS</b></span>
+            <span>三类故障注入</span>
+            <span>六份文档</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">08</span>
+        <h3>询价转报价工作流</h3>
+        <span class="stack">Coze 低代码 · 五节点</span>
+        <span class="when">2026.11 · v0.0.4 已发布</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            业务员把客户微信原话整段粘进去，出来两份东西：<b>给客户的报价草稿</b>和<b>给业务的待确认清单</b>。
+            五个节点：抽取结构 / 查价核算 / 成文 / 双路输出。
+            单价与金额由代码节点内嵌的价目表计算（11 款 SKU，含起订量），模型不参与任何金额。
+          </p>
+          <ul class="pts">
+            <li>实测客户压价“上次给我报 1 块 2”，<b>单价一分没动</b></li>
+            <li>待确认清单由代码原文透传，模型看不到——因为它会把这个清单润色成“无”</li>
+            <li>缺型号不出价，直接进 issues</li>
+          </ul>
+          <div class="nums">
+            <span><b>11</b> 款 SKU 价目表</span>
+            <span>三条回归测试</span>
+            <span>合计 <b>25950</b> 一分不差</span>
+          </div>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看询价转报价工作流完整操作卡大图">
+            <img src="img/coze.png" alt="Coze 报价工作流的四步操作卡：打开工作流、粘客户原话、跑一次、先看 issues 再发 output" loading="lazy" decoding="async" width="2160" height="3040">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看完整操作卡
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">四步操作卡：找对入口 → 粘贴原话 → 运行 → 先看 issues 再发 output</figcaption>
+        </figure>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap" id="other" aria-labelledby="other-title">
+    <h2 class="sec" id="other-title">
+      <span class="num">02</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
+    </h2>
+    <p class="sec-lead">八个更具体的项目，各自解决一个具体场景。</p>
+
+    <div class="mini-grid">
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">09</span><h3>公开网页采集器</h3></div>
+        <p>只用 Python 标准库：同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON。<b>已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</b>实测单任务 100 页 / 2 分 53 秒。</p>
+        <div class="tags" aria-label="技术标签"><span>Python 标准库</span><span>SQLite</span><span>单文件 exe</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">10</span><h3>网页巡检工作台</h3></div>
+        <p>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告。单 worker 队列 + 1–168 小时定时调度，异常与访问限制都有边界处理。</p>
+        <div class="tags" aria-label="技术标签"><span>Python</span><span>定时调度</span><span>Markdown 报告</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">11</span><h3>订单洞察台</h3></div>
+        <p>订单 CSV 导入校验去重，按频次 / 金额 / 间隔做客户分层，生成复购回访提醒与跟进名单导出。Python + SQLite + 原生前端，无第三方依赖。</p>
+        <div class="tags" aria-label="技术标签"><span>Python</span><span>SQLite</span><span>原生前端</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">12</span><h3>AI 开发交付看板</h3></div>
+        <p>三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。</p>
+        <div class="tags" aria-label="技术标签"><span>REST API</span><span>SQLite</span><span>拖拽看板</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">13</span><h3>海外独立站 Luma Studio</h3></div>
+        <p>英文品牌前台 + 运营工作台 + SEO 检查，WordPress 与本地两套运行时，<b>有公网在线版可直接打开</b>。</p>
+        <div class="tags" aria-label="技术标签"><span>WordPress</span><span>SEO</span><span>英文前台</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>美容预约助手 MVP</h3></div>
+        <p>顾客咨询、服务项目、预约意向提交，门店侧预约查看与确认，本地可跑。</p>
+        <div class="tags" aria-label="技术标签"><span>预约流程</span><span>门店后台</span><span>MVP</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>提示词安全评测台</h3></div>
+        <p>把提示词安全要求拆成六类越权 / 诱导场景的可执行用例与评测记录，单页原型。</p>
+        <div class="tags" aria-label="技术标签"><span>Prompt 安全</span><span>六类场景</span><span>单页原型</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">16</span><h3>电商广告数据分析 Demo</h3></div>
+        <p>用 pandas + numpy 把销售、广告、关键词三张带脏数据的日报清洗成可复核指标，按 ASIN / 广告活动 / 关键词 / 周趋势给结论和异常清单，输出 Markdown、响应式 HTML 和 8 个 sheet 的 Excel 报告；<b>8 个 pytest 全过，GitHub Actions 每次 push 跑完整流水线</b>。数据全部为程序生成的模拟数据。<a class="mini-link" href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">源码</a></p>
+        <div class="tags" aria-label="技术标签"><span>pandas / numpy</span><span>数据清洗</span><span>自动化报告</span><span>pytest</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="scope" aria-labelledby="scope-title">
+    <h2 class="sec" id="scope-title">
+      <span class="num">03</span><span class="sec-title">边界说明</span><span class="en">SCOPE</span>
+    </h2>
+
+    <div class="edge reveal">
+      <p class="edge-lead">这些多数是能跑的原型；其中 AI 报价工作台、RAG 知识库、AI 求职作战台和 AI 订单跟进助手已部署为公开演示站，但还不是生产系统。</p>
+      <p class="body">数据全部为程序生成的示例或本地模拟；AI 报价、RAG、求职匹配和订单跟进的示例数据也都是虚构的，不连接真实业务系统，不处理客户真实数据。</p>
+      <div class="gaps">
+        <span class="gaps-label">没做过</span>
+        <ul>
+          <li>企微接收回调（仅单向推送）</li>
+          <li>腾讯文档 API</li>
+          <li>真实产线验证</li>
+          <li>多人协作与权限体系</li>
+        </ul>
+      </div>
+      <p class="edge-tail">一句话：<b>能演示、能复核、能交出操作单；还没有被人长期用过的证据。</b></p>
+    </div>
+  </section>
+
+  <section class="wrap" id="contact" aria-labelledby="contact-title">
+    <div class="cta reveal">
+      <p class="eyebrow">CONTACT · 广州白云</p>
+      <h2 id="contact-title">面试时，直接跑给你看。</h2>
+      <p class="sub">任意一个项目，从跑一次到看日志、看数据库，全程可复核。</p>
+      <div class="actions">
+        <a class="btn primary" href="tel:18148856185">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.2l1.1 3.2-1.7 1.2a12.5 12.5 0 0 0 5.9 5.9l1.2-1.7 3.2 1.1v2.2c0 1.1-.9 2-2 2A15.9 15.9 0 0 1 4.6 5.5c0-1.1.9-2 2-2Z"/></svg>
+          打电话 · 181 4885 6185
+        </a>
+        <a class="btn ghost" href="mailto:3490882124@qq.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          发邮件 · 3490882124@qq.com
+        </a>
+        <a class="btn ghost" href="https://github.com/Hyxxt" target="_blank" rel="noopener">
+          GitHub · Hyxxt
+        </a>
+        <a class="btn ghost" href="resume.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          下载简历 PDF
+        </a>
+      </div>
+      <p class="cta-meta">广州白云 · 大专在读 · 2027.06 毕业 · AI 全栈开发</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>© <span id="year">2026</span> 黄佑雄 · 示例数据均为虚构或程序生成，不连接真实业务系统。</p>
+  <a class="top-link" href="#top">回到顶部 ↑</a>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="操作卡大图" hidden>
+  <button class="lb-close" type="button" aria-label="关闭大图">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <figure class="lb-figure">
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到页面顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg>
+</button>
+
+<script>
+(function () {
+  'use strict';
+
+  var progressBar = document.getElementById('progressBar');
+  var toTop = document.getElementById('toTop');
+  var topbar = document.querySelector('.topbar');
+  var ticking = false;
+
+  function onScroll() {
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(st / max, 1) : 0) + ')';
+    toTop.classList.toggle('show', st > 640);
+    topbar.classList.toggle('scrolled', st > 8);
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+  onScroll();
+
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  document.getElementById('printBtn').addEventListener('click', function () {
+    window.print();
+  });
+
+  /* 导航高亮 */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var sections = navLinks.map(function (a) {
+    return document.querySelector(a.getAttribute('href'));
+  }).filter(Boolean);
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { rootMargin: '-38% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function (s) { navObserver.observe(s); });
+  }
+
+  /* 入场动画 */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var revealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.01, rootMargin: '0px 0px -20px 0px' });
+    reveals.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* 操作卡大图 */
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbCap = document.getElementById('lbCap');
+  var lastFocus = null;
+  var pageRegions = [
+    document.querySelector('.topbar'),
+    document.querySelector('main'),
+    document.querySelector('footer'),
+    document.getElementById('toTop')
+  ];
+
+  function setPageInert(value) {
+    pageRegions.forEach(function (el) { if (el) el.inert = value; });
+  }
+
+  function openLightbox(button) {
+    var figure = button.closest('.shot');
+    var img = button.querySelector('img');
+    var cap = figure ? figure.querySelector('.cap') : null;
+    lastFocus = button;
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = cap ? cap.textContent.trim() : '';
+    lightbox.hidden = false;
+    document.body.classList.add('lb-open');
+    setPageInert(true);
+    lightbox.querySelector('.lb-close').focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.body.classList.remove('lb-open');
+    lbImg.removeAttribute('src');
+    setPageInert(false);
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.shot-open'), function (button) {
+    button.addEventListener('click', function () { openLightbox(button); });
+  });
+
+  lightbox.addEventListener('click', function (event) {
+    if (event.target === lightbox || event.target.closest('.lb-close')) closeLightbox();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (!lightbox.hidden && event.key === 'Escape') closeLightbox();
+  });
+})();
+</script>
+</body>
+</html>

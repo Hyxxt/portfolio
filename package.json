@@ -1,0 +1,9 @@
+{
+  "name": "huangyouxiong-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "黄佑雄 AI 全栈开发作品集（静态站）",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}
