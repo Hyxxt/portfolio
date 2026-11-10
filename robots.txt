@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://huangyouxiong.pages.dev/sitemap.xml
+Sitemap: https://huangyouxiong-10m3k3ol.maozi.io/sitemap.xml

@@ -4,7 +4,8 @@
 
 作品集包含 4 个已上线的 Next.js 全栈项目（AI 报价、RAG 知识库、AI 求职匹配、订单跟进），以及 pandas 广告数据分析、Python 自动化、影刀 RPA、Coze 工作流等原型。关键金额、判定、匹配分写在确定性代码里，模型只负责理解语言，结果可复核、能演示、有测试。
 
-- 在线作品集：<https://huangyouxiong.pages.dev/>（海外线路）
+- 在线作品集（国内直连）：<https://huangyouxiong-10m3k3ol.maozi.io/>
+- 海外镜像：<https://huangyouxiong.pages.dev/>
 - GitHub：<https://github.com/Hyxxt>
 
 ## 本地预览
