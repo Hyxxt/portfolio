@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 工具定制｜Excel 自动化、报价/订单工具、知识库 · 黄佑雄</title>
+<meta name="description" content="广州白云，一个人接小单：Excel/报表自动化、报价单与订单跟进工具、企业知识库问答、影刀 RPA、公开数据采集。先看演示，满意再付定金，源码交付。">
+<meta name="author" content="黄佑雄">
+<meta name="theme-color" content="#16324a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI 工具定制 · 黄佑雄">
+<meta property="og:description" content="把重复的活交给代码和 AI：Excel 自动化、报价/订单工具、企业知识库、RPA。先看演示，满意再付定金。">
+<meta property="og:url" content="https://huangyouxiong-10m3k3ol.maozi.io/services.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://huangyouxiong-10m3k3ol.maozi.io/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://huangyouxiong-10m3k3ol.maozi.io/services.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%2316324a'/%3E%3Ctext%20x='32'%20y='45'%20font-size='36'%20text-anchor='middle'%20fill='%23fffdf9'%20font-family='SimSun,serif'%3E%E9%BB%84%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI 工具定制",
+  "serviceType": "小商家与团队的小型软件、自动化与 AI 工具开发",
+  "provider": {
+    "@type": "Person",
+    "name": "黄佑雄",
+    "url": "https://huangyouxiong-10m3k3ol.maozi.io/",
+    "email": "mailto:3490882124@qq.com",
+    "telephone": "+86-181-4885-6185"
+  },
+  "areaServed": ["广州", "远程"],
+  "description": "Excel/报表自动化、报价单与订单跟进工具、企业知识库问答、影刀 RPA、公开数据采集与清洗。"
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f7f5f0;
+    --card:#fffdf9;
+    --ink:#1b232b;
+    --body:#3b4652;
+    --grey:#5f6b77;
+    --muted:#626d78;
+    --rule:#e4dfd5;
+    --navy:#16324a;
+    --navy-2:#21486a;
+    --accent:#96661c;
+    --accent-soft:#f3e9d6;
+    --serif:"Noto Serif SC","Source Han Serif SC","Songti SC",STSong,"STZhongsong",SimSun,serif;
+    --sans:"Noto Sans SC","Source Han Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    font-family:var(--sans);font-size:15.5px;color:var(--ink);background:var(--bg);
+    line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  img{max-width:100%}
+  a{color:inherit}
+  ::selection{background:#e8d6b5;color:var(--navy)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  .skip{
+    position:absolute;left:16px;top:-60px;z-index:200;
+    background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;
+    font-size:13px;text-decoration:none;transition:top .2s ease;
+  }
+  .skip:focus{top:12px}
+
+  /* 顶栏 */
+  .topbar{
+    position:sticky;top:0;z-index:60;
+    background:rgba(247,245,240,.9);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar-in{display:flex;align-items:center;gap:24px;min-height:64px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto}
+  .mono{
+    width:30px;height:30px;border-radius:7px;background:var(--navy);color:#fffdf9;
+    display:grid;place-items:center;font-family:var(--serif);font-size:17px;font-weight:600;
+    letter-spacing:0;line-height:1;padding-top:1px;
+  }
+  .brand-name{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.15;letter-spacing:.04em}
+  .brand-name small{display:block;font-size:9.5px;font-weight:500;color:var(--grey);letter-spacing:.08em;margin-top:3px}
+  .nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+  .nav a{
+    position:relative;font-size:12.5px;color:var(--grey);text-decoration:none;
+    letter-spacing:.04em;padding:4px 0;transition:color .2s ease;
+  }
+  .nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;
+    background:var(--navy);transform:scaleX(0);transform-origin:0 50%;transition:transform .25s ease;
+  }
+  .nav a:hover{color:var(--navy)}
+  .nav a:hover::after{transform:scaleX(1)}
+  .nav a.nav-service{color:var(--accent);font-weight:600}
+  .nav a.nav-service::after{background:var(--accent)}
+  .call-btn{
+    display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;
+    border:1px solid #d8d2c5;background:transparent;color:var(--navy);
+    font-family:var(--sans);font-size:11.5px;letter-spacing:.04em;
+    padding:7px 11px;border-radius:7px;text-decoration:none;
+    transition:background .2s ease,border-color .2s ease;
+  }
+  .call-btn:hover{background:#efebe2;border-color:#c9c0af}
+  .call-btn svg{width:13px;height:13px}
+
+  /* 头部 */
+  .hero{padding:64px 0 8px}
+  .eyebrow{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--accent);font-weight:700;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent);opacity:.7}
+  .hero h1{
+    margin-top:16px;font-family:var(--serif);font-size:clamp(33px,6.2vw,48px);
+    font-weight:600;letter-spacing:.08em;line-height:1.22;color:var(--navy);
+  }
+  .hero .lead{margin-top:22px;max-width:760px;font-size:15.5px;line-height:2;color:#303b46}
+  .hero .lead b{color:var(--navy);font-weight:700}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;list-style:none}
+  .badges li{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11.5px;color:#4c5865;background:#f1ede4;border:1px solid #e5dfd2;
+    border-radius:999px;padding:5px 12px;letter-spacing:.02em;
+  }
+  .badges .dot{width:6px;height:6px;border-radius:50%;background:#4f8a5b;box-shadow:0 0 0 3px rgba(79,138,91,.14)}
+  .hero-note{
+    margin-top:26px;padding:18px 22px;background:var(--accent-soft);
+    border:1px solid #e6d7b8;border-radius:12px;
+    font-size:13.5px;line-height:1.9;color:#5c5034;
+  }
+  .hero-note b{color:#7d5a14}
+
+  /* 分节 */
+  .sec{
+    display:flex;align-items:center;gap:12px;
+    margin-top:66px;padding-bottom:12px;border-bottom:1px solid var(--rule);
+  }
+  .sec .num{font-family:var(--serif);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+  .sec-title{font-size:15px;font-weight:700;color:var(--navy);letter-spacing:.12em}
+  .sec .en{margin-left:auto;font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.2em;color:var(--muted)}
+  .sec-lead{margin:14px 0 22px;font-size:13.5px;color:var(--grey);letter-spacing:.01em}
+
+  /* 服务卡 */
+  .svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .svc{
+    display:flex;flex-direction:column;
+    background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:24px 24px 20px;
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  }
+  .svc:hover{transform:translateY(-2px);border-color:#d3cabb;box-shadow:0 12px 26px -20px rgba(22,50,74,.35)}
+  .svc-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .svc .idx{font-family:var(--serif);font-size:11.5px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+  .svc h3{font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.4;letter-spacing:-.01em}
+  .svc .price{
+    margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:700;
+    color:var(--accent);white-space:nowrap;letter-spacing:.01em;
+  }
+  .svc > p{margin-top:10px;font-size:13.4px;line-height:1.85;color:var(--body)}
+  .svc > p b{color:var(--navy)}
+  .svc ul{list-style:none;margin-top:12px}
+  .svc li{position:relative;padding-left:15px;margin-top:5px;font-size:12.8px;line-height:1.75;color:#414c58}
+  .svc li::before{content:"";position:absolute;left:0;top:.75em;width:7px;height:1.5px;background:#b3a58c;border-radius:1px}
+  .svc .meta{
+    margin-top:auto;padding-top:14px;display:flex;flex-wrap:wrap;gap:6px;
+    font-size:10px;color:#63707c;
+  }
+  .svc .meta span{background:#f5f2ea;border:1px solid #e8e2d6;border-radius:999px;padding:2.5px 8px;letter-spacing:.03em}
+  .price-note{margin-top:16px;font-size:11.5px;line-height:1.8;color:var(--grey)}
+  .price-note b{color:var(--navy)}
+
+  /* 流程 */
+  .steps{list-style:none;counter-reset:step;margin-top:8px}
+  .step{position:relative;padding:0 0 24px 38px}
+  .step:last-child{padding-bottom:0}
+  .step::before{
+    counter-increment:step;content:counter(step);
+    position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;
+    background:var(--navy);color:#fffdf9;display:grid;place-items:center;
+    font-family:var(--serif);font-size:13px;font-weight:600;
+  }
+  .step::after{
+    content:"";position:absolute;left:13.5px;top:32px;bottom:6px;width:1px;background:var(--rule);
+  }
+  .step:last-child::after{display:none}
+  .step h3{font-size:14.5px;font-weight:700;color:var(--navy);line-height:1.5}
+  .step p{margin-top:4px;font-size:13.2px;line-height:1.85;color:var(--body);max-width:760px}
+  .step p b{color:var(--navy)}
+
+  /* 案例 */
+  .case-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .case{
+    background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px 22px 20px;
+    display:flex;flex-direction:column;
+  }
+  .case h3{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.4}
+  .case .stack{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;color:var(--grey);letter-spacing:.02em}
+  .case p{margin-top:9px;font-size:13px;line-height:1.8;color:var(--body)}
+  .case p b{color:var(--navy)}
+  .case .case-link{
+    margin-top:auto;padding-top:12px;font-size:12.5px;font-weight:600;
+  }
+  .case .case-link a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(150,102,28,.35);padding-bottom:1px}
+  .case .case-link a:hover{border-color:var(--accent)}
+  .case-note{margin-top:14px;font-size:11.5px;line-height:1.8;color:var(--grey)}
+
+  /* 边界 */
+  .boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .box{border-radius:14px;padding:24px}
+  .box h3{font-size:14.5px;font-weight:700;line-height:1.5;margin-bottom:10px}
+  .box ul{list-style:none}
+  .box li{position:relative;padding-left:16px;margin-top:6px;font-size:13px;line-height:1.8}
+  .box li::before{position:absolute;left:0;top:0;font-weight:700}
+  .box.yes{background:#f1f5f1;border:1px solid #d9e4d8}
+  .box.yes h3{color:#2f5b38}
+  .box.yes li{color:#3c5140}
+  .box.yes li::before{content:"✓";color:#4f8a5b}
+  .box.no{background:#fbf2ef;border:1px solid #ecdcd5}
+  .box.no h3{color:#7a4032}
+  .box.no li{color:#5d463f}
+  .box.no li::before{content:"×";color:#a85a45}
+  .limit-note{margin-top:16px;font-size:12.5px;line-height:1.9;color:var(--grey)}
+  .limit-note b{color:var(--navy)}
+
+  /* FAQ */
+  .faq{margin-top:4px}
+  .faq details{border-bottom:1px solid var(--rule);padding:16px 0}
+  .faq summary{
+    display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    cursor:pointer;list-style:none;font-size:14.5px;font-weight:700;color:var(--navy);line-height:1.6;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";flex:0 0 auto;font-family:var(--mono);font-size:16px;color:var(--accent);font-weight:400}
+  .faq details[open] summary::after{content:"−"}
+  .faq details p{margin-top:9px;font-size:13.3px;line-height:1.9;color:var(--body);max-width:820px}
+  .faq details p b{color:var(--navy)}
+
+  /* 联系 */
+  .cta{
+    position:relative;overflow:hidden;margin-top:66px;
+    background:linear-gradient(135deg,#16324a 0%,#1c3d59 58%,#21486a 100%);
+    border-radius:18px;padding:46px 44px 42px;color:#fff;
+  }
+  .cta::after{
+    content:"黄";position:absolute;right:-12px;bottom:-62px;
+    font-family:var(--serif);font-size:230px;line-height:1;
+    color:rgba(255,255,255,.045);pointer-events:none;user-select:none;
+  }
+  .cta .eyebrow{color:#d8b271}
+  .cta .eyebrow::before{background:#d8b271}
+  .cta h2{
+    margin-top:14px;font-family:var(--serif);font-size:clamp(25px,4vw,32px);
+    font-weight:600;letter-spacing:.04em;line-height:1.35;color:#fff;
+  }
+  .cta p.sub{margin-top:12px;font-size:14px;line-height:1.8;color:#c6d3df;max-width:600px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;position:relative;z-index:1}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    height:42px;padding:0 18px;border-radius:8px;
+    font-size:13px;font-weight:600;letter-spacing:.02em;
+    transition:transform .2s ease,background .2s ease,border-color .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn svg{width:15px;height:15px}
+  .btn.primary{background:#fffdf9;color:var(--navy)}
+  .btn.primary:hover{background:#f1e9db}
+  .btn.ghost{border:1px solid rgba(255,255,255,.34);color:#fff}
+  .btn.ghost:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
+  .cta-meta{margin-top:22px;font-size:11.5px;color:#9fb2c2;letter-spacing:.04em}
+
+  /* 页脚 */
+  footer{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:34px auto 64px}
+  footer p{font-size:11.5px;color:var(--grey);line-height:1.8}
+  footer a{font-size:11.5px;color:var(--grey);text-decoration:none;border-bottom:1px solid transparent}
+  footer a:hover{color:var(--navy);border-bottom-color:#c9bda8}
+  footer .foot-right{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:760px){
+    .wrap{padding:0 18px}
+    .nav{display:none}
+    .topbar-in{min-height:58px;gap:12px}
+    .hero{padding-top:44px}
+    .hero .lead{font-size:15px}
+    .sec{margin-top:52px}
+    .svc-grid,.case-grid,.boundary{grid-template-columns:1fr}
+    .svc{padding:22px 20px 18px}
+    .cta{margin-top:52px;padding:32px 24px 30px;border-radius:14px}
+    .cta::after{font-size:150px;bottom:-34px;right:-6px}
+    .actions{flex-direction:column;align-items:stretch}
+    .btn{justify-content:center}
+    .call-btn span{display:none}
+    .call-btn{padding:7px 9px}
+    footer{margin-bottom:44px}
+    footer .foot-right{margin-left:0;width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="index.html" aria-label="黄佑雄作品集">
+      <span class="mono" aria-hidden="true">黄</span>
+      <span class="brand-name">黄佑雄<small>AI 工具定制 · 接单中</small></span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#services">服务与价格</a>
+      <a href="#process">合作流程</a>
+      <a href="#cases">案例</a>
+      <a href="#faq">常见问题</a>
+      <a class="nav-service" href="index.html">完整作品集</a>
+    </nav>
+    <a class="call-btn" href="tel:18148856185" aria-label="打电话 181 4885 6185">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.2l1.1 3.2-1.7 1.2a12.5 12.5 0 0 0 5.9 5.9l1.2-1.7 3.2 1.1v2.2c0 1.1-.9 2-2 2A15.9 15.9 0 0 1 4.6 5.5c0-1.1.9-2 2-2Z"/></svg>
+      <span>181 4885 6185</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <p class="eyebrow">AI TOOLS · 广州白云 · 可远程</p>
+    <h1 id="hero-title">把重复的活，<br>交给代码和 AI。</h1>
+    <p class="lead">
+      一个人接小单：<b>Excel 报表自动化</b>、<b>报价单/订单跟进工具</b>、<b>企业知识库问答</b>、<b>RPA 代做</b>。
+      先看现成演示，觉得靠谱再谈；用你脱敏后的数据跑一遍，看得见效果再付定金。
+    </p>
+    <ul class="badges" aria-label="合作方式">
+      <li><span class="dot" aria-hidden="true"></span>可接单</li>
+      <li>小单也接</li>
+      <li>先演示后定金</li>
+      <li>源码交付</li>
+      <li>广州可面谈</li>
+    </ul>
+    <p class="hero-note">
+      我是黄佑雄，2027 届大专在读，不是外包公司，也不转包。下面每个案例都是我自己做、能直接点开的项目；
+      <b>不编客户案例</b>，做不了的活我会直说。
+    </p>
+  </section>
+
+  <section class="wrap" id="services" aria-labelledby="services-title">
+    <h2 class="sec" id="services-title">
+      <span class="num">01</span><span class="sec-title">服务与参考价</span><span class="en">SERVICES</span>
+    </h2>
+    <p class="sec-lead">参考价按常见小单给，最终按功能清单报固定价；报价后不加价。周期从付定金、拿到样本数据后算起。</p>
+
+    <div class="svc-grid">
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">01</span>
+          <h3>Excel / 报表自动化</h3>
+          <span class="price">300–1,500 元</span>
+        </div>
+        <p>每月手工汇总、对账、拆表、合并几十个 Excel？把规则写死成脚本，<b>双击就跑</b>，跑完出结果表和异常清单。</p>
+        <ul>
+          <li>合并多表、按条件拆分、跨表对账、格式整理</li>
+          <li>输出 Excel 结果 + 一份使用说明</li>
+        </ul>
+        <div class="meta"><span>1–3 天</span><span>Python / pandas / openpyxl</span><span>含 1 次规则调整</span></div>
+      </article>
+
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">02</span>
+          <h3>报价单 / 订单跟进工具</h3>
+          <span class="price">3,000–15,000 元</span>
+        </div>
+        <p>客户一句「拉链改 6000 米、交期提前 25 天」——工具自动拆出变更，<b>重算金额、拦交期风险、生成回复草稿和待办</b>。</p>
+        <ul>
+          <li>报价：口语询价 → 查价目表 → 逐行报价与合计</li>
+          <li>改单：数量/颜色/交期变更 → 重新算钱与风险检查</li>
+        </ul>
+        <div class="meta"><span>1–2 周</span><span>Next.js / DeepSeek / SQLite</span><span>含部署</span></div>
+      </article>
+
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">03</span>
+          <h3>企业知识库问答（RAG）</h3>
+          <span class="price">8,000–30,000 元</span>
+        </div>
+        <p>把产品手册、售后话术、制度文件变成能问答的内部助手：<b>回答带引用</b>，资料不足时明确拒答，不编。</p>
+        <ul>
+          <li>文档切块、中文检索、引用来源、无答案拒答</li>
+          <li>可先做小范围试用，再决定是否扩容</li>
+        </ul>
+        <div class="meta"><span>2–4 周</span><span>RAG / BM25 / 引用</span><span>含评测题</span></div>
+      </article>
+
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">04</span>
+          <h3>影刀 RPA / 网页重复操作</h3>
+          <span class="price">500–5,000 元</span>
+        </div>
+        <p>每天复制粘贴、导表、录单、发消息，做成一条能定时跑的流程；<b>只处理你有权限的数据</b>。</p>
+        <ul>
+          <li>Excel 与网页/后台系统之间的批量操作</li>
+          <li>失败重试、异常截图、运行记录</li>
+        </ul>
+        <div class="meta"><span>2–5 天</span><span>影刀 / Python</span><span>含一次现场调试</span></div>
+      </article>
+
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">05</span>
+          <h3>公开数据采集与清洗</h3>
+          <span class="price">800–5,000 元</span>
+        </div>
+        <p>采集公开的商品、价格、评论信息，清洗成能直接分析的 Excel；<b>只做公开数据，不碰登录态和个人信息</b>。</p>
+        <ul>
+          <li>公开页面采集、去重、字段整理</li>
+          <li>附采集范围和字段说明，方便复核</li>
+        </ul>
+        <div class="meta"><span>2–7 天</span><span>Python / pandas</span><span>遵守网站规则</span></div>
+      </article>
+
+      <article class="svc">
+        <div class="svc-top">
+          <span class="idx" aria-hidden="true">06</span>
+          <h3>落地页 / 小官网</h3>
+          <span class="price">1,000–5,000 元</span>
+        </div>
+        <p>一页讲清楚你是做什么的：服务、案例、价格、联系方式，手机端能看，<b>部署上线</b>。</p>
+        <ul>
+          <li>静态页，加载快，不依赖复杂后台</li>
+          <li>含基础 SEO、访问统计、部署</li>
+        </ul>
+        <div class="meta"><span>3–7 天</span><span>HTML / CSS / 静态托管</span><span>含 1 次改版</span></div>
+      </article>
+    </div>
+    <p class="price-note"><b>说明：</b>以上是参考区间，不是最终报价。功能多、数据脏、要对接别人系统，都会加钱；需要长期维护另算。预算不够可以只做核心功能，我会告诉你哪些能砍。</p>
+  </section>
+
+  <section class="wrap" id="process" aria-labelledby="process-title">
+    <h2 class="sec" id="process-title">
+      <span class="num">02</span><span class="sec-title">怎么合作</span><span class="en">PROCESS</span>
+    </h2>
+    <p class="sec-lead">六步，每一步都有文字确认；不靠口头承诺。</p>
+    <ol class="steps">
+      <li class="step">
+        <h3>发需求</h3>
+        <p>微信或邮件说清三件事：<b>现在怎么做、多久做一次、希望变成什么样</b>，附一张脱敏截图。信息越具体，报价越快。</p>
+      </li>
+      <li class="step">
+        <h3>先看演示</h3>
+        <p>现成演示站免费看。合适的话，用你的脱敏样本做一次核心流程演示，收 <b>200–500 元</b>，成交后从尾款里抵扣。</p>
+      </li>
+      <li class="step">
+        <h3>固定报价</h3>
+        <p>把交付物、工期、修改次数、验收标准写成一页，<b>报价后不加价</b>；做不了的部分直接说明。</p>
+      </li>
+      <li class="step">
+        <h3>付定金开工</h3>
+        <p>收 <b>30%–50% 定金</b>后开工；中期给你看一次进度，方向不对早改，别等到最后。</p>
+      </li>
+      <li class="step">
+        <h3>验收付尾款</h3>
+        <p>按验收标准逐条过；源码、部署、使用说明一起交，<b>不绑定我的账号</b>，后面别人也能接手。</p>
+      </li>
+      <li class="step">
+        <h3>7 天保修</h3>
+        <p>交付后 7 天内修 bug 不收费；新增功能或改需求，按项另报。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap" id="cases" aria-labelledby="cases-title">
+    <h2 class="sec" id="cases-title">
+      <span class="num">03</span><span class="sec-title">能点开的案例</span><span class="en">DEMOS</span>
+    </h2>
+    <p class="sec-lead">不是截图，是能操作的演示站；示例数据均为虚构，不连接真实业务系统。</p>
+    <div class="case-grid">
+      <article class="case">
+        <h3>AI 报价工作台</h3>
+        <span class="stack">Next.js · DeepSeek · SQLite</span>
+        <p>口语询价 → 提取规格 → 查价目表算钱 → <b>逐行报价、合计、待确认清单</b>，历史报价可回看。</p>
+        <p class="case-link"><a href="https://ai-quote-app.onrender.com" target="_blank" rel="noopener">打开演示 →</a></p>
+      </article>
+      <article class="case">
+        <h3>RAG 知识库问答</h3>
+        <span class="stack">Next.js · BM25 · DeepSeek</span>
+        <p>上传文档 → 检索 Top-4 片段 → <b>带 [编号] 引用回答</b>；资料不足时拒答，不补外部知识。</p>
+        <p class="case-link"><a href="https://rag-kb-nr1a.onrender.com" target="_blank" rel="noopener">打开演示 →</a></p>
+      </article>
+      <article class="case">
+        <h3>AI 订单跟进助手</h3>
+        <span class="stack">Next.js · 规则引擎 · SQLite</span>
+        <p>客户改数量/颜色/交期 → <b>重算金额、检查交期、生成回复草稿</b>；单位不一致直接阻断。</p>
+        <p class="case-link"><a href="https://ai-order-followup.onrender.com" target="_blank" rel="noopener">打开演示 →</a></p>
+      </article>
+      <article class="case">
+        <h3>电商广告数据分析</h3>
+        <span class="stack">Python · pandas</span>
+        <p>广告流水清洗 → 计算点击率、转化、花费 → <b>输出可复核的分析报告</b>，不靠手拉透视表。</p>
+        <p class="case-link"><a href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">看源码与说明 →</a></p>
+      </article>
+    </div>
+    <p class="case-note">更多项目（求职匹配、质检整理、RPA、Coze 工作流等）在 <a href="index.html" style="color:var(--accent)">完整作品集</a>。</p>
+  </section>
+
+  <section class="wrap" id="scope" aria-labelledby="scope-title">
+    <h2 class="sec" id="scope-title">
+      <span class="num">04</span><span class="sec-title">接什么，不接什么</span><span class="en">SCOPE</span>
+    </h2>
+    <p class="sec-lead">先把边界说清楚，省得双方浪费时间。</p>
+    <div class="boundary">
+      <div class="box yes">
+        <h3>可以接</h3>
+        <ul>
+          <li>小脚本、小工具、单页官网</li>
+          <li>几个人到几十人用的内部工具</li>
+          <li>用脱敏样本开发，交付源码和说明</li>
+          <li>部署到你自己的账号（Render / Vercel / Cloudflare 等）</li>
+          <li>预算有限时，先做核心功能</li>
+        </ul>
+      </div>
+      <div class="box no">
+        <h3>不接</h3>
+        <ul>
+          <li>爬取隐私、登录态数据，或绕过网站限制</li>
+          <li>刷单、刷评、代写论文/作业</li>
+          <li>需要金融、医疗等资质的建议类项目</li>
+          <li>多人权限体系、高并发、等保合规的大系统</li>
+          <li>「先做完再付」「保证赚钱」这类单</li>
+        </ul>
+      </div>
+    </div>
+    <p class="limit-note"><b>一个人做，同时最多接 1–2 单。</b>排期满了我会直接说，不接了再转包给别人。大项目我会建议你找正规外包公司，不硬接。</p>
+  </section>
+
+  <section class="wrap" id="faq" aria-labelledby="faq-title">
+    <h2 class="sec" id="faq-title">
+      <span class="num">05</span><span class="sec-title">常见问题</span><span class="en">FAQ</span>
+    </h2>
+    <div class="faq">
+      <details>
+        <summary>你是学生，能做好吗？</summary>
+        <p>是，2027 年 6 月毕业。项目都是我自己写的，代码开源、演示站能直接跑，你可以先点开看再决定。<b>做不了的我会直说</b>，不接超出能力的单。</p>
+      </details>
+      <details>
+        <summary>为什么比外包公司便宜？</summary>
+        <p>一个人、远程、没有销售和场地成本；小单按天算，不报虚价。便宜不等于糊弄：交付物、验收标准、保修期都会写清楚。</p>
+      </details>
+      <details>
+        <summary>可以先做再付钱吗？</summary>
+        <p>现成演示免费看；定制开发收 <b>30%–50% 定金</b>，验收后付尾款。完全做完再付的单一律不接——不是不信你，是我垫不起时间。</p>
+      </details>
+      <details>
+        <summary>我的数据安全怎么保证？</summary>
+        <p>只在你提供的<b>脱敏样本</b>上开发；需要的话签一页保密约定；交付完成后删除样本。涉及客户隐私的数据，我不会带走。</p>
+      </details>
+      <details>
+        <summary>交付什么东西？</summary>
+        <p>源码、部署（可部署到你自己的账号）、使用说明，以及一次验收。不绑定我的账号和服务，后面换人也能接手。</p>
+      </details>
+      <details>
+        <summary>多久能做完？</summary>
+        <p>脚本 1–3 天；小工具 1–2 周；知识库 2–4 周。具体看排期，开工前给你一个确定日期，延期会提前说。</p>
+      </details>
+      <details>
+        <summary>能开发票吗？</summary>
+        <p>个人接单，<b>开不了增值税发票</b>。可以签个人服务协议、走平台担保；需要专票的单子我接不了，提前说清楚，免得耽误你。</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="contact-title">
+    <div class="cta">
+      <p class="eyebrow">CONTACT · 广州白云</p>
+      <h2 id="contact-title">先说说你现在怎么做。</h2>
+      <p class="sub">把流程、频率、一张脱敏截图发我，一般 24 小时内回复：能不能做、怎么做、多少钱、多久交。</p>
+      <div class="actions">
+        <a class="btn primary" href="tel:18148856185">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.2l1.1 3.2-1.7 1.2a12.5 12.5 0 0 0 5.9 5.9l1.2-1.7 3.2 1.1v2.2c0 1.1-.9 2-2 2A15.9 15.9 0 0 1 4.6 5.5c0-1.1.9-2 2-2Z"/></svg>
+          打电话 · 181 4885 6185
+        </a>
+        <a class="btn ghost" href="mailto:3490882124@qq.com?subject=AI%20%E5%B7%A5%E5%85%B7%E5%AE%9A%E5%88%B6%E5%92%A8%E8%AF%A2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          发邮件 · 3490882124@qq.com
+        </a>
+        <a class="btn ghost" href="index.html">看完整作品集</a>
+      </div>
+      <p class="cta-meta">广州白云 · 可远程 · 2027 届大专在读 · 一个人做，不转包</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>© <span id="year">2026</span> 黄佑雄 · AI 工具定制</p>
+  <div class="foot-right">
+    <a href="index.html">完整作品集</a>
+    <a href="resume.pdf" download>简历 PDF</a>
+    <a href="https://github.com/Hyxxt" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import { join } from 'node:path';
 const files = [
   'index.html',
   '作品集.html',
+  'services.html',
   'resume.pdf',
   'robots.txt',
   'sitemap.xml',
