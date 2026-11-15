@@ -11,6 +11,7 @@ const files = [
   'sitemap.xml',
   '_headers',
   'img',
+  'beauty-ops',
 ];
 
 async function copy(src, dest) {
