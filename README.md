@@ -23,4 +23,8 @@ npx serve dist
 
 ## 新增美妆电商运营案例
 
-澄光美妆运营台：AI概念素材、图文草稿、指标诊断、活动贡献利润、工单与报告导出。全部经营数据为模拟。14项计算测试、12项浏览器验收通过。入口：beauty-ops/。
+澄光美妆运营台：AI概念素材、图文草稿、指标诊断、活动贡献利润、工单与报告导出。全部经营数据为模拟。14项计算测试、12项浏览器验收通过。
+
+- 作品集内入口：`beauty-ops/`
+- 独立站：<https://chengguang-beauty-ops.onrender.com>
+- 独立仓库：<https://github.com/Hyxxt/chengguang-beauty-ops>
