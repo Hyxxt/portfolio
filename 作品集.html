@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>黄佑雄 · AI 全栈开发作品集</title>
-<meta name="description" content="黄佑雄的项目作品集：AI 报价工作台、RAG 知识库问答、AI 求职作战台、AI 订单跟进助手、理赔通五个 Next.js 全栈项目，以及 QMS 来料异常产品设计、订单、RPA、电商广告数据分析等案例与自动化原型。算钱与判合格交给代码，模型只负责听懂人话。">
+<meta name="description" content="黄佑雄的项目作品集：AI 报价工作台、RAG 知识库问答、AI 求职作战台、AI 订单跟进助手、理赔通五个 Next.js 全栈项目，以及 QMS 来料异常产品设计、FluxOps CSV 双表核对工具、订单、RPA、电商广告数据分析等案例与自动化原型。算钱与判合格交给代码，模型只负责听懂人话。">
 <meta name="author" content="黄佑雄">
 <meta name="theme-color" content="#16324a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="黄佑雄 · AI 全栈开发作品集">
-<meta property="og:description" content="5 个 Next.js 全栈项目（AI 报价、RAG、求职匹配、订单跟进、理赔 Agent）+ 5 个业务自动化与数据分析工具 + 1 个 QMS 产品设计案例。能演示、能复核、能交出操作单。">
+<meta property="og:description" content="5 个 Next.js 全栈项目（AI 报价、RAG、求职匹配、订单跟进、理赔 Agent）+ 6 个业务自动化与数据分析工具（含 FluxOps CSV 双表核对）+ 1 个 QMS 产品设计案例。能演示、能复核、能交出操作单。">
 <meta property="og:url" content="https://huangyouxiong-10m3k3ol.maozi.io/">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://huangyouxiong-10m3k3ol.maozi.io/img/og.png">
@@ -509,12 +509,12 @@
       </li>
     </ul>
     <p class="lead">
-      做过 <b>19 个个人项目</b>，其中五个全栈项目已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>和<b>理赔通·保险理赔 Agent</b>，都能直接打开。
+      做过 <b>20 个个人项目</b>，其中五个全栈项目已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>和<b>理赔通·保险理赔 Agent</b>，都能直接打开。
       做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
       因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
     </p>
     <div class="stats" role="list" aria-label="项目数据">
-      <div class="stat" role="listitem"><b>19</b><span>个个人项目</span></div>
+      <div class="stat" role="listitem"><b>20</b><span>个个人项目</span></div>
       <div class="stat" role="listitem"><b>5</b><span>个已上线全栈项目</span></div>
       <div class="stat" role="listitem"><b>10/10</b><span>RAG 检索评测</span></div>
       <div class="stat" role="listitem"><b>39</b><span>项单元测试（质检）</span></div>
@@ -881,7 +881,7 @@
     <h2 class="sec" id="other-title">
       <span class="num">02</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
     </h2>
-    <p class="sec-lead">九个更具体的项目，各自解决一个具体场景。</p>
+    <p class="sec-lead">十个更具体的项目，各自解决一个具体场景。</p>
 
     <div class="mini-grid">
       <article class="mini reveal">
@@ -933,7 +933,13 @@
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>FluxOps 流序 · CSV 双表核对工具</h3></div>
+        <p>免登录核对两份 CSV / TSV：列名不同也能自由映射，支持联合键、金额容差、币种 / 单位与按键汇总；自动识别 UTF-8、GB18030 和 UTF-16LE，结果可导出差异 CSV、无效行清单和 JSON。<b>文件全程在浏览器本地处理，不上传；国内静态镜像已上线。</b> <a class="mini-link" href="https://fluxops-10g3k3ol.maozi.io" target="_blank" rel="noopener">打开国内版</a> · <a class="mini-link" href="https://fluxops-data-workbench-hyx.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">原站</a></p>
+        <div class="tags" aria-label="技术标签"><span>React / Vite</span><span>CSV / GB18030</span><span>数据核对</span><span>本地处理</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
         <p>面向制造企业来料检验场景，把异常单从登记、质量评审、处置执行做到复验关闭：六个状态、四类角色，覆盖退回补充、评审驳回和复验不合格重开。交付 PRD、业务泳道图和可交互 HTML 原型。<b>自主设计练习，全部为演示数据。</b> <a class="mini-link" href="qms/" target="_blank" rel="noopener">打开案例</a> · <a class="mini-link" href="qms/prd.html" target="_blank" rel="noopener">PRD</a></p>
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
       </article>
