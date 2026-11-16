@@ -1,0 +1,18 @@
+{
+  "status": "succeeded",
+  "at": "2026-11-16T07:24:43.650Z",
+  "model": "onnx-community/Qwen2.5-0.5B-Instruct",
+  "device": "CPU (Node.js / ONNX Runtime)",
+  "dtype": "q4",
+  "elapsedMs": 1156,
+  "totalMs": 2100083,
+  "question": "星河科技2025年营业收入是多少？",
+  "sourceIds": [
+    "report-2-1",
+    "report-3-1",
+    "report-7-1"
+  ],
+  "answer": "12.0",
+  "expected": "12.0 亿元",
+  "factualCheck": false
+}
