@@ -39,7 +39,11 @@ function mapPgRow(row) {
 }
 
 async function createPgStore(connectionString) {
-  const useSsl = /sslmode=require/i.test(connectionString) || process.env.PGSSL === 'require';
+  const useSsl = process.env.PGSSL === 'disable'
+    ? false
+    : process.env.PGSSL === 'require'
+      || /sslmode=require/i.test(connectionString)
+      || /\.render\.com(?::\d+)?\//i.test(connectionString);
   const pool = new pg.Pool({
     connectionString,
     max: 5,
