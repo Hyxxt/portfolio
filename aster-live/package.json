@@ -1,0 +1,19 @@
+{
+  "name": "aster-live",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Functional demo RFQ backend for the fictional Aster Precision site",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
