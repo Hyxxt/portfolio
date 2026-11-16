@@ -25,7 +25,7 @@
    if(btn){btn.disabled=true;btn.textContent='Submitting…';}
    const old=form.querySelector('.rfq-result');if(old)old.remove();
    try{
-    const r=await fetch((API_BASE||'')+'/api/rfq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(60000)});
+    const r=await fetch((API_BASE||'')+'/api/rfq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(90000)});
     const data=await r.json().catch(()=>({}));
     if(!r.ok){const msg=data.errors?Object.values(data.errors).join(' '):(data.message||'Submission failed.');throw new Error(msg);}
     const box=document.createElement('div');box.className='rfq-result';box.setAttribute('role','status');

@@ -8,9 +8,40 @@
  document.querySelectorAll('.shortlist-toggle').forEach(b=>b.onclick=()=>$('#shortlist-dialog').showModal());if($('.close-dialog'))$('.close-dialog').onclick=()=>$('#shortlist-dialog').close();if($('.menu-toggle'))$('.menu-toggle').onclick=()=>{const open=$('#main-nav').classList.toggle('open');$('.menu-toggle').setAttribute('aria-expanded',String(open));};
  let family='all',query='';function filter(){let count=0;document.querySelectorAll('#catalog-grid .product-card').forEach(card=>{const show=(family==='all'||card.dataset.family===family)&&card.dataset.search.includes(query);card.hidden=!show;if(show)count++;});if($('#result-count'))$('#result-count').textContent=`${count} illustrative component${count===1?'':'s'}`;if($('#empty-catalog'))$('#empty-catalog').hidden=count>0;}
  document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{family=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});filter();});if($('#catalog-search'))$('#catalog-search').oninput=e=>{query=e.target.value.trim().toLowerCase();filter();};
+ const API_BASE=(document.querySelector('meta[name="aster-api-base"]')?.content||'').replace(/\/$/,'');
  if(document.querySelector('meta[name="aster-static-preview"]')){
   document.querySelectorAll('[data-wp-demo]').forEach(a=>{a.href='/wordpress-demo/?view=admin';a.textContent='WordPress live demo ↗';});
-  const form=$('#rfq-form');if(form)form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const f=new FormData(form);const payload={};for(const k of ['name','email','company','country','quantity','message','website','consent','items'])payload[k]=String(f.get(k)||'');try{sessionStorage.setItem('aster-pending-rfq',JSON.stringify(payload));location.href='/wordpress-demo/?view=rfq';}catch{toast('Session storage is unavailable. Open the WordPress live demo to submit the form directly.');}});
+  const form=$('#rfq-form');
+  if(form)form.addEventListener('submit',async e=>{
+   e.preventDefault();
+   if(!form.reportValidity())return;
+   const f=new FormData(form);
+   const payload={};
+   for(const k of ['name','email','company','country','quantity','message','website','items'])payload[k]=String(f.get(k)||'');
+   payload.consent=f.get('consent')==='1';
+   try{payload.items=JSON.parse(payload.items||'[]');}catch{payload.items=[];}
+   const btn=form.querySelector('button[type="submit"]');
+   const original=btn?btn.innerHTML:'';
+   if(btn){btn.disabled=true;btn.textContent='Submitting…';}
+   const old=form.querySelector('.rfq-result');if(old)old.remove();
+   try{
+    const r=await fetch((API_BASE||'')+'/api/rfq',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(90000)});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok){const msg=data.errors?Object.values(data.errors).join(' '):(data.message||'Submission failed.');throw new Error(msg);}
+    const box=document.createElement('div');box.className='rfq-result';box.setAttribute('role','status');
+    const strong=document.createElement('strong');strong.textContent='Demo RFQ saved';
+    const p=document.createElement('p');p.textContent=`Reference: ${data.reference}. The site owner can review it in the demo admin dashboard. No real quotation or supplier response will follow.`;
+    box.append(strong,p);form.append(box);
+    form.reset();
+    try{localStorage.removeItem('aster-shortlist');}catch{}
+    shortlist=[];persist();
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+   }catch(err){
+    const box=document.createElement('div');box.className='rfq-result error';box.setAttribute('role','alert');box.textContent='Could not submit: '+err.message;form.append(box);
+   }finally{
+    if(btn){btn.disabled=false;btn.innerHTML=original;}
+   }
+  });
  }
  update();
 })();
