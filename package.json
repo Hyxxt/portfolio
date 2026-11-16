@@ -9,6 +9,7 @@
   "scripts": {
     "build": "node build.mjs",
     "build:aster": "node build-aster.mjs",
-    "build:fluxops": "node build-fluxops.mjs"
+    "build:fluxops": "node build-fluxops.mjs",
+    "build:northform": "node build-northform.mjs"
   }
 }
