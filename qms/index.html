@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>QMS 来料异常管理 · 产品设计案例</title>
+<meta name="description" content="制造业来料检验场景的异常处理设计：从登记、评审、处置到复验关闭的完整闭环，含可交互 HTML 原型。自主设计案例，演示数据。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="QMS 来料异常管理 · 产品设计案例">
+<meta property="og:description" content="一张异常单，六个状态，四类角色接力。含可交互原型，完整走通来料异常处理闭环。">
+<meta property="og:image" content="https://qms-portfolio.pages.dev/assets/workbench.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#10253D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310253D'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='30' font-weight='700' fill='%236FD1BE' text-anchor='middle'%3EQ%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --navy-950:#0A1929;
+  --navy-900:#10253D;
+  --navy-800:#16324F;
+  --ink:#203450;
+  --ink-2:#344B66;
+  --muted:#66788E;
+  --muted-2:#8492A4;
+  --bg:#F3F6FA;
+  --card:#FFFFFF;
+  --line:#DFE6EF;
+  --line-2:#E9EEF5;
+  --green:#168878;
+  --green-dark:#0E6B5F;
+  --green-deep:#0A5A50;
+  --green-soft:#E7F3F0;
+  --green-bright:#6FD1BE;
+  --amber:#A66A16;
+  --amber-soft:#FBF1E3;
+  --shadow-sm:0 2px 10px rgba(16,37,61,.05);
+  --shadow-md:0 18px 44px rgba(16,37,61,.10);
+  --shadow-lg:0 36px 80px rgba(7,22,38,.34);
+  --radius:16px;
+  --wrap:1200px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,svg{max-width:100%}
+a{color:inherit}
+button{font:inherit}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0}
+ul,ol{padding:0;list-style:none}
+::selection{background:var(--green);color:#fff}
+:focus-visible{outline:3px solid rgba(22,136,120,.4);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+.skip{position:fixed;top:-80px;left:18px;z-index:100;background:#fff;color:var(--navy-900);padding:10px 18px;border-radius:8px;text-decoration:none;font-size:14px;box-shadow:var(--shadow-md);transition:top .2s}
+.skip:focus{top:12px}
+.js [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.js [data-reveal].in{opacity:1;transform:none}
+
+/* Header */
+.site-header{position:fixed;inset:0 0 auto;z-index:50;background:rgba(11,28,46,.84);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);transition:background .25s,box-shadow .25s}
+.site-header.scrolled{background:rgba(9,24,40,.96);box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.header-inner{display:flex;align-items:center;gap:26px;height:72px}
+.back-home{flex:none;display:inline-flex;align-items:center;font-size:12px;color:#9DB1C7;text-decoration:none;white-space:nowrap;margin-right:-8px}
+.back-home:hover{color:#fff}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff;min-width:0}
+.brand .mark{font-size:23px;font-weight:800;letter-spacing:.12em;line-height:1;white-space:nowrap}
+.brand .mark i{color:var(--green-bright);font-style:normal}
+.brand .divider{width:1px;height:19px;background:rgba(255,255,255,.18);flex:none}
+.brand .sub{font-size:12px;color:#9DB1C7;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav a{position:relative;padding:9px 12px;font-size:13px;color:#A9BCD2;text-decoration:none;border-radius:6px;transition:color .2s,background .2s}
+.nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav a.active{color:#fff}
+.nav a.active::after{content:"";position:absolute;left:12px;right:12px;bottom:1px;height:2px;background:var(--green-bright);border-radius:2px}
+.header-cta{flex:none;height:38px;padding:0 16px;font-size:13px}
+.menu-btn{display:none;flex:none;width:40px;height:40px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:transparent;color:#fff;cursor:pointer;position:relative}
+.menu-btn span{position:absolute;left:11px;right:11px;height:1.5px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .25s,top .25s}
+.menu-btn span:nth-child(1){top:14px}
+.menu-btn span:nth-child(2){top:19px}
+.menu-btn span:nth-child(3){top:24px}
+.menu-btn[aria-expanded="true"] span:nth-child(1){top:19px;transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){top:19px;transform:rotate(-45deg)}
+.mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:#0C1F33;border-top:1px solid rgba(255,255,255,.08);box-shadow:0 24px 40px rgba(0,0,0,.3);padding:10px 22px 18px}
+.mobile-menu a{display:block;padding:12px 2px;color:#C4D3E3;text-decoration:none;font-size:14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu a:last-child{border:0}
+.mobile-menu .mm-cta{color:var(--green-bright);font-weight:700;border:0;padding-top:16px}
+[hidden]{display:none!important}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 22px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--navy-900);font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s,color .2s;white-space:nowrap}
+.btn:hover{border-color:#B9C7D8;box-shadow:var(--shadow-sm);transform:translateY(-1px)}
+.btn-primary{background:var(--green-dark);border-color:var(--green-dark);color:#fff;box-shadow:0 10px 26px rgba(14,107,95,.24)}
+.btn-primary:hover{background:var(--green-deep);border-color:var(--green-deep);box-shadow:0 14px 30px rgba(14,107,95,.3)}
+.btn-ghost{background:transparent;border-color:rgba(255,255,255,.26);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.52)}
+.btn-lg{height:50px;padding:0 26px;font-size:15px}
+.btn-sm{height:38px;padding:0 16px;font-size:13px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:146px 0 92px;background:
+  radial-gradient(900px 520px at 84% -6%,rgba(22,136,120,.30),transparent 62%),
+  linear-gradient(158deg,#091A2C 0%,#10253D 46%,#12314A 100%);color:#fff}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:58px 58px;-webkit-mask-image:radial-gradient(ellipse 75% 70% at 62% 38%,#000 0%,transparent 78%);mask-image:radial-gradient(ellipse 75% 70% at 62% 38%,#000 0%,transparent 78%);pointer-events:none}
+.hero::after{content:"";position:absolute;right:-150px;top:60px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(22,136,120,.22),transparent 66%);filter:blur(12px);pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:62px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;color:#9FC0C9;font-weight:600}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 0 4px rgba(111,209,190,.14);flex:none}
+.hero h1{margin:22px 0 20px;font-size:clamp(36px,4.5vw,58px);line-height:1.17;letter-spacing:-.02em;font-weight:800}
+.hero h1 .h1-accent{display:block;margin-top:11px;font-size:.66em;line-height:1.34;letter-spacing:-.012em;color:var(--green-bright)}
+.hero .lead{max-width:570px;font-size:17px;line-height:1.88;color:#B9C9DA;text-wrap:pretty}
+.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.hero-facts{display:flex;margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);max-width:530px}
+.hero-facts li{flex:1;padding-right:18px;margin-right:18px;border-right:1px solid rgba(255,255,255,.1)}
+.hero-facts li:last-child{padding-right:0;margin-right:0;border-right:0}
+.hero-facts strong{display:block;font-size:29px;line-height:1;font-weight:800;color:#fff}
+.hero-facts strong small{font-size:13px;font-weight:400;color:#8FA6BC;margin-left:4px}
+.hero-facts span{display:block;margin-top:8px;font-size:12px;color:#91A6BC}
+.fineprint{margin-top:16px;font-size:12px;color:#8499B0}
+.hero-visual{position:relative}
+.browser{position:relative;background:#fff;border:1px solid rgba(255,255,255,.16);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.browser-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F8FB;border-bottom:1px solid #E4EAF2}
+.browser-dots{display:flex;gap:6px;flex:none}
+.browser-dots i{display:block;width:8px;height:8px;border-radius:50%;background:#D5DDE8}
+.browser-dots i:nth-child(1){background:#E6B8B4}
+.browser-dots i:nth-child(2){background:#E8D3A8}
+.browser-dots i:nth-child(3){background:#B7D9C9}
+.browser-url{flex:1;min-width:0;text-align:center;font-size:10.5px;color:#6E8095;background:#fff;border:1px solid #E4EAF2;border-radius:5px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.browser-live{flex:none;font-size:10px;font-weight:700;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:20px;letter-spacing:.04em}
+.browser img{display:block;width:100%;height:auto}
+.float-card{position:absolute;left:-28px;bottom:-34px;width:250px;background:#fff;border:1px solid #E1E8F1;border-radius:12px;padding:16px 18px;box-shadow:0 24px 50px rgba(0,0,0,.28);color:var(--ink)}
+.fc-kicker{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.1em;color:var(--muted-2);font-weight:700}
+.fc-kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);flex:none}
+.float-card strong{display:block;font-size:15px;color:var(--navy-900);letter-spacing:.02em;margin:8px 0 9px}
+.fc-meta{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--muted)}
+.fc-badge{background:var(--green-soft);color:var(--green-dark);font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap}
+
+/* Sections */
+.section{padding:92px 0}
+.section.alt{background:#fff;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.section-head{max-width:900px;margin-bottom:38px}
+.section-num{display:inline-flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.14em;color:var(--green-dark);font-weight:700;margin-bottom:14px}
+.section-num::after{content:"";width:46px;height:1px;background:var(--green);opacity:.65}
+.section h2{font-size:clamp(28px,3.3vw,40px);line-height:1.32;letter-spacing:-.015em;font-weight:800;color:var(--navy-900);text-wrap:balance}
+.section-head p{margin-top:16px;font-size:16px;line-height:1.85;color:var(--muted);max-width:760px;text-wrap:pretty}
+.section-head p strong{color:var(--ink-2);font-weight:600}
+
+/* Problems and goals */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.problem{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px;box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .25s,box-shadow .25s}
+.problem:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.problem::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:var(--green);transform:scaleX(.18);transform-origin:left;transition:transform .35s}
+.problem:hover::before{transform:scaleX(1)}
+.pnum{font-size:11px;letter-spacing:.14em;color:var(--muted-2);font-weight:700}
+.problem h3{margin:14px 0 8px;font-size:18px;line-height:1.45;color:var(--navy-900)}
+.problem p{font-size:14px;line-height:1.82;color:var(--muted)}
+.goal-band{position:relative;overflow:hidden;margin-top:20px;background:var(--navy-900);border-radius:14px;padding:26px 30px;display:grid;grid-template-columns:190px repeat(4,1fr);gap:18px;align-items:center;color:#fff}
+.goal-band::after{content:"";position:absolute;right:-60px;top:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(22,136,120,.3),transparent 68%);pointer-events:none}
+.g-title{position:relative;z-index:1}
+.g-title strong{display:block;font-size:16px;color:#fff}
+.g-title span{display:block;margin-top:3px;font-size:11.5px;line-height:1.6;color:#91A6BC}
+.goal{position:relative;z-index:1;border-left:1px solid rgba(255,255,255,.14);padding-left:18px}
+.goal strong{display:block;font-size:14.5px;color:#fff}
+.goal span{display:block;margin-top:4px;font-size:11.5px;line-height:1.65;color:#9DB1C7}
+
+/* Flow */
+.flow-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow-sm)}
+.flow-scroll{overflow-x:auto;border:1px solid var(--line-2);border-radius:10px;background:#F7F9FC;-webkit-overflow-scrolling:touch}
+.flow-scroll img{display:block;width:100%;min-width:980px;height:auto}
+.flow-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 6px 0;font-size:12px;color:var(--muted-2)}
+.flow-meta a{color:var(--green-dark);font-weight:600;text-decoration:none;white-space:nowrap}
+.flow-meta a:hover{text-decoration:underline}
+.scroll-hint{display:none;margin-top:10px;font-size:11.5px;color:var(--muted-2);text-align:center}
+.state-rail{display:grid;grid-template-columns:repeat(6,1fr);margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.state-rail li{position:relative;padding:20px 18px 18px;border-right:1px solid var(--line-2)}
+.state-rail li:last-child{border-right:0}
+.state-rail .num{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--muted-2)}
+.state-rail strong{display:block;margin-top:6px;font-size:15px;color:var(--navy-900)}
+.state-rail small{display:block;margin-top:2px;font-size:11.5px;color:var(--muted)}
+.state-rail li::after{content:"";position:absolute;right:-5px;top:50%;width:9px;height:9px;border-top:1px solid #C7D2DF;border-right:1px solid #C7D2DF;transform:translateY(-50%) rotate(45deg);background:#fff;z-index:1}
+.state-rail li:last-child::after{display:none}
+.state-rail li:first-child{background:#F8FBFA}
+.state-rail li:nth-child(2){background:#F2F8F6}
+.state-rail li:nth-child(3){background:#ECF5F2}
+.state-rail li:nth-child(4){background:#E6F1EE}
+.state-rail li:nth-child(5){background:#E0EEEA}
+.state-rail li:nth-child(6){background:var(--green-soft)}
+.branch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.branch{display:flex;align-items:flex-start;gap:13px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+.branch:hover{border-color:#C9D6E4;box-shadow:var(--shadow-sm)}
+.branch .tag{flex:none;margin-top:2px;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--amber);background:var(--amber-soft);border-radius:4px;padding:3px 7px;white-space:nowrap}
+.branch strong{display:block;font-size:13.5px;color:var(--navy-900);line-height:1.5}
+.branch p{margin-top:3px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+
+/* Design */
+.design-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.design-card{display:flex;gap:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s}
+.design-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.icon-tile{flex:none;width:46px;height:46px;border-radius:12px;background:var(--green-soft);color:var(--green-dark);display:grid;place-items:center}
+.icon-tile svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.design-card h3{font-size:17px;line-height:1.5;color:var(--navy-900);margin-bottom:7px}
+.design-card p{font-size:14px;line-height:1.82;color:var(--muted)}
+.rule-band{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px}
+.rule{display:flex;align-items:flex-start;gap:10px}
+.rule svg{flex:none;width:16px;height:16px;color:var(--green);margin-top:4px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rule strong{display:block;font-size:13px;color:var(--navy-900)}
+.rule span{display:block;margin-top:2px;font-size:11.5px;line-height:1.65;color:var(--muted)}
+
+/* Screens */
+.screens{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.screen{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s,border-color .25s}
+.screen:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#C9D7E6}
+.screen .shot{position:relative;overflow:hidden;aspect-ratio:4/3;background:#F6F8FB;border-bottom:1px solid var(--line-2)}
+.screen .shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;transition:transform .55s ease}
+.screen:hover .shot img{transform:scale(1.015)}
+.open-chip{position:absolute;right:14px;top:14px;background:rgba(16,37,61,.9);color:#fff;font-size:11px;padding:5px 10px;border-radius:20px;backdrop-filter:blur(6px);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+.screen:hover .open-chip{opacity:1;transform:none}
+.screen .cap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px}
+.screen .cap strong{font-size:14.5px;color:var(--navy-900)}
+.screen .cap span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+.screen .cap .arrow{color:var(--green-dark);font-weight:700;font-size:18px;flex:none}
+.screens-foot{margin-top:22px;display:flex;justify-content:flex-end}
+.screens-foot a{font-size:13px;color:var(--green-dark);font-weight:600;text-decoration:none}
+.screens-foot a:hover{text-decoration:underline}
+
+/* Prototype */
+.prototype-section{background:linear-gradient(180deg,#ECF4F2 0%,#F3F6FA 62%);border-top:1px solid #DCE8E4;border-bottom:1px solid var(--line)}
+.demo-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}
+.demo-head .section-head{margin-bottom:0}
+.demo-actions{display:flex;gap:10px;flex-wrap:wrap;flex:none;padding-bottom:4px}
+.demo-wide{max-width:1480px;margin:0 auto;padding:0 24px}
+.demo-shell{background:#fff;border:1px solid #C7D6E4;border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(16,37,61,.16)}
+.demo-shell .browser-bar{background:#F7F9FC}
+.demo-live{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:700;color:var(--green-dark);letter-spacing:.04em;white-space:nowrap}
+.demo-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(22,136,120,.14);flex:none}
+.demo-shell iframe{display:block;width:100%;height:820px;border:0;background:var(--bg)}
+.demo-note{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 4px 0;font-size:12px;line-height:1.7;color:var(--muted);flex-wrap:wrap}
+.demo-note strong{color:var(--ink-2);font-weight:600}
+.demo-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:26px}
+.demo-step{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 16px 15px}
+.demo-step .s-num{position:absolute;right:14px;top:13px;font-size:10px;letter-spacing:.1em;color:#A6B4C4;font-weight:700}
+.s-role{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--green-dark);background:var(--green-soft);padding:3px 7px;border-radius:4px}
+.demo-step strong{display:block;margin-top:9px;font-size:13px;color:var(--navy-900);line-height:1.5}
+.demo-step span.s-desc{display:block;margin-top:3px;font-size:11.5px;line-height:1.65;color:var(--muted)}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.note-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+.note-card .n-icon{width:34px;height:34px;border-radius:9px;background:#F1F5F9;color:var(--navy-800);display:grid;place-items:center;margin-bottom:14px}
+.note-card .n-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.note-card h3{font-size:15px;color:var(--navy-900);margin-bottom:8px}
+.note-card p{font-size:13px;line-height:1.85;color:var(--muted)}
+.note-card p + p{margin-top:8px}
+.deliverables{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px}
+.d-label{font-size:11px;letter-spacing:.1em;color:var(--muted-2);font-weight:700;white-space:nowrap}
+.deliverables ul{display:flex;gap:9px;flex-wrap:wrap}
+.deliverables li{font-size:12px;color:var(--ink-2);background:#F5F8FB;border:1px solid var(--line-2);padding:6px 12px;border-radius:20px}
+.deliverables li a{color:var(--green-dark);text-decoration:none;font-weight:600}
+.deliverables li a:hover{text-decoration:underline}
+.deliverables .d-note{margin-left:auto;font-size:11.5px;color:var(--muted-2)}
+.cta-band{position:relative;overflow:hidden;background:var(--navy-900);color:#fff;padding:60px 0}
+.cta-band::after{content:"";position:absolute;right:6%;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(22,136,120,.28),transparent 66%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.cta-inner .eyebrow{color:#9FC0C9}
+.cta-inner h2{margin-top:12px;font-size:clamp(24px,2.8vw,34px);line-height:1.35;font-weight:800;letter-spacing:-.01em;color:#fff}
+.cta-inner p.tiny{margin-top:8px;font-size:12px;color:#8FA6BC}
+
+/* Footer */
+.site-footer{background:var(--navy-950);color:#8FA6BC;padding:44px 0}
+.footer-grid{display:grid;grid-template-columns:1.15fr 1fr auto;gap:36px;align-items:center}
+.footer-brand{color:#fff;font-size:20px;font-weight:800;letter-spacing:.12em}
+.footer-brand i{color:var(--green-bright);font-style:normal}
+.footer-sub{margin-top:6px;font-size:12px;color:#8FA6BC}
+.site-footer .disclaimer{font-size:11.5px;line-height:1.8;color:#7F95AC}
+.footer-right{text-align:right;font-size:12px;line-height:2}
+.footer-right a{color:#C7D5E4;text-decoration:none}
+.footer-right a:hover{color:#fff}
+
+/* Responsive */
+@media(max-width:1080px){
+  .hero-grid{gap:40px}
+  .float-card{left:-12px;bottom:-24px;width:230px}
+  .nav a{padding:9px 9px}
+  .goal-band{grid-template-columns:160px repeat(4,1fr);padding:24px}
+}
+@media(max-width:960px){
+  .hero{padding:128px 0 82px}
+  .hero-grid{grid-template-columns:1fr;gap:52px}
+  .hero .lead{max-width:700px}
+  .hero-visual{max-width:760px}
+  .float-card{left:auto;right:18px;bottom:-28px}
+  .design-grid{grid-template-columns:1fr}
+  .rule-band{grid-template-columns:1fr 1fr;gap:18px 24px}
+  .screens{grid-template-columns:1fr}
+  .notes-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:26px}
+  .footer-right{text-align:left;grid-column:1/-1}
+  .demo-head{flex-direction:column;align-items:flex-start;gap:18px}
+  .demo-steps{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:900px){
+  .back-home{display:none}
+  .nav{display:none}
+  .header-cta{margin-left:auto}
+  .menu-btn{display:block}
+  .mobile-menu:not([hidden]){display:block}
+  .brand .sub{max-width:280px}
+  .goal-band{grid-template-columns:1fr 1fr;gap:20px 24px}
+  .g-title{grid-column:1/-1}
+  .goal{border-left:0;padding-left:0;padding-top:14px;border-top:1px solid rgba(255,255,255,.13)}
+  .state-rail{grid-template-columns:repeat(3,1fr)}
+  .state-rail li:nth-child(3){border-right:0}
+  .state-rail li:nth-child(n+4){border-top:1px solid var(--line-2)}
+  .state-rail li::after{display:none}
+  .branch-grid{grid-template-columns:1fr}
+  .scroll-hint{display:block}
+  .demo-shell iframe{height:72vh;min-height:560px}
+}
+@media(max-width:760px){
+  .wrap{padding:0 18px}
+  .demo-wide{padding:0 18px}
+  .site-header .header-inner{height:64px;gap:12px}
+  .brand{gap:10px}
+  .brand .mark{font-size:20px}
+  .brand .divider{display:none}
+  .brand .sub{font-size:10.5px;max-width:170px;white-space:normal;line-height:1.35}
+  .header-cta{height:36px;padding:0 13px;font-size:12px}
+  .hero{padding:112px 0 70px}
+  .hero h1{font-size:clamp(31px,8.4vw,42px)}
+  .hero .lead{font-size:15.5px}
+  .hero-actions{gap:10px}
+  .hero-actions .btn{flex:1 1 auto;min-width:150px}
+  .hero-facts strong{font-size:25px}
+  .hero-facts span{font-size:11px}
+  .float-card{position:relative;right:auto;bottom:auto;width:auto;margin:14px 12px 0;box-shadow:var(--shadow-md)}
+  .section{padding:66px 0}
+  .section-head{margin-bottom:28px}
+  .section-head p{font-size:15px}
+  .problem-grid{grid-template-columns:1fr;gap:14px}
+  .goal-band{padding:22px;grid-template-columns:1fr}
+  .goal{padding-top:14px}
+  .flow-card{padding:12px}
+  .flow-meta{align-items:flex-start}
+  .state-rail{grid-template-columns:1fr 1fr}
+  .state-rail li{padding:16px}
+  .state-rail li:nth-child(3){border-right:1px solid var(--line-2)}
+  .state-rail li:nth-child(even){border-right:0}
+  .state-rail li:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .design-card{padding:22px;gap:14px}
+  .rule-band{grid-template-columns:1fr;padding:20px}
+  .demo-steps{grid-template-columns:1fr 1fr}
+  .deliverables{padding:18px;gap:14px}
+  .deliverables .d-note{margin-left:0}
+  .cta-inner{flex-direction:column;align-items:flex-start}
+  .footer-grid{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .brand .sub{display:none}
+  .hero{padding-top:104px}
+  .hero h1{font-size:31px}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%}
+  .hero-facts li{padding-right:10px;margin-right:10px}
+  .hero-facts strong{font-size:22px}
+  .hero-facts span{font-size:10.5px}
+  .browser-url{display:none}
+  .demo-steps{grid-template-columns:1fr}
+  .demo-note{flex-direction:column;align-items:flex-start;gap:6px}
+  .screens-foot{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js [data-reveal]{opacity:1;transform:none}
+}
+@media print{
+  .site-header,.menu-btn,.demo-actions,.cta-band,.skip{display:none!important}
+  .js [data-reveal]{opacity:1!important;transform:none!important}
+  .hero{padding:48px 0;background:#10253D!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section{padding:36px 0}
+  .demo-shell iframe{height:640px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a class="back-home" href="../" aria-label="返回作品集">← 作品集</a>
+    <a class="brand" href="#top" aria-label="QMS 来料异常管理案例首页">
+      <span class="mark">QMS<i>.</i></span>
+      <span class="divider" aria-hidden="true"></span>
+      <span class="sub">来料异常管理 · 产品设计案例</span>
+    </a>
+    <nav class="nav" aria-label="页面目录">
+      <a href="#top" class="active" aria-current="page">项目概览</a>
+      <a href="#flow">业务闭环</a>
+      <a href="#design">设计要点</a>
+      <a href="#prototype">交互原型</a>
+      <a href="#notes">说明</a>
+    </nav>
+    <a class="btn btn-primary header-cta" href="#prototype">打开原型</a>
+    <button class="menu-btn" type="button" aria-label="打开页面目录" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="#top">项目概览</a>
+      <a href="#flow">业务闭环</a>
+      <a href="#design">设计要点</a>
+      <a href="#prototype">交互原型</a>
+      <a href="#notes">说明与边界</a>
+      <a class="mm-cta" href="#prototype">打开交互原型 →</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">产品设计案例 · V1.0 · 2026.11</p>
+        <h1>让每张来料异常单<span class="h1-accent">有责任人、有状态、有记录。</span></h1>
+        <p class="lead">面向制造企业的来料检验场景，设计异常单从登记、质量评审、处置执行到复验关闭的线上闭环。配套一份可操作的交互原型，完整走通四类角色的交接。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#prototype">进入交互原型 <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost btn-lg" href="prd.html">查看 PRD</a>
+        </div>
+        <ul class="hero-facts" aria-label="案例概况">
+          <li><strong>6</strong><span>个状态节点</span></li>
+          <li><strong>4</strong><span>类业务角色</span></li>
+          <li><strong>1</strong><span>份可交互原型</span></li>
+        </ul>
+        <p class="fineprint">自主设计练习 · 所有人名、供应商与批次均为演示数据</p>
+      </div>
+      <div class="hero-visual">
+        <div class="browser">
+          <div class="browser-bar">
+            <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="browser-url">QMS / 来料异常 / 工作台</span>
+            <span class="browser-live">交互原型</span>
+          </div>
+          <img src="assets/workbench.png" alt="QMS 质量工作台界面：指标概览与当前角色待办列表" width="1437" height="1004" fetchpriority="high">
+        </div>
+        <div class="float-card" aria-hidden="true">
+          <span class="fc-kicker">示例单据 · 第 1 轮</span>
+          <strong>NC20261116001</strong>
+          <div class="fc-meta"><span class="fc-badge">待处理</span><span>质量工程师 QE</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="context">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="section-num">01 / 项目概览</p>
+        <h2>异常本身不复杂，难的是每一步都能被看见。</h2>
+        <p>来料检验发现不良后，信息往往散落在表格、聊天记录和口头交接里。这个案例把异常单作为唯一载体，让事实、方案、执行和复验都落在同一张单据上。</p>
+      </div>
+      <div class="problem-grid">
+        <article class="problem" data-reveal>
+          <p class="pnum">01</p>
+          <h3>登记分散</h3>
+          <p>检验单、缺陷描述和证据各在一处，后续人员难以还原现场。</p>
+        </article>
+        <article class="problem" data-reveal>
+          <p class="pnum">02</p>
+          <h3>评审难追踪</h3>
+          <p>处置方案和评审意见依赖口头沟通，驳回原因无法回看。</p>
+        </article>
+        <article class="problem" data-reveal>
+          <p class="pnum">03</p>
+          <h3>执行靠催</h3>
+          <p>处置进度、执行凭证和复验结果缺少统一入口，闭环靠人盯。</p>
+        </article>
+      </div>
+      <div class="goal-band" data-reveal>
+        <div class="g-title"><strong>设计目标</strong><span>不预设业务收益，先把规则写清楚</span></div>
+        <div class="goal"><strong>登记完整</strong><span>必填与数量校验前置</span></div>
+        <div class="goal"><strong>处理及时</strong><span>待办按角色聚合</span></div>
+        <div class="goal"><strong>执行可追溯</strong><span>每次动作写入轨迹</span></div>
+        <div class="goal"><strong>减少逾期</strong><span>计划时间与逾期标识</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="flow">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="section-num">02 / 业务闭环</p>
+        <h2>一张单据，六个状态，四类角色接力。</h2>
+        <p>主流程从 IQC 登记开始，依次经过 QE 方案、主管评审、仓库执行和 IQC 复验；任何一个环节发现问题，都有明确的回退路径。</p>
+      </div>
+      <div class="flow-card" data-reveal>
+        <div class="flow-scroll">
+          <img src="assets/process.svg" alt="来料检验异常处理业务泳道图：IQC 登记提交、QE 补充处置方案、质量主管评审、仓库执行并上传凭证、IQC 复验处置结果并关闭异常，包含退回补充、评审驳回和复验不合格分支" width="1640" height="900" loading="lazy">
+        </div>
+        <div class="flow-meta">
+          <span>泳道图 · 角色交接与回退路径</span>
+          <a href="assets/process.svg" target="_blank" rel="noopener">查看大图 ↗</a>
+        </div>
+        <p class="scroll-hint">← 左右滑动查看完整泳道图 →</p>
+      </div>
+      <ol class="state-rail" aria-label="异常单状态流转" data-reveal>
+        <li><span class="num">01</span><strong>草稿</strong><small>IQC 检验员</small></li>
+        <li><span class="num">02</span><strong>待处理</strong><small>质量工程师 QE</small></li>
+        <li><span class="num">03</span><strong>待评审</strong><small>质量主管</small></li>
+        <li><span class="num">04</span><strong>待执行</strong><small>仓库执行人</small></li>
+        <li><span class="num">05</span><strong>待复验</strong><small>IQC 检验员</small></li>
+        <li><span class="num">06</span><strong>已关闭</strong><small>只读留档</small></li>
+      </ol>
+      <div class="branch-grid">
+        <article class="branch" data-reveal>
+          <span class="tag">退回补充</span>
+          <div><strong>待处理 → 草稿</strong><p>QE 发现事实缺失，填写理由退回 IQC 补充。</p></div>
+        </article>
+        <article class="branch" data-reveal>
+          <span class="tag">评审驳回</span>
+          <div><strong>待评审 → 待处理</strong><p>主管填写评审意见，方案退回 QE 修订。</p></div>
+        </article>
+        <article class="branch" data-reveal>
+          <span class="tag">复验不合格</span>
+          <div><strong>待复验 → 待处理</strong><p>保留上一轮记录，轮次加一，重新制定方案。</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="design">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="section-num">03 / 设计要点</p>
+        <h2>把“可追溯”写进每一次状态变化。</h2>
+        <p>除了主流程，真正决定系统能不能落地的是四个约束：事实不被覆盖、方案审批后锁定、执行必须留证、复验失败保留历史。</p>
+      </div>
+      <div class="design-grid">
+        <article class="design-card" data-reveal>
+          <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2"/></svg></span>
+          <div><h3>事实先锁定</h3><p>首次提交冻结检验单、批次与检验数量。提交后发现错误，只能通过后续记录说明，不直接覆盖原始事实。</p></div>
+        </article>
+        <article class="design-card" data-reveal>
+          <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 6-6"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
+          <div><h3>方案审批后锁定</h3><p>QE 提交处置方式、执行人和完成时间；主管通过后，当前轮方案不再修改，避免执行口径反复。</p></div>
+        </article>
+        <article class="design-card" data-reveal>
+          <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span>
+          <div><h3>执行必须留证</h3><p>仓库反馈处置数量、执行结果和凭证说明；数量必须覆盖整批，凭证缺失不能进入复验。</p></div>
+        </article>
+        <article class="design-card" data-reveal>
+          <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></span>
+          <div><h3>复验不合格进入新轮</h3><p>保留上一轮的方案、执行和复验快照，轮次加一，回到待处理重新制定方案。</p></div>
+        </article>
+      </div>
+      <div class="rule-band" data-reveal>
+        <div class="rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong>角色 × 状态双校验</strong><span>隐藏按钮只是体验，服务端仍需校验权限</span></div></div>
+        <div class="rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong>全动作留痕</strong><span>记录操作者、时间与前后状态</span></div></div>
+        <div class="rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong>幂等防重复</strong><span>同一请求只产生一次流转</span></div></div>
+        <div class="rule"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong>数量校验闭环</strong><span>抽检 ≤ 来料，复验 ≤ 处置</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="screens">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="section-num">04 / 界面一览</p>
+        <h2>工作台、台账、详情，三个页面串起日常处理。</h2>
+        <p>工作台按角色聚合待办，台账支持多字段搜索和状态筛选，详情页承载全部事实、方案与操作轨迹。</p>
+      </div>
+      <div class="screens">
+        <a class="screen" href="demo.html" target="_blank" rel="noopener" data-reveal>
+          <div class="shot">
+            <img src="assets/ledger.png" alt="异常台账界面：搜索框、状态筛选与异常单列表" width="1440" height="1000" loading="lazy">
+            <span class="open-chip">打开原型 ↗</span>
+          </div>
+          <div class="cap"><div><strong>异常台账</strong><span>搜索、筛选与状态识别</span></div><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+        <a class="screen" href="demo.html" target="_blank" rel="noopener" data-reveal>
+          <div class="shot">
+            <img src="assets/detail.png" alt="异常单详情界面：状态步骤条、异常基本信息、处置方案与操作轨迹" width="1512" height="1512" loading="lazy">
+            <span class="open-chip">打开原型 ↗</span>
+          </div>
+          <div class="cap"><div><strong>单据详情</strong><span>事实、方案与操作轨迹</span></div><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </div>
+      <div class="screens-foot"><a href="#prototype">在交互原型中逐一体验 →</a></div>
+    </div>
+  </section>
+
+  <section class="section prototype-section" id="prototype">
+    <div class="wrap">
+      <div class="demo-head">
+        <div class="section-head" data-reveal>
+          <p class="section-num">05 / 交互原型</p>
+          <h2>上手走一遍，比看截图更直接。</h2>
+          <p>原型包含完整的表单校验、角色切换和状态流转，数据保存在本机浏览器。建议从“新建异常”或待处理单开始，按角色走完闭环。</p>
+        </div>
+        <div class="demo-actions" data-reveal>
+          <a class="btn btn-primary" href="demo.html" target="_blank" rel="noopener">全屏打开 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="demo-wide">
+      <div class="demo-shell" data-reveal>
+        <div class="browser-bar">
+          <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="browser-url">QMS / 来料异常 / 交互原型</span>
+          <span class="demo-live">可交互</span>
+        </div>
+        <iframe src="demo.html" title="QMS 来料异常管理交互原型" loading="lazy"></iframe>
+      </div>
+      <div class="demo-note">
+        <span><strong>演示角色</strong>仅用于体验岗位动作，不等于正式登录鉴权。</span>
+        <span>数据仅保存在当前浏览器，原型左下角可重置演示数据。</span>
+      </div>
+    </div>
+    <div class="wrap">
+      <ol class="demo-steps" aria-label="演示路径">
+        <li class="demo-step" data-reveal><span class="s-num">01</span><span class="s-role">IQC 检验员</span><strong>新建或打开草稿</strong><span class="s-desc">补齐事实并提交异常</span></li>
+        <li class="demo-step" data-reveal><span class="s-num">02</span><span class="s-role">质量工程师 QE</span><strong>制定处置方案</strong><span class="s-desc">选择方式、执行人与完成时间</span></li>
+        <li class="demo-step" data-reveal><span class="s-num">03</span><span class="s-role">质量主管</span><strong>评审方案</strong><span class="s-desc">通过或填写意见驳回</span></li>
+        <li class="demo-step" data-reveal><span class="s-num">04</span><span class="s-role">仓库执行人</span><strong>执行并留证</strong><span class="s-desc">填写数量、结果与凭证</span></li>
+        <li class="demo-step" data-reveal><span class="s-num">05</span><span class="s-role">IQC 检验员</span><strong>复验并关闭</strong><span class="s-desc">合格关闭，不合格进入新轮</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="notes">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="section-num">06 / 说明与边界</p>
+        <h2>这是自主设计练习，不宣称真实上线。</h2>
+        <p>案例依据单工厂、单组织的内部 QMS 场景设计，聚焦 P0 流程。以下边界一并说明，避免过度解读。</p>
+      </div>
+      <div class="notes-grid">
+        <article class="note-card" data-reveal>
+          <span class="n-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></span>
+          <h3>设计边界</h3>
+          <p>P0 覆盖异常单、评审、执行、复验、权限与日志。P1 看板、提醒与导出。</p>
+          <p>暂不覆盖供应商门户、完整 8D、APQP、FMEA、特采审批、ERP 库存写回和电子签名。</p>
+        </article>
+        <article class="note-card" data-reveal>
+          <span class="n-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+          <h3>数据与演示</h3>
+          <p>所有人名、供应商、批次与检验数据均为演示数据。</p>
+          <p>原型数据仅保存在本机浏览器，可随时重置。演示角色用于体验岗位动作，不代表正式登录鉴权。</p>
+        </article>
+        <article class="note-card" data-reveal>
+          <span class="n-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3>案例定位</h3>
+          <p>本作品为自主设计练习，不代表真实企业上线、合规认证或量化业务收益。</p>
+          <p>企业落地前，需由业务负责人和咨询师结合组织规则确认。</p>
+        </article>
+      </div>
+      <div class="deliverables" data-reveal>
+        <span class="d-label">配套材料</span>
+        <ul>
+          <li><a href="prd.html">01 PRD（网页版 / Word）</a></li>
+          <li>02 业务泳道图（SVG / drawio）</li>
+          <li>03 交互原型（本页）</li>
+          <li>04 演示说明</li>
+        </ul>
+        <span class="d-note">完整交付文件可另行提供</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-label="开始体验">
+    <div class="wrap cta-inner">
+      <div data-reveal>
+        <p class="eyebrow">可交互原型</p>
+        <h2>从一张异常单开始，走完整个闭环。</h2>
+        <p class="tiny">建议使用桌面浏览器体验；手机端可全屏打开。</p>
+      </div>
+      <a class="btn btn-primary btn-lg" href="demo.html" target="_blank" rel="noopener" data-reveal>打开完整原型 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="footer-brand">QMS<i>.</i></div>
+      <p class="footer-sub">来料异常处理 · 产品设计案例 V1.0</p>
+    </div>
+    <p class="disclaimer">自主设计练习，不代表真实企业上线、合规认证或量化业务收益。全部人名、供应商与批次均为演示数据。</p>
+    <div class="footer-right"><p>Huang · 2026</p><p><a href="../">返回作品集</a> · <a href="#top">回到顶部 ↑</a></p></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var header=document.getElementById('site-header');
+  var navLinks=Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"], .mobile-menu a[href^="#"]'));
+  var map=[['top','#top'],['context','#top'],['flow','#flow'],['design','#design'],['screens','#design'],['prototype','#prototype'],['notes','#notes']];
+  var ticking=false;
+  function updateNav(){
+    var y=window.scrollY+130, current='#top';
+    for(var i=0;i<map.length;i++){
+      var el=document.getElementById(map[i][0]);
+      if(el && el.offsetTop<=y) current=map[i][1];
+    }
+    navLinks.forEach(function(a){
+      var on=a.getAttribute('href')===current;
+      a.classList.toggle('active',on);
+      if(on){a.setAttribute('aria-current','page')}else{a.removeAttribute('aria-current')}
+    });
+    header.classList.toggle('scrolled',window.scrollY>8);
+    ticking=false;
+  }
+  function onScroll(){if(!ticking){ticking=true;window.requestAnimationFrame(updateNav)}}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  updateNav();
+
+  var menuBtn=document.querySelector('.menu-btn');
+  var menu=document.getElementById('mobile-menu');
+  function setMenu(open){
+    menuBtn.setAttribute('aria-expanded',open?'true':'false');
+    menuBtn.setAttribute('aria-label',open?'关闭页面目录':'打开页面目录');
+    menu.hidden=!open;
+  }
+  menuBtn.addEventListener('click',function(){setMenu(menuBtn.getAttribute('aria-expanded')!=='true')});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false)});
+  document.addEventListener('click',function(e){
+    if(menu.hidden)return;
+    if(!e.target.closest('#mobile-menu')&&!e.target.closest('.menu-btn'))setMenu(false);
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden)setMenu(false)});
+
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items=Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  if(!reduce && 'IntersectionObserver' in window){
+    items.forEach(function(el,i){el.style.transitionDelay=((i%4)*60)+'ms'});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -36px 0px'});
+    items.forEach(function(el){io.observe(el)});
+  }else{
+    items.forEach(function(el){el.classList.add('in')});
+  }
+})();
+</script>
+</body>
+</html>
