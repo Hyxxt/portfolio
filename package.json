@@ -7,6 +7,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "build:aster": "node build-aster.mjs"
   }
 }
