@@ -13,6 +13,7 @@ const files = [
   'img',
   'beauty-ops',
   'qms',
+  'luma',
 ];
 
 async function copy(src, dest) {
