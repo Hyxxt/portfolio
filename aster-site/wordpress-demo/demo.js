@@ -2,10 +2,10 @@ const $=s=>document.querySelector(s);const status=s=>$('#status').textContent=s;
 const slow=setTimeout(()=>{status('WordPress is taking longer to start. You can use the hosted WordPress preview below, or keep this page open. Edge was verified for this interactive demo.');$('#error').style.display='block';},60000);
 try{
  const blueprintText=await fetch('/blueprint.json').then(r=>r.text());
- // Keep the standalone copy self-contained: any resource URLs in the exported
- // blueprint still point at the original chatgpt.site host. Resolve them to
- // this site's origin so the WordPress theme/plugin zips load from this copy.
- const blueprint=JSON.parse(blueprintText.split('https://aster-precision-b2b-hyx.glacialbowl3.chatgpt.site').join(location.origin));
+ // Keep the blueprint resources self-contained: its URLs use the canonical
+ // Maozi domain. Resolve them to the current origin so preview/deployment
+ // domains also load the theme/plugin zips from this copy rather than remotely.
+ const blueprint=JSON.parse(blueprintText.split('https://asterprecision-10n3k3ol.maozi.io').join(location.origin));
  const official=new URL('https://playground.wordpress.net/');official.searchParams.set('blueprint-url',location.origin+'/blueprint.json');$('#official').href=official.href;
  const {startPlaygroundWeb}=await import('https://playground.wordpress.net/client/index.js');
  const client=await startPlaygroundWeb({iframe:$('#wp'),remoteUrl:'https://playground.wordpress.net/remote.html',blueprint});

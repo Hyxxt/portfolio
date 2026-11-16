@@ -13,7 +13,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://aster-precision-b2b-hyx.glacialbowl3.chatgpt.site/aster-b2b.zip"
+        "url": "https://asterprecision-10n3k3ol.maozi.io/aster-b2b.zip"
       },
       "options": {
         "activate": true
@@ -23,7 +23,7 @@
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://aster-precision-b2b-hyx.glacialbowl3.chatgpt.site/aster-precision.zip"
+        "url": "https://asterprecision-10n3k3ol.maozi.io/aster-precision.zip"
       },
       "options": {
         "activate": true
