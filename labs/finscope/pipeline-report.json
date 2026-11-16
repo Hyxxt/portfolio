@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "rows": 48,
+  "unique_keys": 48,
+  "annual_rows": 12,
+  "checks": [
+    "unique company/year/quarter",
+    "positive revenue/assets",
+    "annual SQL aggregation matches pandas"
+  ],
+  "sql": "SELECT company, industry, year, ROUND(SUM(revenue),2) revenue,\n    ROUND(SUM(net_profit),2) net_profit,\n    ROUND(SUM(operating_cash_flow),2) operating_cash_flow\n    FROM quarterly GROUP BY company,industry,year ORDER BY company,year"
+}

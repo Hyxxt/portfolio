@@ -1,0 +1,13 @@
+{
+  "status": "succeeded",
+  "verifiedOn": "2026-11-16",
+  "model": "onnx-community/Qwen2.5-0.5B-Instruct",
+  "device": "Browser Web Worker / WASM CPU",
+  "dtype": "q4",
+  "loadMs": 4500,
+  "inferenceMs": 14451,
+  "question": "星河科技2025年营业收入是多少？",
+  "answer": "12.0",
+  "qualityNote": "推理运行成功，但回答漏掉亿元单位，也没有生成引用编号。原文与来源仍可在页面核对。",
+  "qaWeightSource": "已从 Hugging Face 下载的相同模型文件，经 loopback 缓存服务供浏览器 QA 使用，避免重复下载 786 MB；正式网站从 Hugging Face 获取模型。"
+}

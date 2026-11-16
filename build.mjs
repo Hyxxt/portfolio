@@ -14,6 +14,7 @@ const files = [
   'beauty-ops',
   'qms',
   'luma',
+  'labs',
 ];
 
 async function copy(src, dest) {
