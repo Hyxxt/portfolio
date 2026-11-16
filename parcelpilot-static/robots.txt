@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://parcelpilot-dispatch-hyx.glacialbowl3.chatgpt.site/sitemap.xml
