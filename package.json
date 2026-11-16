@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "node build.mjs",
-    "build:aster": "node build-aster.mjs"
+    "build:aster": "node build-aster.mjs",
+    "build:fluxops": "node build-fluxops.mjs"
   }
 }
