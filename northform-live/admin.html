@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Northform RFQ 收件箱</title>
+<style>
+:root{
+  --ink:#173038;--muted:#6d7c7b;--paper:#f4f2ea;--card:#fffdf7;--line:#d8ddd3;
+  --accent:#b8683e;--green:#2f5c4b;--green-soft:#e8efe8;--danger:#a84b36;
+  --shadow:0 18px 60px rgba(23,48,56,.09);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--paper);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.top{padding:22px 0;border-bottom:1px solid var(--line);background:rgba(255,253,247,.85);backdrop-filter:blur(10px)}
+.wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.16em;font-size:12px;color:var(--ink);text-decoration:none}
+.brand svg{width:28px;height:28px;color:var(--accent)}
+.brand small{display:block;font-size:9px;letter-spacing:.28em;color:var(--muted);font-weight:600}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 13px;border-radius:2px;font-size:12px;font-weight:700;letter-spacing:.02em;transition:.15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.primary:hover{background:#0c2026}
+.btn.danger{color:var(--danger);border-color:#e3c4b9}
+.btn.small{padding:6px 10px;font-size:11px}
+.btn:disabled{opacity:.5;cursor:wait}
+.login-wrap{min-height:calc(100vh - 78px);display:grid;place-items:center;padding:32px 16px}
+.login{width:min(420px,100%);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:34px 32px}
+.eyebrow{display:block;font-size:10px;font-weight:800;letter-spacing:.22em;color:var(--accent);margin-bottom:12px}
+.login h1{margin:0 0 8px;font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
+.login p{margin:0 0 22px;color:var(--muted);font-size:13px}
+.field{display:grid;gap:7px;margin-bottom:16px}
+.field label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;padding:11px 12px;border-radius:2px;color:var(--ink);outline:none}
+.field input:focus,.field select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(47,92,75,.12)}
+.login .btn{width:100%;justify-content:center;padding:12px}
+.form-error{min-height:20px;margin:10px 0 0;font-size:12px;color:var(--danger)}
+.login-note{margin-top:18px!important;font-size:11px!important;line-height:1.7!important;color:#8b9692!important}
+.dash{padding:28px 0 70px}
+.dash-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.dash-head h1{margin:0;font-size:30px;letter-spacing:-.03em;line-height:1.1}
+.dash-head p{margin:7px 0 0;color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--line);padding:14px 16px}
+.stat span{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.stat b{display:block;margin-top:4px;font-size:26px;line-height:1.2;font-weight:700}
+.stat.hot b{color:var(--accent)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar .filters{display:flex;align-items:center;gap:8px}
+.toolbar select{padding:8px 10px;border:1px solid var(--line);background:var(--card);border-radius:2px;color:var(--ink)}
+.toolbar .meta{color:var(--muted);font-size:11px}
+.table-card{background:var(--card);border:1px solid var(--line);overflow:hidden;box-shadow:0 12px 40px rgba(23,48,56,.04)}
+.table-scroll{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:880px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid #e8ebe4;vertical-align:top}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:#f9f8f2;white-space:nowrap}
+td{font-size:12px}
+td .ref{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;white-space:nowrap}
+td .sub{color:var(--muted);font-size:11px;margin-top:2px}
+td .name{font-weight:700}
+tr:last-child td{border-bottom:0}
+.status{display:inline-block;padding:3px 8px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+.status.new{background:#f7e5d9;color:#8f4127}
+.status.contacted{background:#e3ece4;color:#2f5c4b}
+.status.closed{background:#ececea;color:#66706d}
+.empty{padding:54px 20px;text-align:center;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}
+.toast{position:fixed;right:18px;bottom:18px;max-width:min(360px,calc(100% - 36px));background:var(--ink);color:#fff;padding:12px 15px;font-size:12px;line-height:1.6;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:50}
+.toast.show{opacity:1;transform:none}
+dialog{border:0;padding:0;width:min(720px,calc(100% - 24px));max-height:calc(100vh - 40px);background:var(--card);color:var(--ink);box-shadow:0 28px 90px rgba(0,0,0,.28)}
+dialog::backdrop{background:rgba(12,32,38,.5);backdrop-filter:blur(3px)}
+.detail{padding:24px 26px 26px}
+.detail-head{display:flex;align-items:start;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.detail-head h2{margin:0;font-size:20px;letter-spacing:-.02em}
+.detail-head .ref{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);font-size:11px;margin-top:3px}
+.close-x{border:1px solid var(--line);background:#fff;color:var(--muted);width:30px;height:30px;border-radius:50%;font-size:17px;line-height:1}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;margin:18px 0}
+.detail-grid div span{display:block;color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.detail-grid div b{font-size:13px;font-weight:600;word-break:break-word}
+.detail h3{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:18px 0 7px}
+.message{white-space:pre-wrap;background:#faf9f3;border:1px solid var(--line);padding:13px 14px;font-size:13px;line-height:1.75;max-height:240px;overflow:auto;word-break:break-word}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:20px;padding-top:16px}
+.detail-actions .spacer{flex:1}
+@media(max-width:760px){
+  .stats{grid-template-columns:1fr 1fr}
+  .dash-head h1{font-size:25px}
+  .detail-grid{grid-template-columns:1fr}
+  .detail{padding:20px}
+  .top{padding:16px 0}
+}
+@media(max-width:460px){
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:11px 12px}
+  .stat b{font-size:22px}
+  .top-actions .btn{padding:8px 10px}
+  .login{padding:26px 20px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/" aria-label="Northform Precision home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 28 20 5l14 23H6Zm7 7 7-12 7 12" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+      <span>NORTHFORM<small>RFQ INBOX</small></span>
+    </a>
+    <div class="top-actions hidden" id="top-actions">
+      <button class="btn" id="refresh">刷新</button>
+      <a class="btn" id="export" href="/api/admin/export.csv">导出 CSV</a>
+      <button class="btn" id="logout">退出</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="login-wrap" id="login-view">
+    <form class="login" id="login-form">
+      <span class="eyebrow">PRIVATE DASHBOARD</span>
+      <h1>询价收件箱</h1>
+      <p>登录后可查看 Northform 演示站收到的询价记录。</p>
+      <div class="field">
+        <label for="password">管理密码</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="输入管理员密码">
+      </div>
+      <button class="btn primary" type="submit" id="login-btn">登录</button>
+      <p class="form-error" id="login-error" role="alert"></p>
+      <p class="login-note">这是虚构品牌的演示后台。访客提交的数据仅用于演示，请勿索要或保存真实敏感信息。</p>
+    </form>
+  </section>
+
+  <section class="dash hidden" id="dash-view">
+    <div class="wrap">
+      <div class="dash-head">
+        <div>
+          <span class="eyebrow">NORTHFORM PRECISION · DEMO</span>
+          <h1>询价收件箱</h1>
+          <p>这里显示用户通过公开站点提交的演示询价。</p>
+        </div>
+      </div>
+
+      <div class="stats" id="stats">
+        <div class="stat"><span>总计</span><b id="stat-total">0</b></div>
+        <div class="stat hot"><span>待处理</span><b id="stat-new">0</b></div>
+        <div class="stat"><span>已联系</span><b id="stat-contacted">0</b></div>
+        <div class="stat"><span>已关闭</span><b id="stat-closed">0</b></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filters">
+          <label class="meta" for="filter">筛选</label>
+          <select id="filter">
+            <option value="">全部</option>
+            <option value="new">待处理</option>
+            <option value="contacted">已联系</option>
+            <option value="closed">已关闭</option>
+          </select>
+        </div>
+        <span class="meta" id="list-meta">—</span>
+      </div>
+
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>编号</th>
+                <th>联系人</th>
+                <th>公司</th>
+                <th>国家 / 数量</th>
+                <th>状态</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="empty hidden" id="empty">
+          <strong>还没有询价</strong>
+          <span>等第一个用户提交后，这里会出现记录。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="detail-dialog">
+  <div class="detail">
+    <div class="detail-head">
+      <div>
+        <h2 id="detail-title">询价详情</h2>
+        <div class="ref" id="detail-ref"></div>
+      </div>
+      <button class="close-x" id="detail-close" aria-label="关闭">×</button>
+    </div>
+    <div class="detail-grid">
+      <div><span>姓名</span><b id="detail-name">—</b></div>
+      <div><span>公司</span><b id="detail-company">—</b></div>
+      <div><span>邮箱</span><b id="detail-email">—</b></div>
+      <div><span>国家</span><b id="detail-country">—</b></div>
+      <div><span>数量</span><b id="detail-quantity">—</b></div>
+      <div><span>时间</span><b id="detail-created">—</b></div>
+      <div><span>状态</span><b id="detail-status">—</b></div>
+      <div><span>短名单</span><b id="detail-items">—</b></div>
+    </div>
+    <h3>需求描述</h3>
+    <div class="message" id="detail-message"></div>
+    <div class="detail-actions">
+      <button class="btn small primary" data-set-status="contacted">标记已联系</button>
+      <button class="btn small" data-set-status="closed">标记已关闭</button>
+      <button class="btn small" data-set-status="new">重新打开</button>
+      <span class="spacer"></span>
+      <button class="btn small danger" id="detail-delete">删除</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const $ = (selector) => document.querySelector(selector);
+  const state = { rows: [], stats: null, filter: '', currentId: null };
+  const statusLabels = { new: '待处理', contacted: '已联系', closed: '已关闭' };
+  let toastTimer;
+
+  function toast(message) {
+    const el = $('#toast');
+    el.textContent = message;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+  }
+
+  async function api(path, options = {}) {
+    const response = await fetch(path, {
+      credentials: 'same-origin',
+      ...options,
+      headers: {
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+        ...(options.headers || {}),
+      },
+    });
+    if (response.status === 401) {
+      showLogin();
+      throw new Error('authentication_required');
+    }
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || `request_failed_${response.status}`);
+    return data;
+  }
+
+  function showLogin() {
+    $('#login-view').classList.remove('hidden');
+    $('#dash-view').classList.add('hidden');
+    $('#top-actions').classList.add('hidden');
+    $('#password').focus();
+  }
+
+  function showDashboard() {
+    $('#login-view').classList.add('hidden');
+    $('#dash-view').classList.remove('hidden');
+    $('#top-actions').classList.remove('hidden');
+  }
+
+  function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return date.toLocaleString('zh-CN', { hour12: false });
+  }
+
+  function renderStats() {
+    const stats = state.stats || { total: 0, new: 0, contacted: 0, closed: 0 };
+    $('#stat-total').textContent = stats.total;
+    $('#stat-new').textContent = stats.new;
+    $('#stat-contacted').textContent = stats.contacted;
+    $('#stat-closed').textContent = stats.closed;
+  }
+
+  function renderRows() {
+    const tbody = $('#rows');
+    tbody.replaceChildren();
+    $('#empty').classList.toggle('hidden', state.rows.length > 0);
+    $('#list-meta').textContent = `${state.rows.length} 条记录`;
+    for (const row of state.rows) {
+      const tr = document.createElement('tr');
+
+      const time = document.createElement('td');
+      time.textContent = formatDate(row.created_at);
+
+      const ref = document.createElement('td');
+      const refSpan = document.createElement('span');
+      refSpan.className = 'ref';
+      refSpan.textContent = row.reference;
+      ref.append(refSpan);
+
+      const contact = document.createElement('td');
+      const name = document.createElement('div');
+      name.className = 'name';
+      name.textContent = row.name;
+      const email = document.createElement('div');
+      email.className = 'sub';
+      email.textContent = row.email;
+      contact.append(name, email);
+
+      const company = document.createElement('td');
+      company.textContent = row.company;
+
+      const place = document.createElement('td');
+      place.textContent = `${row.country} / ${row.quantity}`;
+
+      const status = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = `status ${row.status}`;
+      badge.textContent = statusLabels[row.status] || row.status;
+      status.append(badge);
+
+      const action = document.createElement('td');
+      const button = document.createElement('button');
+      button.className = 'btn small';
+      button.dataset.open = row.id;
+      button.textContent = '查看';
+      action.append(button);
+
+      tr.append(time, ref, contact, company, place, status, action);
+      tbody.append(tr);
+    }
+  }
+
+  async function load() {
+    const query = state.filter ? `?status=${encodeURIComponent(state.filter)}` : '';
+    const data = await api(`/api/admin/rfqs${query}`);
+    state.rows = data.rfqs || [];
+    state.stats = data.stats;
+    renderStats();
+    renderRows();
+  }
+
+  function findRow(id) {
+    return state.rows.find((row) => row.id === id);
+  }
+
+  function openDetail(id) {
+    const row = findRow(id);
+    if (!row) return;
+    state.currentId = id;
+    $('#detail-title').textContent = `${row.name} · ${row.company}`;
+    $('#detail-ref').textContent = row.reference;
+    $('#detail-name').textContent = row.name;
+    $('#detail-company').textContent = row.company;
+    $('#detail-email').textContent = row.email;
+    $('#detail-country').textContent = row.country;
+    $('#detail-quantity').textContent = row.quantity;
+    $('#detail-created').textContent = formatDate(row.created_at);
+    $('#detail-status').textContent = statusLabels[row.status] || row.status;
+    $('#detail-items').textContent = row.items && row.items.length ? row.items.join(', ') : '无';
+    $('#detail-message').textContent = row.message;
+    $('#detail-dialog').showModal();
+  }
+
+  async function setStatus(status) {
+    if (!state.currentId) return;
+    try {
+      await api(`/api/admin/rfqs/${state.currentId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status }),
+      });
+      $('#detail-dialog').close();
+      toast('状态已更新');
+      await load();
+    } catch (error) {
+      toast(`更新失败：${error.message}`);
+    }
+  }
+
+  async function removeCurrent() {
+    if (!state.currentId) return;
+    if (!window.confirm('确定删除这条演示询价？删除后无法恢复。')) return;
+    try {
+      await api(`/api/admin/rfqs/${state.currentId}`, { method: 'DELETE' });
+      $('#detail-dialog').close();
+      toast('已删除');
+      await load();
+    } catch (error) {
+      toast(`删除失败：${error.message}`);
+    }
+  }
+
+  $('#login-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const button = $('#login-btn');
+    const error = $('#login-error');
+    error.textContent = '';
+    button.disabled = true;
+    button.textContent = '登录中…';
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('#password').value }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || 'login_failed');
+      }
+      $('#login-form').reset();
+      showDashboard();
+      await load();
+    } catch (err) {
+      const messages = {
+        invalid_password: '密码不对',
+        too_many_attempts: '尝试次数太多，请稍后再试',
+        admin_not_configured: '后台未配置管理密码',
+      };
+      error.textContent = messages[err.message] || `登录失败：${err.message}`;
+    } finally {
+      button.disabled = false;
+      button.textContent = '登录';
+    }
+  });
+
+  $('#filter').addEventListener('change', async (event) => {
+    state.filter = event.target.value;
+    try { await load(); } catch (error) { toast(`加载失败：${error.message}`); }
+  });
+
+  $('#refresh').addEventListener('click', async () => {
+    try { await load(); toast('已刷新'); } catch (error) { toast(`刷新失败：${error.message}`); }
+  });
+
+  $('#logout').addEventListener('click', async () => {
+    try { await api('/api/admin/logout', { method: 'POST' }); } catch {}
+    showLogin();
+  });
+
+  $('#rows').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-open]');
+    if (button) openDetail(button.dataset.open);
+  });
+
+  $('#detail-close').addEventListener('click', () => $('#detail-dialog').close());
+  $('#detail-dialog').addEventListener('click', (event) => {
+    if (event.target === $('#detail-dialog')) $('#detail-dialog').close();
+  });
+  document.querySelectorAll('[data-set-status]').forEach((button) => {
+    button.addEventListener('click', () => setStatus(button.dataset.setStatus));
+  });
+  $('#detail-delete').addEventListener('click', removeCurrent);
+
+  (async () => {
+    try {
+      const me = await api('/api/admin/me');
+      if (!me.configured) {
+        $('#login-error').textContent = '后台未配置管理密码，请先设置 ADMIN_PASSWORD。';
+        return;
+      }
+      if (me.authenticated) {
+        showDashboard();
+        await load();
+      } else {
+        showLogin();
+      }
+    } catch {
+      showLogin();
+    }
+  })();
+})();
+</script>
+</body>
+</html>
