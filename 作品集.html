@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>黄佑雄 · AI 全栈开发作品集</title>
-<meta name="description" content="黄佑雄的项目作品集：AI 报价工作台、RAG 知识库问答、AI 求职作战台、AI 订单跟进助手、理赔通五个 Next.js 全栈项目，医院后勤制度助手（FastAPI + pgvector）、LabelCare 门店售后排障，以及 QMS 来料异常产品设计、FluxOps CSV 双表核对工具、ParcelPilot 发货数据检查、订单、RPA、电商广告数据分析等案例与自动化原型。算钱与判合格交给代码，模型只负责听懂人话。">
+<meta name="description" content="黄佑雄的项目作品集：AI 报价工作台、RAG 知识库问答、AI 求职作战台、AI 订单跟进助手、理赔通五个 Next.js 全栈项目，医院后勤制度助手（FastAPI + pgvector）、LabelCare 门店售后排障、Bag Doctor 机器人日志体检，以及 QMS 来料异常产品设计、FluxOps CSV 双表核对工具、ParcelPilot 发货数据检查、订单、RPA、电商广告数据分析等案例与自动化原型。算钱与判合格交给代码，模型只负责听懂人话。">
 <meta name="author" content="黄佑雄">
 <meta name="theme-color" content="#16324a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="黄佑雄 · AI 全栈开发作品集">
-<meta property="og:description" content="5 个 Next.js 全栈项目（AI 报价、RAG、求职匹配、订单跟进、理赔 Agent）+ 医院后勤制度助手（FastAPI / pgvector）+ LabelCare 门店售后排障 + 业务自动化与数据分析工具（含 FluxOps、ParcelPilot）+ QMS 产品设计案例。能演示、能复核、能交出操作单。">
+<meta property="og:description" content="5 个 Next.js 全栈项目（AI 报价、RAG、求职匹配、订单跟进、理赔 Agent）+ 医院后勤制度助手（FastAPI / pgvector）+ LabelCare 门店售后排障 + Bag Doctor 机器人日志体检 + 业务自动化与数据分析工具（含 FluxOps、ParcelPilot）+ QMS 产品设计案例。能演示、能复核、能交出操作单。">
 <meta property="og:url" content="https://huangyouxiong-10m3k3ol.maozi.io/">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://huangyouxiong-10m3k3ol.maozi.io/img/og.png">
@@ -509,13 +509,13 @@
       </li>
     </ul>
     <p class="lead">
-      做过 <b>23 个个人项目</b>，其中七个项目已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>、<b>理赔通·保险理赔 Agent</b>、<b>医院后勤制度助手</b>和 <b>LabelCare</b>，都能直接打开。
+      做过 <b>24 个个人项目</b>，其中八个项目已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>、<b>理赔通·保险理赔 Agent</b>、<b>医院后勤制度助手</b>、<b>LabelCare</b>和 <b>Bag Doctor</b>，都能直接打开。
       做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
       因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
     </p>
     <div class="stats" role="list" aria-label="项目数据">
-      <div class="stat" role="listitem"><b>23</b><span>个个人项目</span></div>
-      <div class="stat" role="listitem"><b>7</b><span>个已上线项目</span></div>
+      <div class="stat" role="listitem"><b>24</b><span>个个人项目</span></div>
+      <div class="stat" role="listitem"><b>8</b><span>个已上线项目</span></div>
       <div class="stat" role="listitem"><b>10/10</b><span>RAG 检索评测</span></div>
       <div class="stat" role="listitem"><b>39</b><span>项单元测试（质检）</span></div>
     </div>
@@ -957,7 +957,7 @@
     <h2 class="sec" id="other-title">
       <span class="num">02</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
     </h2>
-    <p class="sec-lead">十一个更具体的项目，各自解决一个具体场景。</p>
+    <p class="sec-lead">十二个更具体的项目，各自解决一个具体场景。</p>
 
     <div class="mini-grid">
       <article class="mini reveal">
@@ -1026,7 +1026,11 @@
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
       </article>
 
-
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">23</span><h3>Bag Doctor · 机器人日志体检</h3></div>
+        <p>在浏览器里体检 ROS1 V2.0 bag：话题频率、间隔、TF 动态边断段和 bag_time − header.stamp 偏移，支持正常基线对比；报告可导出 HTML 或 JSON。<b>原始数据不出电脑</b>，Worker + 分段 File 读取；10 GiB 合成包详细分析 831–957 ms，4/4 解析回归通过。已上线。 <a class="mini-link" href="https://bag-doctor-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
+        <div class="tags" aria-label="技术标签"><span>ROS1 bag</span><span>TF 分析</span><span>浏览器 Worker</span><span>LZ4 / BZ2</span></div>
+      </article>
     </div>
   </section>
 
@@ -1036,7 +1040,7 @@
     </h2>
 
     <div class="edge reveal">
-      <p class="edge-lead">这些多数是能跑的原型；其中 AI 报价工作台、RAG 知识库、AI 求职作战台、AI 订单跟进助手、理赔通、医院后勤制度助手和 LabelCare 已部署为公开演示站，但还不是生产系统。</p>
+      <p class="edge-lead">这些多数是能跑的原型；其中 AI 报价工作台、RAG 知识库、AI 求职作战台、AI 订单跟进助手、理赔通、医院后勤制度助手、LabelCare 和 Bag Doctor 已部署为公开演示站，但还不是生产系统。</p>
       <p class="body">数据全部为程序生成的示例或本地模拟；AI 报价、RAG、求职匹配和订单跟进的示例数据也都是虚构的，不连接真实业务系统，不处理客户真实数据。</p>
       <div class="gaps">
         <span class="gaps-label">没做过</span>
