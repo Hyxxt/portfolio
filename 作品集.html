@@ -509,7 +509,7 @@
       </li>
     </ul>
     <p class="lead">
-      做过 <b>24 个个人项目</b>，其中八个项目已上线：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>、<b>理赔通·保险理赔 Agent</b>、<b>医院后勤制度助手</b>、<b>LabelCare</b>和 <b>Bag Doctor</b>，都能直接打开。
+      做过 <b>24 个个人项目</b>，其中八个项目已上线：<b>Bag Doctor</b>、<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>、<b>理赔通·保险理赔 Agent</b>、<b>医院后勤制度助手</b>和 <b>LabelCare</b>，都能直接打开。
       做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
       因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
     </p>
@@ -539,8 +539,46 @@
     <h2 class="sec" id="work-title">
       <span class="num">01</span><span class="sec-title">主项目</span><span class="en">SELECTED WORK</span>
     </h2>
-    <p class="sec-lead">十二个重点项目：七个 AI / 全栈项目、四个自动化工具和一个电商运营演示；个人项目与模拟数据均注明边界。</p>
+    <p class="sec-lead">十三个重点项目：一个机器人日志工具、一个电商运营演示、七个 AI / 全栈项目和四个自动化工具；个人项目与模拟数据均注明边界。</p>
 
+
+    <article class="card has-shot reveal" id="bag-doctor-case">
+      <div class="card-head">
+        <span class="idx">NEW</span>
+        <h3>Bag Doctor · 机器人日志体检</h3>
+        <span class="stack">原生 JavaScript · ROS1 bag · TF 分析 · Web Worker · LZ4 / BZ2</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            在浏览器里体检 ROS1 V2.0 bag：话题记录频率、间隔、TF 动态边断段和 bag_time − header.stamp 偏移，可选正常基线对比；报告可导出 HTML 或 JSON。<b>原始数据不出电脑</b>，不需要上传或第三方运行依赖。
+          </p>
+          <ul class="pts">
+            <li>解析与性能：Worker + 分段 File 读取，支持未压缩、LZ4、BZ2 的 TF 提取；10 GiB 合成包详细分析 <b>831–957 ms</b>，800 MiB 包 325 ms，浏览器详细分析上限 1,000 万条。</li>
+            <li>定位能力：内置合成对比 596 ms，定位 <b>odom → base_link</b> 在 8.00–13.30 s 断段、当前偏移 180 ms vs 基线 40 ms，<b>/scan_tick</b> 频率 -21.7%。</li>
+            <li>验证与边界：<b>npm test 4/4</b>；用 Foxglove 的 example.bag / example-lz4.bag / example-bz2.bag 解码 2,689 条 TF 消息、3 条边、零跳过；10 GiB 级压缩现场包和 30 GB 文件还需独立压测。</li>
+          </ul>
+          <div class="nums">
+            <span>10 GiB 合成包 <b>831–957 ms</b></span>
+            <span>TF <b>2,689 / 2,689</b></span>
+            <span>解析回归 <b>4/4</b></span>
+          </div>
+          <p class="card-links"><a href="https://bag-doctor-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 Bag Doctor 大图">
+            <img src="img/bag-doctor.png" alt="Bag Doctor 机器人日志体检：TF 断段、时间戳偏移和话题异常区间报告" loading="lazy" width="1440" height="1200" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">合成对比示例：odom → base_link 断段 8.00–13.30 s，偏移 180 ms vs 基线 40 ms。</figcaption>
+        </figure>
+      </div>
+    </article>
 
     <article class="card has-shot reveal" id="beauty-ops-case">
       <div class="card-head"><span class="idx">NEW</span><h3>澄光美妆运营台</h3><span class="stack">AI图文策划 · JavaScript指标与利润核算 · 运营复盘</span><span class="when">2026.11 · 交互演示</span></div>
@@ -957,7 +995,7 @@
     <h2 class="sec" id="other-title">
       <span class="num">02</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
     </h2>
-    <p class="sec-lead">十二个更具体的项目，各自解决一个具体场景。</p>
+    <p class="sec-lead">十一个更具体的项目，各自解决一个具体场景。</p>
 
     <div class="mini-grid">
       <article class="mini reveal">
@@ -1024,12 +1062,6 @@
         <div class="mini-head"><span class="idx" aria-hidden="true">22</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
         <p>面向制造企业来料检验场景，把异常单从登记、质量评审、处置执行做到复验关闭：六个状态、四类角色，覆盖退回补充、评审驳回和复验不合格重开。交付 PRD、业务泳道图和可交互 HTML 原型。<b>自主设计练习，全部为演示数据。</b> <a class="mini-link" href="qms/" target="_blank" rel="noopener">打开案例</a> · <a class="mini-link" href="qms/prd.html" target="_blank" rel="noopener">PRD</a></p>
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
-      </article>
-
-      <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">23</span><h3>Bag Doctor · 机器人日志体检</h3></div>
-        <p>在浏览器里体检 ROS1 V2.0 bag：话题频率、间隔、TF 动态边断段和 bag_time − header.stamp 偏移，支持正常基线对比；报告可导出 HTML 或 JSON。<b>原始数据不出电脑</b>，Worker + 分段 File 读取；10 GiB 合成包详细分析 831–957 ms，4/4 解析回归通过。已上线。 <a class="mini-link" href="https://bag-doctor-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
-        <div class="tags" aria-label="技术标签"><span>ROS1 bag</span><span>TF 分析</span><span>浏览器 Worker</span><span>LZ4 / BZ2</span></div>
       </article>
     </div>
   </section>
