@@ -539,7 +539,7 @@
     <h2 class="sec" id="work-title">
       <span class="num">01</span><span class="sec-title">主项目</span><span class="en">SELECTED WORK</span>
     </h2>
-    <p class="sec-lead">十个重点项目：五个 Next.js AI 全栈应用、四个自动化工具和一个电商运营演示；个人项目与模拟数据均注明边界。</p>
+    <p class="sec-lead">十二个重点项目：七个 AI / 全栈项目、四个自动化工具和一个电商运营演示；个人项目与模拟数据均注明边界。</p>
 
 
     <article class="card has-shot reveal" id="beauty-ops-case">
@@ -745,6 +745,82 @@
     <article class="card has-shot reveal">
       <div class="card-head">
         <span class="idx" aria-hidden="true">06</span>
+        <h3>医院后勤制度助手</h3>
+        <span class="stack">FastAPI · PostgreSQL / pgvector · ONNX Runtime · BM25 + RRF · Docker / Helm · Prometheus</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            面向后勤服务台的制度检索：查设备报修、物资采购、库房管理和设施巡检，回答附条款原文和来源，方便核对。后端是 FastAPI + PostgreSQL/pgvector，向量检索和 BM25 融合，支持岗位权限过滤；同时提供 Docker Compose 和 Helm 两套部署。
+          </p>
+          <ul class="pts">
+            <li>检索链路：BGE-Small-ZH ONNX 向量 + pgvector 余弦排序，与 BM25 做 RRF 融合；公开评测 Recall@3 混合 <b>12/12</b>，4 道范围外问题全部拒答。</li>
+            <li>部署与运维：Compose 和 Helm 双形态，配 healthz/readyz 探针、资源限制、PVC、NetworkPolicy；Prometheus 记录检索耗时与 P95，CI 实跑 Compose 与 Kubernetes 验收。</li>
+            <li>生成边界：vLLM 只接收排名最高的可访问条款，引用由应用回填条款 ID；超时、中断或资料不足时回退原文；CPU 压测报告记录并发 1 / 4 的首 token P95 与 token/s。</li>
+          </ul>
+          <div class="nums">
+            <span>Recall@3 混合 <b>12/12</b></span>
+            <span>范围外 <b>全部拒答</b></span>
+            <span>Compose + <b>Helm</b></span>
+          </div>
+          <p class="card-links"><a href="https://fde-hospital-ops.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/fde-hospital-ops" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看医院后勤制度助手大图">
+            <img src="img/fde-hospital.png" alt="医院后勤制度助手：制度检索首页、推荐问题和检索评测入口" loading="lazy" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">制度检索首页；演示条款为虚构样本。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">07</span>
+        <h3>LabelCare · 门店售后排障工作台</h3>
+        <span class="stack">原生 JavaScript · 浏览器端 BGE · Qwen2.5-1.5B · llama.cpp · Node.js</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            门店标签打印机售后排障：店员自然语言报障，助手追问设备型号和故障现象，按 5 条结构化手册给出带厂商出处的排查步骤；排查未解决时生成可编辑、可复制、可下载的工单草稿。
+          </p>
+          <ul class="pts">
+            <li>公网静态版在浏览器加载 BGE-small-zh-v1.5（约 24 MB）做语义匹配，模型加载期间自动降级规则排查；本地版接入 Qwen2.5-1.5B（llama.cpp）做条目选择。</li>
+            <li>模型只返回条目编号和证据句，应用校验型号、条目和引用后才展示；21 条模拟报障评测从单轮 V1 的 5/21 提升到多轮 V2 的 <b>21/21</b>。</li>
+            <li>工作流状态机负责型号约束、追问和转人工；<b>npm test</b> 覆盖离线工作流、引用校验和适配器边界，22/22 通过。</li>
+          </ul>
+          <div class="nums">
+            <span>报障评测 <b>21/21</b></span>
+            <span>边界测试 <b>22/22</b></span>
+            <span>浏览器端 <b>BGE</b></span>
+          </div>
+          <p class="card-links"><a href="https://labelcare-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 LabelCare 大图">
+            <img src="img/labelcare.png" alt="LabelCare 门店售后排障工作台：排障对话、进度、转人工工单和浏览器模型状态" loading="lazy" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">门店售后排障工作台；门店、报障与工单数据均为模拟。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">08</span>
         <h3>质检报告自动整理</h3>
         <span class="stack">Python · DeepSeek API · openpyxl</span>
         <span class="when">2026.11</span>
@@ -783,7 +859,7 @@
 
     <article class="card reveal">
       <div class="card-head">
-        <span class="idx" aria-hidden="true">07</span>
+        <span class="idx" aria-hidden="true">09</span>
         <h3>服装辅料订单流水线</h3>
         <span class="stack">Python · 标准库 · SQLite</span>
         <span class="when">2026.11</span>
@@ -811,7 +887,7 @@
 
     <article class="card reveal">
       <div class="card-head">
-        <span class="idx" aria-hidden="true">08</span>
+        <span class="idx" aria-hidden="true">10</span>
         <h3>电商订单 RPA 自测项目</h3>
         <span class="stack">影刀 RPA · Python · SQLite</span>
         <span class="when">2026.11</span>
@@ -839,7 +915,7 @@
 
     <article class="card has-shot reveal">
       <div class="card-head">
-        <span class="idx" aria-hidden="true">09</span>
+        <span class="idx" aria-hidden="true">11</span>
         <h3>询价转报价工作流</h3>
         <span class="stack">Coze 低代码 · 五节点</span>
         <span class="when">2026.11 · v0.0.4 已发布</span>
@@ -881,86 +957,76 @@
     <h2 class="sec" id="other-title">
       <span class="num">02</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
     </h2>
-    <p class="sec-lead">十三个更具体的项目，各自解决一个具体场景。</p>
+    <p class="sec-lead">十一个更具体的项目，各自解决一个具体场景。</p>
 
     <div class="mini-grid">
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">10</span><h3>公开网页采集器</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">12</span><h3>公开网页采集器</h3></div>
         <p>只用 Python 标准库：同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON。<b>已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</b>实测单任务 100 页 / 2 分 53 秒。</p>
         <div class="tags" aria-label="技术标签"><span>Python 标准库</span><span>SQLite</span><span>单文件 exe</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">11</span><h3>网页巡检工作台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">13</span><h3>网页巡检工作台</h3></div>
         <p>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告。单 worker 队列 + 1–168 小时定时调度，异常与访问限制都有边界处理。</p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>定时调度</span><span>Markdown 报告</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">12</span><h3>订单洞察台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>订单洞察台</h3></div>
         <p>订单 CSV 导入校验去重，按频次 / 金额 / 间隔做客户分层，生成复购回访提醒与跟进名单导出。Python + SQLite + 原生前端，无第三方依赖。</p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>SQLite</span><span>原生前端</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">13</span><h3>AI 开发交付看板</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>AI 开发交付看板</h3></div>
         <p>三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。</p>
         <div class="tags" aria-label="技术标签"><span>REST API</span><span>SQLite</span><span>拖拽看板</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>海外独立站 Luma Studio</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">16</span><h3>海外独立站 Luma Studio</h3></div>
         <p>英文品牌前台 + 运营工作台 + SEO 检查，WordPress 与本地两套运行时；另有 Elementor / WooCommerce 练习环境。<b>一页作品说明含后台与 SEO 截图。</b> <a class="mini-link" href="luma/Luma-Studio-one-pager.pdf" target="_blank" rel="noopener">查看作品说明</a></p>
         <div class="tags" aria-label="技术标签"><span>WordPress</span><span>Elementor</span><span>WooCommerce</span><span>SEO</span><span>英文前台</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>美容预约助手 MVP</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">17</span><h3>美容预约助手 MVP</h3></div>
         <p>顾客咨询、服务项目、预约意向提交，门店侧预约查看与确认，本地可跑。</p>
         <div class="tags" aria-label="技术标签"><span>预约流程</span><span>门店后台</span><span>MVP</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">16</span><h3>提示词安全评测台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>提示词安全评测台</h3></div>
         <p>把提示词安全要求拆成六类越权 / 诱导场景的可执行用例与评测记录，单页原型。</p>
         <div class="tags" aria-label="技术标签"><span>Prompt 安全</span><span>六类场景</span><span>单页原型</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">17</span><h3>电商广告数据分析 Demo</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>电商广告数据分析 Demo</h3></div>
         <p>用 pandas + numpy 把销售、广告、关键词三张带脏数据的日报清洗成可复核指标，按 ASIN / 广告活动 / 关键词 / 周趋势给结论和异常清单，输出 Markdown、响应式 HTML 和 8 个 sheet 的 Excel 报告；<b>8 个 pytest 全过，GitHub Actions 每次 push 跑完整流水线</b>。数据全部为程序生成的模拟数据。<a class="mini-link" href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">源码</a></p>
         <div class="tags" aria-label="技术标签"><span>pandas / numpy</span><span>数据清洗</span><span>自动化报告</span><span>pytest</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>FluxOps 流序 · CSV 双表核对工具</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">20</span><h3>FluxOps 流序 · CSV 双表核对工具</h3></div>
         <p>免登录核对两份 CSV / TSV：列名不同也能自由映射，支持联合键、金额容差、币种 / 单位与按键汇总；自动识别 UTF-8、GB18030 和 UTF-16LE，结果可导出差异 CSV、无效行清单和 JSON。<b>文件全程在浏览器本地处理，不上传；国内静态镜像已上线。</b> <a class="mini-link" href="https://fluxops-10g3k3ol.maozi.io" target="_blank" rel="noopener">打开国内版</a> · <a class="mini-link" href="https://fluxops-data-workbench-hyx.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">原站</a></p>
         <div class="tags" aria-label="技术标签"><span>React / Vite</span><span>CSV / GB18030</span><span>数据核对</span><span>本地处理</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>ParcelPilot 派送前 · 发货数据检查工具</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">21</span><h3>ParcelPilot 派送前 · 发货数据检查工具</h3></div>
         <p>导入 Excel / CSV / TSV，检查缺失地址、电话格式、重复订单、异常数量和运单冲突；支持列名映射、规则调整、逐行修正和导出通过记录。<b>文件只在浏览器本地处理，不上传；镜像已上线。</b> <a class="mini-link" href="https://parcelpilot-ls02.onrender.com" target="_blank" rel="noopener">打开镜像</a> · <a class="mini-link" href="https://parcelpilot-dispatch-hyx.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">原站</a></p>
         <div class="tags" aria-label="技术标签"><span>Excel / CSV</span><span>数据校验</span><span>发货运营</span><span>本地处理</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">20</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">22</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
         <p>面向制造企业来料检验场景，把异常单从登记、质量评审、处置执行做到复验关闭：六个状态、四类角色，覆盖退回补充、评审驳回和复验不合格重开。交付 PRD、业务泳道图和可交互 HTML 原型。<b>自主设计练习，全部为演示数据。</b> <a class="mini-link" href="qms/" target="_blank" rel="noopener">打开案例</a> · <a class="mini-link" href="qms/prd.html" target="_blank" rel="noopener">PRD</a></p>
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
       </article>
 
-      <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">21</span><h3>医院后勤制度助手</h3></div>
-        <p>面向后勤服务台的制度检索：FastAPI 做岗位权限过滤和引用回填，BGE-Small-ZH ONNX 向量 + pgvector 与 BM25 做 RRF 融合，回答带条款原文；Docker Compose / Helm 双形态部署，配 healthz/readyz 探针和 Prometheus 指标，Recall@3 混合 12/12、范围外问题全部拒答。<b>已开源并上线。</b> <a class="mini-link" href="https://fde-hospital-ops.onrender.com" target="_blank" rel="noopener">在线演示</a> · <a class="mini-link" href="https://github.com/Hyxxt/fde-hospital-ops" target="_blank" rel="noopener">源码</a></p>
-        <div class="tags" aria-label="技术标签"><span>FastAPI</span><span>PostgreSQL / pgvector</span><span>Docker / Helm</span><span>Prometheus</span></div>
-      </article>
 
-      <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">22</span><h3>LabelCare · 门店售后排障工作台</h3></div>
-        <p>门店标签打印机售后排障：店员自然语言报障，助手追问型号和现象，按 5 条结构化手册给出带厂商出处的步骤；排查失败生成工单草稿。公网版在浏览器加载 BGE-small-zh 做语义匹配，规则模式兜底；本地版接 Qwen2.5-1.5B。21 条模拟报障评测 21/21，22 项自动化边界测试通过。<b>已上线。</b> <a class="mini-link" href="https://labelcare-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
-        <div class="tags" aria-label="技术标签"><span>浏览器端 AI</span><span>BGE-small-zh</span><span>Qwen / llama.cpp</span><span>原生 JS</span></div>
-      </article>
     </div>
   </section>
 
