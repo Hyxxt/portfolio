@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>搜索词体检 · 使用说明</title>
+<meta name="description" content="搜索词体检：把亚马逊广告搜索词 CSV 变成浪费榜、机会榜、动作清单和周报。附规则口径、输出格式与样例报告。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23132e45'/%3E%3Ctext%20x='32'%20y='45'%20font-size='36'%20text-anchor='middle'%20fill='%23fffdf9'%20font-family='SimSun,serif'%3E%E9%BB%84%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="../index.html"><i aria-hidden="true">黄</i><span>黄佑雄 · 作品集</span></a>
+  <a class="back" href="../index.html#ops">← 返回作品集</a>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">SKILL · AMAZON ADS · 2026.11</p>
+    <h1>搜索词体检</h1>
+    <p class="sub">亚马逊广告搜索词 CSV → 浪费榜、机会榜、全量动作清单、周报</p>
+    <p class="lead">
+      运营每周都要翻搜索词报告，但导出表只是一行行曝光、点击和花费。这个工具先把同一投放的原始量合计，再按<b>利润目标</b>判断该不该继续花钱；归因窗口没跑完的、人工还没核对意图的，单独放进观察与待核对，不混进“否定”建议。
+    </p>
+    <div class="actions">
+      <a class="btn" href="sample-report.pdf" target="_blank" rel="noopener">样例报告 PDF</a>
+      <a class="btn ghost" href="sample-report.html" target="_blank" rel="noopener">在线看报告</a>
+      <a class="btn ghost" href="../index.html#listing-review-case">看配套的改稿工具</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>它产出什么</h2>
+  <p>样例报告覆盖 2026-11-02 至 2026-11-08、USD、不含税，全部为模拟数据：本期花费 <b>2,437.35 USD</b>，优先复核 <b>676.72 USD</b>，发现 <b>2 个潜力投放</b>，动作清单覆盖 <b>59 项投放</b>。</p>
+  <div class="grid">
+    <div class="panel">
+      <h3>浪费榜 Top 10</h3>
+      <p>按复核金额排序，每条注明命中的规则：零单黑洞、低效词、大词虚耗。复核金额是超出该行目标的广告费，用来排优先级，不等于最终利润。</p>
+    </div>
+    <div class="panel">
+      <h3>机会榜</h3>
+      <p>有转化、CVR 高于活动均值、曝光仍偏低且 ACOS 达标的投放；要求人工意图已确认为“相关”，扩量前仍需小范围验证。</p>
+    </div>
+    <div class="panel">
+      <h3>动作清单</h3>
+      <p>全量投放逐条给出理由、商品用途 / 人工意图和下一步动作，可展开查看证据；打印时自动展开。</p>
+    </div>
+    <div class="panel">
+      <h3>周报与环比</h3>
+      <p>两期口径一致时，给出 ACOS 变化百分点与花费、销售额、点击、订单的绝对变化；本期消失的投放单独列出。</p>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>判断口径</h2>
+  <dl class="kv">
+    <dt>ACOS 上限</dt>
+    <dd>广告前贡献毛利率 − 预留利润率，最低为 0；缺少贡献率时才回退配置里的 target_acos，报告注明用的哪套口径。</dd>
+    <dt>归因成熟度</dt>
+    <dd>默认按 Sponsored Products 卖家 7 天窗口；缺少结束或数据截至日期、窗口未跑完时，只给观察动作。</dd>
+    <dt>零单门槛</dt>
+    <dd>默认 30 次点击；潜力词另用 40 次点击，并同时要求意图确认、低曝光、CVR 与 ACOS 达标。</dd>
+    <dt>匹配类型</dt>
+    <dd>同一搜索词在不同匹配类型下分开聚合，避免“精确零单、词组有单”被合计后误判。</dd>
+    <dt>两期对比</dt>
+    <dd>日期必须相邻、等长且都已过归因窗口；聚合维度不一致时提示补齐或统一裁列。</dd>
+    <dt>可复核</dt>
+    <dd>HTML / Markdown / JSON 同源；JSON 记录规则版本、输入与配置文件名、SHA-256 和生效阈值。</dd>
+  </dl>
+
+  <h2><span class="n">03</span>怎么跑</h2>
+  <p>本机已在 Windows、CPython 3.9.7、PyYAML 6.0 验证。运营同事可直接双击 <code>搜索词体检.pyw</code>，选择本期 CSV、可选上期和输出位置；窗口使用 Python 自带的 Tk，不需要装额外界面库。</p>
+  <pre><code># 生成 HTML 报告（可带上一期做环比）
+python scripts/report.py samples/sample_input.csv --previous samples/sample_previous.csv --output demo.html
+
+# 额外输出证据 JSON
+python scripts/report.py samples/sample_input.csv --previous samples/sample_previous.csv --json --output evidence.json
+
+# Markdown 周报
+python scripts/report.py samples/sample_input.csv --output report.md
+
+# 规则单测
+python -m unittest discover -s tests -v</code></pre>
+  <p>输入字段统一维护在 <code>scripts/parse.py</code>，CSV 编码 UTF-8（可带 BOM），金额按原币显示。旧七列表缺少广告组、匹配类型等维度时，报告显示“未提供”，不猜。</p>
+
+  <h2><span class="n">04</span>验证与边界</h2>
+  <p><b>10 项规则单测全部通过</b>，覆盖金额回退、点击门槛边界、归因成熟度、匹配类型拆分、两期对比、维度不一致和 HTML 转义。样例 CSV 与报告均为模拟数据。</p>
+  <ul>
+    <li>不连接亚马逊广告后台，也不自动改价或否词；报告交付的动作由运营复核后执行。</li>
+    <li>复核金额只用于排查优先级，实际利润还要核对结算、退款与商品成本。</li>
+    <li>换类目时要重新核对利润预留、转化目标、点击门槛和归因参数，不能照搬。</li>
+  </ul>
+
+  <figure>
+    <img src="../img/ads-checker.png" alt="搜索词体检模拟报告：一句话结论、浪费榜 Top 10 与机会榜" width="1440" height="1150" loading="lazy">
+    <figcaption>模拟报告的实际页面；点击上方“在线看报告”可查看完整交互版。</figcaption>
+  </figure>
+
+  <div class="note">
+    <p><b>给面试官：</b>直接发 <a href="sample-report.pdf">样例报告 PDF</a> 即可，首页标明了模拟数据。需要看规则实现时，可现场跑一遍单元测试和两期对比。</p>
+  </div>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 黄佑雄 · 示例数据均为虚构或程序生成</span>
+  <a href="../index.html#ops">返回作品集 ↑</a>
+</footer>
+
+</body>
+</html>

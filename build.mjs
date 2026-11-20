@@ -6,6 +6,7 @@ const files = [
   'index.html',
   '作品集.html',
   'services.html',
+  'case.css',
   'resume.pdf',
   'robots.txt',
   'sitemap.xml',
@@ -15,6 +16,8 @@ const files = [
   'qms',
   'luma',
   'labs',
+  'ads-checker',
+  'listing-review',
 ];
 
 async function copy(src, dest) {
