@@ -688,7 +688,7 @@
           </li>
         </ul>
         <p class="lead">
-          做过 <b>26 个个人项目</b>，其中九个有线上演示：<b>AI 报价工作台</b>、<b>RAG 知识库问答</b>、<b>AI 求职作战台</b>、<b>AI 订单跟进助手</b>、<b>理赔通</b>、<b>医院后勤制度助手</b>、<b>LabelCare</b>、<b>Bag Doctor</b>，以及需要开通访问的 <b>商品页改稿台 · 团队版</b>。
+          做过 <b>26 个个人项目</b>，现在每个都能在作品集里点开：<b>9 个已部署的在线演示</b>、<b>5 个部署在 Render 的本地应用</b>（免费实例，首次打开约 1 分钟）、若干静态报告与交互原型，其余本地工具提供流程、测试或操作说明。
           做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
           因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
         </p>
@@ -700,12 +700,12 @@
           <li><a href="#ops"><span class="no">02</span><b>商品页改稿台 · 团队版</b><small>按 SKU 写稿、双人复核与版本留痕</small></a></li>
           <li><a href="#bag-doctor-case"><span class="no">03</span><b>Bag Doctor</b><small>机器人日志体检 · TF 断段与时钟偏移</small></a></li>
         </ol>
-        <p class="aside-foot">26 个作品 · 9 个线上演示<br>本页 2026.11 更新</p>
+        <p class="aside-foot">26 个作品 · 全部有入口<br>本页 2026.11 更新</p>
       </aside>
     </div>
     <div class="stats" role="list" aria-label="项目数据">
       <div class="stat" role="listitem"><b>26</b><span>个个人项目</span></div>
-      <div class="stat" role="listitem"><b>9</b><span>个线上演示 · 含 1 私有</span></div>
+      <div class="stat" role="listitem"><b>14</b><span>个在线演示 · 含 1 私有</span></div>
       <div class="stat" role="listitem"><b>10/10</b><span>RAG 检索评测</span></div>
       <div class="stat" role="listitem"><b>39</b><span>项单元测试（质检）</span></div>
       <div class="stat" role="listitem"><b>10</b><span>项规则单测（广告）</span></div>
@@ -798,6 +798,7 @@
             <span>已批准才可导出</span>
           </div>
           <p class="card-links">
+            <a href="listing-review/demo.html" target="_blank" rel="noopener">交互演示</a>
             <a href="https://listing-review-team-desk.glacialbowl3.chatgpt.site" target="_blank" rel="noopener">打开团队版</a>
             <a href="listing-review/index.html">使用说明</a>
             <span class="duo-note">私有站点 · 演示前开通访问</span>
@@ -1164,6 +1165,7 @@
             <span><b>39</b> 项单元测试</span>
             <span>四张 Excel 表</span>
           </div>
+          <p class="card-links"><a href="qc-report/" target="_blank" rel="noopener">查看示例报告</a><a href="qc-report/sample-report.pdf" target="_blank" rel="noopener">PDF 版</a></p>
         </div>
         <figure class="shot">
           <button class="shot-open" type="button" aria-label="查看质检报告工具完整操作卡大图">
@@ -1203,6 +1205,7 @@
             <span>五张报表</span>
             <span>拦下 <b>24</b> 单</span>
           </div>
+          <p class="card-links"><a href="accessory-pipeline/" target="_blank" rel="noopener">查看流程说明</a></p>
         </div>
       </div>
     </article>
@@ -1231,6 +1234,7 @@
             <span>三类故障注入</span>
             <span>六份文档</span>
           </div>
+          <p class="card-links"><a href="rpa/" target="_blank" rel="noopener">查看测试说明</a></p>
         </div>
       </div>
     </article>
@@ -1259,6 +1263,7 @@
             <span>三条回归测试</span>
             <span>合计 <b>25950</b> 一分不差</span>
           </div>
+          <p class="card-links"><a href="coze-quote/" target="_blank" rel="noopener">查看操作卡与说明</a></p>
         </div>
         <figure class="shot">
           <button class="shot-open" type="button" aria-label="查看询价转报价工作流完整操作卡大图">
@@ -1284,25 +1289,25 @@
     <div class="mini-grid">
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">12</span><h3>公开网页采集器</h3></div>
-        <p>只用 Python 标准库：同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON。<b>已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</b>实测单任务 100 页 / 2 分 53 秒。</p>
+        <p>只用 Python 标准库：同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON。<b>已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</b>实测单任务 100 页 / 2 分 53 秒。<a class="mini-link" href="crawler/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python 标准库</span><span>SQLite</span><span>单文件 exe</span></div>
       </article>
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">13</span><h3>网页巡检工作台</h3></div>
-        <p>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告。单 worker 队列 + 1–168 小时定时调度，异常与访问限制都有边界处理。</p>
+        <p>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告。单 worker 队列 + 1–168 小时定时调度，异常与访问限制都有边界处理。<a class="mini-link" href="workflow/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>定时调度</span><span>Markdown 报告</span></div>
       </article>
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>订单洞察台</h3></div>
-        <p>订单 CSV 导入校验去重，按频次 / 金额 / 间隔做客户分层，生成复购回访提醒与跟进名单导出。Python + SQLite + 原生前端，无第三方依赖。</p>
+        <p>订单 CSV 导入校验去重，按频次 / 金额 / 间隔做客户分层，生成复购回访提醒与跟进名单导出。Python + SQLite + 原生前端，无第三方依赖。<a class="mini-link" href="order-insights/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>SQLite</span><span>原生前端</span></div>
       </article>
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>AI 开发交付看板</h3></div>
-        <p>三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。</p>
+        <p>三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。<a class="mini-link" href="delivery-board/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>REST API</span><span>SQLite</span><span>拖拽看板</span></div>
       </article>
 
@@ -1314,19 +1319,19 @@
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">17</span><h3>美容预约助手 MVP</h3></div>
-        <p>顾客咨询、服务项目、预约意向提交，门店侧预约查看与确认，本地可跑。</p>
+        <p>顾客咨询、服务项目、预约意向提交，门店侧预约查看与确认，本地可跑。<a class="mini-link" href="booking/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>预约流程</span><span>门店后台</span><span>MVP</span></div>
       </article>
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>提示词安全评测台</h3></div>
-        <p>把提示词安全要求拆成六类越权 / 诱导场景的可执行用例与评测记录，单页原型。</p>
+        <p>把提示词安全要求拆成六类越权 / 诱导场景的可执行用例与评测记录，单页原型。<a class="mini-link" href="safety-eval/">打开原型</a></p>
         <div class="tags" aria-label="技术标签"><span>Prompt 安全</span><span>六类场景</span><span>单页原型</span></div>
       </article>
 
       <article class="mini reveal">
         <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>电商广告数据分析 Demo</h3></div>
-        <p>用 pandas + numpy 把销售、广告、关键词三张带脏数据的日报清洗成可复核指标，按 ASIN / 广告活动 / 关键词 / 周趋势给结论和异常清单，输出 Markdown、响应式 HTML 和 8 个 sheet 的 Excel 报告；<b>8 个 pytest 全过，GitHub Actions 每次 push 跑完整流水线</b>。数据全部为程序生成的模拟数据。<a class="mini-link" href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">源码</a></p>
+        <p>用 pandas + numpy 把销售、广告、关键词三张带脏数据的日报清洗成可复核指标，按 ASIN / 广告活动 / 关键词 / 周趋势给结论和异常清单，输出 Markdown、响应式 HTML 和 8 个 sheet 的 Excel 报告；<b>8 个 pytest 全过，GitHub Actions 每次 push 跑完整流水线</b>。数据全部为程序生成的模拟数据。<a class="mini-link" href="ecom-report/">在线报告</a> · <a class="mini-link" href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">源码</a></p>
         <div class="tags" aria-label="技术标签"><span>pandas / numpy</span><span>数据清洗</span><span>自动化报告</span><span>pytest</span></div>
       </article>
 
@@ -1356,7 +1361,7 @@
     </h2>
 
     <div class="edge reveal">
-      <p class="edge-lead">这些多数是能跑的原型；其中 AI 报价工作台、RAG 知识库、AI 求职作战台、AI 订单跟进助手、理赔通、医院后勤制度助手、LabelCare、Bag Doctor 和商品页改稿台 · 团队版已部署（最后一个是私有站点，需开通访问），但还不是生产系统。</p>
+      <p class="edge-lead">这些多数是能跑的原型。AI 报价工作台、RAG 知识库、AI 求职作战台、AI 订单跟进助手、理赔通、医院后勤制度助手、LabelCare、Bag Doctor 和商品页改稿台 · 团队版（私有，需开通访问）已部署；公开网页采集器、网页巡检工作台、订单洞察台、AI 开发交付看板、美容预约助手部署在 Render 免费实例上，首次打开约 30–60 秒。其余为本地命令行、桌面或低代码项目，提供报告、操作卡或流程说明，不冒充在线演示。以上都还不是生产系统。</p>
       <p class="body">数据全部为程序生成的示例或本地模拟：搜索词体检用两份模拟 CSV，商品页改稿台的品牌、SKU、规格单和复核人都是虚构示例。不连接亚马逊广告后台、店铺后台或真实销售平台，不处理客户真实数据。</p>
       <div class="gaps">
         <span class="gaps-label">没做过</span>

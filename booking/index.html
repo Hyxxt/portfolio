@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>美容预约助手 MVP · 作品说明</title>
+<meta name="description" content="轻颜美容预约助手：顾客咨询、服务项目介绍、预约意向提交，门店侧预约查看与确认。Python 标准库 + SQLite。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · BOOKING MVP</p>
+    <h1>美容预约助手 MVP</h1>
+    <p class="sub">Python 标准库 · SQLite · 原生前端</p>
+    <p class="lead">门店咨询与预约的最小闭环：<b>顾客问项目与价格 → 提交预约意向 → 门店侧查看与确认</b>。规则写死在代码里，AI 只负责把顾客的话对到服务项目。</p>
+    <div class="actions">
+      <a class="btn" href="https://qingyan-booking.onrender.com" target="_blank" rel="noopener">在线演示（Render）</a>
+      <a class="btn ghost" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>功能</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>顾客侧</h3>
+      <ul>
+        <li>服务项目与参考价展示</li>
+        <li>按关键词匹配护理项目</li>
+        <li>预约意向提交：称呼、手机号、项目、日期、时段</li>
+        <li>过敏、疼痛等敏感描述直接转人工</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>门店侧</h3>
+      <ul>
+        <li>预约列表按日期与时段时间排序</li>
+        <li>待确认 / 已确认状态流转</li>
+        <li>手机号格式与必填校验</li>
+        <li>SQLite 持久化</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>在线演示说明</h2>
+  <p>Render 免费实例闲置会休眠，<b>首次打开约 30–60 秒</b>。演示数据库位于临时目录，服务重启后预约记录会重置。请勿填写真实手机号。</p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>这是 MVP 演示：没有接入真实门店排班、支付或短信通知，AI 回复只覆盖项目、价格、时段等固定问题。涉及健康与诊断的描述一律转人工。</p>
+  <p>相关项目：<a href="../#beauty-ops-case">澄光美妆运营台</a>、<a href="../delivery-board/">AI 开发交付看板</a>。</p>
+</div>
+</body>
+</html>

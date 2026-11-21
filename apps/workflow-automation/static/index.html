@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>流程自动化工作台</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div><div class="brand-name">流程自动化工作台</div><div class="brand-sub">WORKFLOW AUTOMATION DESK</div></div>
+      </div>
+      <div class="top-right"><span class="local-badge"><i></i> 本地运行</span><span class="stack-label">Python · SQLite · Task Queue</span></div>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <div><p class="eyebrow">AUTOMATE THE ROUTINE</p><h1>让重复网页巡检自动跑起来</h1><p class="hero-copy">从公开网页采集开始，自动完成正文清洗、内容去重、历史比对与变化报告。</p></div>
+        <div class="hero-badge"><div class="hero-check">✓</div><div><strong>按站点规则运行</strong><span>robots.txt · 同源 · 串行限速</span></div></div>
+      </section>
+
+      <section class="flow-card">
+        <div class="flow-label">自动化流程</div>
+        <div class="flow-steps">
+          <div class="flow-step"><span class="step-icon">01</span><div><strong>采集</strong><small>公开网页</small></div></div><span class="flow-arrow">›</span>
+          <div class="flow-step"><span class="step-icon">02</span><div><strong>清洗</strong><small>正文规范化</small></div></div><span class="flow-arrow">›</span>
+          <div class="flow-step"><span class="step-icon">03</span><div><strong>去重比对</strong><small>历史快照</small></div></div><span class="flow-arrow">›</span>
+          <div class="flow-step"><span class="step-icon">04</span><div><strong>保存</strong><small>SQLite</small></div></div><span class="flow-arrow">›</span>
+          <div class="flow-step"><span class="step-icon final">05</span><div><strong>生成报告</strong><small>变化与异常</small></div></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="left-column">
+          <section class="panel create-panel">
+            <div class="panel-head"><div><span class="section-index">01</span><h2>配置自动化任务</h2><p>新建后默认暂停；可先手动运行一次。</p></div><span class="small-tag">最多 5 个起始网址</span></div>
+            <form id="taskForm">
+              <label class="label" for="taskName">任务名称</label>
+              <input id="taskName" maxlength="60" placeholder="例如：公开产品目录巡检" required>
+              <label class="label label-gap" for="seeds">起始网址 <span>每行一个公开网址</span></label>
+              <textarea id="seeds" rows="3" placeholder="https://www.example.com/" required></textarea>
+              <div class="field-grid">
+                <label><span class="label">最多页面数</span><div class="unit-input"><input id="maxPages" type="number" min="1" max="100" value="20"><em>页</em></div></label>
+                <label><span class="label">链接深度</span><div class="unit-input"><input id="maxDepth" type="number" min="0" max="3" value="1"><em>层</em></div></label>
+                <label><span class="label">运行间隔</span><div class="unit-input"><input id="interval" type="number" min="1" max="168" value="24"><em>小时</em></div></label>
+              </div>
+              <div class="scope-note"><span>i</span><p>仅访问无需登录、且 robots.txt 允许的公开 HTML；不会绕过验证码或访问限制。</p></div>
+              <div class="form-actions"><button class="btn btn-primary" type="submit"><span>＋</span> 保存任务</button><span id="formMessage" role="status"></span></div>
+            </form>
+          </section>
+
+          <section class="panel tasks-panel">
+            <div class="panel-head"><div><span class="section-index subdued">02</span><h2>任务管理</h2><p id="taskCountText">还没有任务</p></div><span id="queueBadge" class="queue-badge">队列空闲</span></div>
+            <div id="taskList" class="task-list"><div class="empty-state"><div class="empty-symbol">↻</div><strong>创建一个自动化任务</strong><span>任务保存后可手动运行，也可启用周期调度。</span></div></div>
+          </section>
+        </div>
+
+        <div class="right-column">
+          <section class="metric-grid">
+            <div class="metric-card"><span>任务总数</span><strong id="metricTasks">0</strong><small>已保存</small></div>
+            <div class="metric-card"><span>本次运行</span><strong id="metricState">—</strong><small id="metricSub">等待任务</small></div>
+            <div class="metric-card"><span>本次变化</span><strong id="metricChanges">0</strong><small>新增或更新</small></div>
+            <div class="metric-card"><span>等待队列</span><strong id="metricQueue">0</strong><small>后台任务</small></div>
+          </section>
+
+          <section class="panel runs-panel">
+            <div class="panel-head runs-head"><div><span class="section-index subdued">03</span><h2>运行记录与报告</h2><p>每次运行后生成 Markdown 变化报告。</p></div><button id="refreshButton" class="icon-button" title="刷新">↻</button></div>
+            <div class="run-table-wrap"><table><thead><tr><th>任务</th><th>状态</th><th>变化</th><th>时间</th><th></th></tr></thead><tbody id="runsBody"><tr class="empty-row"><td colspan="5">暂无运行记录</td></tr></tbody></table></div>
+          </section>
+
+          <section class="panel activity-panel">
+            <div class="activity-head"><div><span class="eyebrow">LIVE ACTIVITY</span><h2>执行动态</h2></div><span id="liveDot" class="live-dot"></span></div>
+            <div id="activityList" class="activity-list"><div class="activity-empty">任务启动后，队列状态与采集进度会显示在这里。</div></div>
+          </section>
+        </div>
+      </section>
+
+      <footer class="footer"><span>流程自动化工作台</span><span>本地数据 · 单 worker · SQLite 历史快照</span></footer>
+    </main>
+  </div>
+  <dialog id="reportDialog" class="dialog"><div class="dialog-head"><div><span class="eyebrow">AUTOMATION REPORT</span><h2 id="reportTitle">运行明细</h2></div><button id="closeDialog" class="close-btn" aria-label="关闭">×</button></div><div id="reportContent" class="report-content"></div></dialog>
+</body>
+</html>

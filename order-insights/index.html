@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>订单洞察台 · 作品说明</title>
+<meta name="description" content="订单 CSV 导入校验去重，按频次、金额、间隔做客户分层，生成复购回访提醒与跟进名单。Python + SQLite + 原生前端。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · ORDER INSIGHTS</p>
+    <h1>订单洞察台</h1>
+    <p class="sub">Python 标准库 · SQLite · 原生前端</p>
+    <p class="lead">把订单 CSV 变成可执行的客户跟进名单：<b>导入校验 → 去重 → 客户分层 → 复购回访提醒 → 导出</b>。分层规则可解释，不是黑盒打分。</p>
+    <div class="actions">
+      <a class="btn" href="https://order-insights.onrender.com" target="_blank" rel="noopener">在线演示（Render）</a>
+      <a class="btn ghost" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>功能</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>导入与清洗</h3>
+      <ul>
+        <li>订单 CSV 字段校验</li>
+        <li>按订单号去重</li>
+        <li>金额、数量、状态合法性检查</li>
+        <li>内置演示订单数据，可直接试</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>分层与跟进</h3>
+      <ul>
+        <li>按最近购买、频次、金额、品类周期分层</li>
+        <li>生成复购回访提醒</li>
+        <li>跟进名单导出</li>
+        <li>客户状态可标记为待跟进 / 已联系</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>在线演示说明</h2>
+  <p>Render 免费实例闲置会休眠，<b>首次打开约 30–60 秒</b>。演示数据库位于临时文件系统，服务重启后恢复为内置演示订单；本地运行时数据保留。</p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>订单与客户全部为程序生成的模拟数据，不含真实个人信息。工具用于演示分层与跟进流程，不构成真实营销建议。</p>
+  <p>相关项目：<a href="../delivery-board/">AI 开发交付看板</a>、<a href="../crawler/">公开网页采集器</a>。</p>
+</div>
+</body>
+</html>

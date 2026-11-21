@@ -5,3 +5,10 @@ node_modules/
 /fluxops-dist/
 /northform-dist/
 /parcelpilot-dist/
+
+# Python app runtime
+__pycache__/
+*.pyc
+apps/*/data/*.sqlite3
+apps/*/data/*.sqlite3-*
+apps/*/data/*.log

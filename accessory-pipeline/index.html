@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>服装辅料订单流水线 · 作品说明</title>
+<meta name="description" content="从脏 Excel 到可发客户报价单的 Python 流水线：台账清洗、对账、交期预警、报价单与合同生成、自检。本地命令行工具，无在线演示。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · LOCAL PIPELINE</p>
+    <h1>服装辅料订单流水线</h1>
+    <p class="sub">Python · 标准库 · SQLite / openpyxl · 2026.11</p>
+    <p class="lead">从“业务员发来的脏 Excel”到“能发客户的报价单”的完整链路：<b>台账清洗 → 对账报表 → 交期预警 → 报价单与购销合同生成 → 六道出单校验 → 自检</b>，一条命令跑完。</p>
+    <div class="actions">
+      <span class="btn ghost">本地命令行项目 · 无公网演示</span>
+      <a class="btn" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>为什么做这个</h2>
+  <p>外贸和辅料订单的原始台账通常是多个业务员各自维护的 Excel：单位混用、色号写法不统一、重复单、空字段、数字存成文本、日期有四种写法。直接拿去对账或出报价单，错一个零就是真金白银的损失。</p>
+  <p>这条流水线把“能算的算、不能算的不猜”落到了每一步：客户名缺失标「待补」，不用地址或联系人反推；金额一律按数量 × 单价重算，不信任原始金额列。</p>
+
+  <h2><span class="n">02</span>流程与结果</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>五段流水线</h3>
+      <ul>
+        <li>台账清洗：单位、色号、日期归一，联合键去重</li>
+        <li>对账报表：订单汇总 / 客户对账 / 交期预警 / 异常清单 / 口径说明</li>
+        <li>交期预警：按承诺交期分级，输出待跟进名单</li>
+        <li>报价单与合同：批量生成 Word / Excel 文档</li>
+        <li>自检：金额、单号、客户、日期六道校验</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>实测数据</h3>
+      <ul>
+        <li>造 <b>65 行</b>台账，埋 <b>8 类脏数据</b> + 12 笔业务异常</li>
+        <li>清洗后 <b>60 行</b>，8 类埋点全部抓到</li>
+        <li>报表 <b>5 个 sheet</b>，问题按 P0/P1/P2 分级</li>
+        <li>出单前六道校验：<b>60 单 → 36 出单、24 单被拦</b></li>
+        <li><b>16 项自检全过</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">03</span>关键设计</h2>
+  <ul>
+    <li>去重用 <b>联合键（订单号 + 平台）</b>：只用订单号会把两个平台各一单误删一条。</li>
+    <li>金额按<b>分</b>存整数，对账时两边都转分比对，避免浮点误差。</li>
+    <li>出单前拦截而不是“先出再改”：缺客户名、金额对不上、交期缺失的单直接拦下并写明原因。</li>
+    <li>企微推送节点因缺少 webhook 未实际发送，其余五段均已跑通——边界写在报告里。</li>
+  </ul>
+
+  <h2><span class="n">04</span>演示边界</h2>
+  <p>这是一个<b>本地命令行工具</b>，依赖业务方提供的 Excel 文件和本机环境，没有做成公网 Web 服务，因此不提供在线演示。项目使用的全部为程序生成的模拟数据，不含真实客户信息。</p>
+  <p>同一条“算钱交给代码”的思路也用在其他项目：<a href="../coze-quote/">询价转报价工作流</a>、<a href="../qc-report/">质检报告自动整理</a>、<a href="../ads-checker/">搜索词体检</a>。</p>
+</div>
+</body>
+</html>

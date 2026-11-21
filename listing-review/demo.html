@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商品页改稿台 · Listing Review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f4ee;color:#252f2b;font:15px/1.6 "Microsoft YaHei",system-ui,sans-serif}header,main{max-width:1180px;margin:auto;padding:24px}header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #c7c9be}header strong{letter-spacing:.12em}small,.muted{color:#59675e}h1{font-size:clamp(32px,5vw,58px);margin:4px 0;letter-spacing:-.05em}h2{font-size:21px;margin:0 0 16px}h3{font-size:16px;margin:0}.intro{padding:20px 0 32px}.intro p{margin:6px 0}.layout{display:grid;grid-template-columns:minmax(215px,1fr) minmax(0,2.6fr);gap:24px}aside,article,.handoff{background:#fffefa;padding:22px;border:1px solid #d6d8cc;border-radius:10px}aside{align-self:start}article{margin-bottom:12px}dl{margin:0}dt{font-weight:700;color:#376453;margin-top:16px}dd{margin:2px 0}label{display:block;font-weight:600;margin:12px 0 4px}textarea{font:16px/1.5 system-ui;width:100%;resize:vertical;min-height:76px;padding:10px;border:1px solid #89988e;background:white;border-radius:5px;color:#173329}blockquote{margin:8px 0;padding-left:12px;border-left:3px solid #cfaa76;color:#665142}input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:#286351}button{font:inherit;cursor:pointer;border:1px solid #436555;color:#234d3e;background:white;padding:8px 16px;border-radius:6px;margin:6px 6px 6px 0}button.primary{color:white;background:#285641}button:disabled{opacity:.45;cursor:default}.handoff{margin-top:12px}.status{font-weight:700;color:#285641}summary{cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 system-ui}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #d4a53a}@media(max-width:760px){.layout{display:block}aside{margin-bottom:16px}header,main{padding:16px}}
+</style></head><body>
+<header><strong>LISTING REVIEW</strong><small>美国站 · 模拟商品资料</small></header>
+<main><section class="intro"><h1>商品页改稿台</h1><p>竹制抽屉收纳盒 · 英文标题与五点描述</p><p class="muted">对照资料核实每条文案，按需修改并确认。全部确认后即可导出英文稿。</p></section>
+<div class="layout"><aside><h2>商品资料卡</h2><small>演示 SKU · KDR-33</small><dl>
+<dt>规格单 · 尺寸</dt><dd>外部尺寸 13 × 9 × 2 英寸。固定宽度，购买前需测量抽屉内径。</dd>
+<dt>规格单 · 材料</dt><dd>侧框为竹材，底板为 MDF。商品资料未提供食品接触认证。</dd>
+<dt>样品验收 · 结构</dt><dd>5 个固定分格。样品演示用途为分类存放刀叉、勺子及小件厨房工具。</dd>
+<dt>包装与护理卡</dt><dd>内含 1 个收纳盒，餐具仅用于展示。湿布擦拭、立即擦干，避免浸泡和机洗。</dd></dl></aside>
+<section><div id="cards"></div><section class="handoff"><h2>英文交付稿</h2><div class="status" id="count" aria-live="polite"></div>
+<details><summary>预览当前稿</summary><pre id="preview" lang="en"></pre></details>
+<button class="primary" id="download" disabled>下载英文稿 TXT</button><button id="copy" disabled>复制全文</button><span id="message" role="status"></span>
+</section></section></div></main>
+<script>
+const items=[
+['标题','Best 100% Bamboo Expandable Organizer for Every Drawer','Bamboo Frame Flatware Organizer, 5 Fixed Compartments, 13 x 9 x 2 Inches, Kitchen Drawer Tray','规格单与样品验收','原标题把固定款写成可伸缩款，并把竹制侧框写成整件纯竹。标题保留品类、材料范围和可核对的尺寸。'],
+['五点 1 · 尺寸与适配','Fits any kitchen drawer perfectly.','Check the fit: The tray measures 13 x 9 x 2 inches on the outside. Measure the inside of your drawer before ordering.','规格单 · 尺寸','用外部尺寸回应买家最先要判断的适配问题，避免承诺通用。'],
+['五点 2 · 分格用途','Unlimited storage for all your utensils.','Sort your flatware: Five fixed compartments keep forks, spoons, knives and small kitchen tools in separate sections.','样品验收 · 结构','用分格数量和具体收纳对象说明用途；资料中没有容量上限测试。'],
+['五点 3 · 材料','Made entirely of premium solid bamboo.','Bamboo frame: The tray pairs bamboo sides with an MDF base.','规格单 · 材料','明确侧框和底板各自的材料，消除整件实竹的误读。'],
+['五点 4 · 清洁','Dishwasher safe for easy cleaning.','Care instructions: Wipe with a damp cloth and dry promptly. Avoid soaking or placing the tray in a dishwasher.','包装与护理卡','原稿的机洗说明与护理卡直接冲突，按随附说明改写。'],
+['五点 5 · 包装内容','Complete kitchen set included.','In the box: One drawer organizer. Flatware and other utensils shown are for display only.','包装与护理卡','列清包装内件数，避免买家误以为随附餐具。']
+];
+const cards=document.querySelector('#cards'), fields=[], checks=[];
+function refresh(){
+ const n=checks.filter(c=>c.checked).length;
+ document.querySelector('#count').textContent='已复核 '+n+' / '+items.length+' 项';
+ document.querySelector('#preview').textContent=fields.map((f,i)=>(i===0?'Title':'Bullet '+i)+'\n'+f.value.trim()).join('\n\n');
+ for(const id of ['copy','download'])document.getElementById(id).disabled=n!==items.length;
+ document.querySelector('#message').textContent='';
+}
+items.forEach(([title,old,draft,source,why],i)=>{
+ const card=document.createElement('article');
+ card.innerHTML='<h3></h3><blockquote lang="en"></blockquote><p class="muted"></p><label></label><textarea lang="en"></textarea><label><input type="checkbox"> 已对照资料复核本条</label>';
+ card.querySelector('h3').textContent=title;
+ card.querySelector('blockquote').textContent='原稿 · '+old;
+ card.querySelector('p').textContent=source+' ｜ '+why;
+ const f=card.querySelector('textarea'), c=card.querySelector('input'), l=card.querySelector('label');
+ f.id='draft-'+i;l.htmlFor=f.id;l.textContent='建议稿（可编辑）';f.value=draft;
+ fields.push(f);checks.push(c);
+ f.oninput=()=>{c.checked=false;c.disabled=!f.value.trim();refresh()};c.onchange=refresh;cards.append(card);
+});
+refresh();
+document.querySelector('#download').onclick=()=>{
+ const blob=new Blob([document.querySelector('#preview').textContent+'\n'],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='KDR-33-US-listing.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+document.querySelector('#copy').onclick=async()=>{
+ const p=document.querySelector('#preview'),msg=document.querySelector('#message');
+ try{await navigator.clipboard.writeText(p.textContent);msg.textContent='已复制英文稿。'}
+ catch{p.parentElement.open=true;const r=document.createRange();r.selectNodeContents(p);const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent='已选中全文，请按 Ctrl+C 或使用复制菜单。'}
+};
+</script></body></html>

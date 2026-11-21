@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>轻颜 Care｜美容护理与预约</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">q</span><span>轻颜 <small>CARE STUDIO</small></span></a>
+    <nav><a class="nav-link active" href="#services">护理项目</a><a class="nav-link" href="#advisor">AI 顾问</a><a class="nav-link" href="#book">预约到店</a><button class="staff-link" id="staffToggle">门店工作台</button></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy"><span class="overline">YOUR SKIN, YOUR RHYTHM</span><h1>把忙碌放一放，<br><em>好好照顾自己。</em></h1><p>从了解肌肤需求开始，找到适合自己的护理节奏。轻颜顾问随时为你解答。</p><a class="primary-link" href="#book">预约一次护理 <span>↗</span></a><div class="hero-meta"><span>✳ 温和护理</span><span>·</span><span>专业顾问</span><span>·</span><span>预约制服务</span></div></div>
+      <div class="hero-art" aria-label="护理门店插画"><div class="art-sun"></div><div class="art-arch"><div class="art-leaf leaf-one"></div><div class="art-leaf leaf-two"></div><div class="art-vase"></div><div class="art-counter"></div><div class="art-bottle bottle-one"></div><div class="art-bottle bottle-two"></div></div><div class="art-note"><span>轻一点，刚刚好</span><small>A LITTLE CARE, EVERY DAY</small></div></div>
+    </section>
+    <section class="section services-section" id="services">
+      <div class="section-head"><div><span class="overline">CARE MENU</span><h2>给肌肤一点恰好的照顾</h2><p>先了解，再选择。具体护理方案由到店顾问结合实际情况确认。</p></div><span class="section-count">01 — 03</span></div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </section>
+    <section class="middle-grid">
+      <section class="advisor-card" id="advisor">
+        <div class="advisor-head"><div class="ai-badge">✳</div><div><span class="overline">QINGYAN AI ADVISOR</span><h2>想了解什么？</h2><p>问问项目、预约方式或参考价格</p></div><span class="online"><i></i>在线</span></div>
+        <div class="chat-messages" id="chatMessages" aria-live="polite"><div class="chat-line bot-line"><div class="bot-avatar">✳</div><div class="bubble-wrap"><span class="speaker">轻颜顾问</span><div class="bubble">你好，欢迎来轻颜。你最近想了解哪类护理？我可以介绍项目和预约方式。<br><small>温馨提示：AI 建议不能替代专业诊断。</small></div></div></div></div>
+        <div class="suggestions"><button data-message="最近皮肤有点干，想做补水护理">皮肤有点干</button><button data-message="清洁护理多少钱？">了解价格</button><button data-message="最近可以预约吗？">查看预约方式</button></div>
+        <form class="chat-form" id="chatForm"><input id="chatInput" maxlength="500" placeholder="输入你的问题…" autocomplete="off"><button aria-label="发送">↑</button></form>
+        <div class="chat-caption">AI 生成的内容仅供参考 · 遇到特殊情况将建议门店顾问跟进</div>
+      </section>
+      <section class="booking-card" id="book">
+        <div class="booking-heading"><span class="overline">BOOK A VISIT</span><h2>预约到店</h2><p>填写预约意向，门店确认后会联系你。</p></div>
+        <form id="bookingForm" class="booking-form">
+          <label>怎么称呼你？<input name="name" maxlength="30" required placeholder="例如：林小姐"></label>
+          <label>联系电话<input name="phone" inputmode="numeric" required placeholder="用于门店确认预约"></label>
+          <label>想了解的项目<select name="service" id="serviceSelect" required></select></label>
+          <div class="form-pair"><label>预约日期<input name="date" id="visitDate" type="date" required></label><label>希望时段<select name="time" required><option value="">请选择</option><option>10:30</option><option>13:00</option><option>15:30</option></select></label></div>
+          <label>备注 <span class="optional">选填</span><textarea name="note" maxlength="300" rows="2" placeholder="可以简单说说你的需求"></textarea></label>
+          <button class="submit-booking" type="submit">提交预约意向 <span>→</span></button>
+          <p class="privacy-note">提交即表示同意门店仅为确认本次预约联系你。演示环境请使用虚构信息。</p>
+        </form>
+        <div class="booking-success" id="bookingSuccess" hidden><div class="success-mark">✓</div><h3>预约意向已收到</h3><p id="successText"></p><button id="bookAnother">再约一位</button></div>
+      </section>
+    </section>
+    <section class="section promise-section"><div><span class="overline">OUR PROMISE</span><h2>安心，从清楚开始。</h2></div><div class="promise-items"><article><span>01</span><b>先沟通，再护理</b><p>到店后先了解需求与肤况，再共同确认护理安排。</p></article><article><span>02</span><b>信息透明</b><p>项目时长与参考价格提前说明，具体费用以门店确认为准。</p></article><article><span>03</span><b>需要时找真人</b><p>特殊情况、过敏不适或个性化问题由门店顾问跟进。</p></article></div></section>
+    <section class="staff-panel" id="staffPanel" hidden><div class="staff-header"><div><span class="overline">STAFF WORKSPACE</span><h2>预约管理</h2><p>演示记录保存在本机数据库，可确认或取消预约。</p></div><button id="refreshAppointments">刷新列表 ↻</button></div><div class="table-wrap"><table><thead><tr><th>顾客</th><th>联系电话</th><th>项目</th><th>预约时间</th><th>备注</th><th>状态 / 操作</th></tr></thead><tbody id="appointmentRows"></tbody></table></div></section>
+  </main>
+  <footer><a class="brand" href="#"><span class="brand-mark">q</span><span>轻颜 <small>CARE STUDIO</small></span></a><span>以温和、清楚、可信赖的服务，照顾每一种肌肤需求。</span><small>© 轻颜 Care · 本地演示版</small></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

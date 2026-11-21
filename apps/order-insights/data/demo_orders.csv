@@ -1,0 +1,24 @@
+order_no,customer_id,order_date,product_sku,product_name,category,quantity,amount,channel,country,status
+W10001,C-1001,2026-05-14,WX-01,Orbit X 智能手表,智能手表,1,1299,Shopify,US,completed
+W10002,C-1001,2026-06-25,ST-02,织物替换表带,配件,1,39,Shopify,US,completed
+W10003,C-1001,2026-08-10,AL-01,AirLoop 运动耳机,运动耳机,1,399,Amazon,US,completed
+W10004,C-1002,2026-07-22,RG-01,Ring S 智能戒指,智能戒指,1,899,Shopify,UK,completed
+W10005,C-1002,2026-08-17,RG-CHG,戒指充电底座,配件,1,79,Shopify,UK,completed
+W10006,C-1003,2026-10-12,PF-02,Pulse Fit 运动手环,运动手环,1,499,Amazon,DE,completed
+W10007,C-1003,2026-10-20,PF-ST,运动硅胶表带,配件,1,49,Amazon,DE,paid
+W10008,C-1004,2026-04-10,WX-01,Orbit X 智能手表,智能手表,1,1199,Shopify,CA,completed
+W10009,C-1004,2026-06-02,WX-CHG,磁吸充电线,配件,1,89,Shopify,CA,completed
+W10010,C-1005,2026-10-18,AL-01,AirLoop 运动耳机,运动耳机,1,599,Amazon,US,completed
+W10011,C-1006,2026-08-28,RG-01,Ring S 智能戒指,智能戒指,1,999,Shopify,DE,completed
+W10012,C-1007,2026-06-20,WX-02,Orbit X Pro 智能手表,智能手表,1,1699,Shopify,UK,completed
+W10013,C-1007,2026-09-02,WX-ST,氟橡胶替换表带,配件,1,59,Shopify,UK,completed
+W10014,C-1008,2026-10-03,PF-ST,运动硅胶表带,配件,1,49,Amazon,CA,completed
+W10015,C-1009,2026-05-08,WX-01,Orbit X 智能手表,智能手表,1,999,Amazon,US,completed
+W10016,C-1009,2026-06-11,WX-ST,氟橡胶替换表带,配件,1,49,Amazon,US,completed
+W10017,C-1010,2026-09-26,AL-02,AirLoop 骨传导耳机,运动耳机,1,699,Shopify,DE,completed
+W10018,C-1011,2026-10-28,PF-02,Pulse Fit 运动手环,运动手环,1,399,Amazon,UK,paid
+W10019,C-1012,2026-08-15,RG-02,Ring S 智能戒指,智能戒指,1,1099,Shopify,CA,completed
+W10020,C-1012,2026-09-23,RG-CHG,戒指充电底座,配件,1,79,Shopify,CA,completed
+W10021,C-1013,2026-10-15,WX-01,Orbit X 智能手表,智能手表,1,1199,Amazon,US,refunded
+W10022,C-1014,2026-05-12,PF-02,Pulse Fit 运动手环,运动手环,1,999,Shopify,DE,completed
+W10023,C-1014,2026-09-18,PF-ST,运动硅胶表带,配件,1,49,Shopify,DE,completed

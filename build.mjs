@@ -18,6 +18,17 @@ const files = [
   'labs',
   'ads-checker',
   'listing-review',
+  'qc-report',
+  'safety-eval',
+  'ecom-report',
+  'accessory-pipeline',
+  'rpa',
+  'coze-quote',
+  'crawler',
+  'workflow',
+  'order-insights',
+  'delivery-board',
+  'booking',
 ];
 
 async function copy(src, dest) {

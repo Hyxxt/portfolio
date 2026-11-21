@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 开发交付看板 · 作品说明</title>
+<meta name="description" content="三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · DELIVERY BOARD</p>
+    <h1>AI 开发交付看板</h1>
+    <p class="sub">Python 标准库 · REST API · SQLite · 原生前端</p>
+    <p class="lead">把“需求拆成任务、任务推到交付”做成一个能用的看板：<b>三列拖拽、REST API、SQLite 参数化查询、输入校验</b>，并附交付复盘。</p>
+    <div class="actions">
+      <a class="btn" href="https://ai-delivery-board.onrender.com" target="_blank" rel="noopener">在线演示（Render）</a>
+      <a class="btn ghost" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>功能</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>看板</h3>
+      <ul>
+        <li>待办 / 进行中 / 已完成三列</li>
+        <li>拖拽调整状态</li>
+        <li>关键词搜索与优先级筛选</li>
+        <li>顶部统计跟随数据变化</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>后端</h3>
+      <ul>
+        <li>任务创建、查询、编辑、状态变更、删除 API</li>
+        <li>SQLite 参数化查询</li>
+        <li>标题长度、状态、优先级约束</li>
+        <li>错误统一返回 JSON</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>在线演示说明</h2>
+  <p>Render 免费实例闲置会休眠，<b>首次打开约 30–60 秒</b>。演示数据库位于临时文件系统，服务重启后恢复为内置演示任务；本地运行时数据保留。</p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>看板里的任务是演示数据，不包含真实项目或客户信息。这是一个单机演示应用，没有做多用户登录与权限隔离。</p>
+  <p>相关项目：<a href="../order-insights/">订单洞察台</a>、<a href="../workflow/">网页巡检工作台</a>。</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f7f8">
+  <title>交付看板</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">F</div><div><strong>交付看板</strong><span>BUILD · TRACK · SHIP</span></div></div>
+      <div class="top-actions"><span class="local-pill"><i></i>本地演示 · SQLite 持久化</span><button class="primary-button" id="addTaskTop"><span>＋</span> 新建任务</button></div>
+    </header>
+
+    <main>
+      <section class="intro-row">
+        <div><div class="eyebrow">AI CODING PROJECT BOARD</div><h1>把想法一步步交付出来</h1><p>拆解需求、跟踪开发、验证交付，让每个模块都有清晰进度。</p></div>
+        <div class="project-chip"><div class="project-icon">✦</div><div><small>当前项目</small><b>AI 开发交付看板</b></div><span class="sample-badge">演示项目</span></div>
+      </section>
+
+      <section class="stats-grid" aria-label="任务统计">
+        <div class="stat-card"><div class="stat-icon all">▤</div><div><span>全部任务</span><strong id="statTotal">0</strong></div><small>条</small></div>
+        <div class="stat-card"><div class="stat-icon todo">○</div><div><span>待开始</span><strong id="statTodo">0</strong></div><small>条</small></div>
+        <div class="stat-card"><div class="stat-icon doing">◷</div><div><span>进行中</span><strong id="statDoing">0</strong></div><small>条</small></div>
+        <div class="stat-card"><div class="stat-icon done">✓</div><div><span>已完成</span><strong id="statDone">0</strong></div><small>条</small></div>
+      </section>
+
+      <section class="toolbar" aria-label="任务筛选">
+        <div class="board-label"><span class="board-dot"></span><strong>任务看板</strong><span id="visibleCount">0 项</span></div>
+        <div class="filters"><label class="searchbox"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索任务或说明" autocomplete="off"></label><select id="priorityFilter" aria-label="按优先级筛选"><option value="">全部优先级</option><option value="high">高优先级</option><option value="medium">中优先级</option><option value="low">低优先级</option></select></div>
+      </section>
+
+      <section class="board" id="board" aria-label="任务看板">
+        <div class="column" data-status="todo"><div class="column-head"><div><span class="column-indicator todo-indicator"></span><h2>待开始</h2><span class="column-count" id="countTodo">0</span></div><button class="add-inline" data-add-status="todo" aria-label="新增待开始任务">＋</button></div><div class="task-list" id="listTodo"></div><button class="add-card" data-add-status="todo">＋ 添加任务</button></div>
+        <div class="column" data-status="doing"><div class="column-head"><div><span class="column-indicator doing-indicator"></span><h2>进行中</h2><span class="column-count" id="countDoing">0</span></div><button class="add-inline" data-add-status="doing" aria-label="新增进行中任务">＋</button></div><div class="task-list" id="listDoing"></div><button class="add-card" data-add-status="doing">＋ 添加任务</button></div>
+        <div class="column" data-status="done"><div class="column-head"><div><span class="column-indicator done-indicator"></span><h2>已完成</h2><span class="column-count" id="countDone">0</span></div><button class="add-inline" data-add-status="done" aria-label="新增已完成任务">＋</button></div><div class="task-list" id="listDone"></div><button class="add-card" data-add-status="done">＋ 添加任务</button></div>
+      </section>
+
+      <section class="delivery-note"><div class="note-mark">✓</div><div><b>交付闭环</b><p>任务数据由本地 Python API 写入 SQLite。拖动卡片、搜索筛选和统计都使用同一份持久化数据。</p></div><button id="apiStatus" class="status-check">正在连接…</button></section>
+    </main>
+    <footer>AI 辅助开发的全栈练习项目 <span>·</span> Python 标准库 · 原生 JavaScript · SQLite</footer>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="task-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading"><div><div class="eyebrow">TASK DETAILS</div><h2 id="modalTitle">新建任务</h2></div><button class="icon-button" id="closeModal" aria-label="关闭">×</button></div>
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+        <label>任务标题 <span>*</span><input id="taskTitle" maxlength="100" required placeholder="例如：整理接口验收清单"></label>
+        <label>任务说明<textarea id="taskDescription" maxlength="1000" rows="4" placeholder="补充背景、交付结果或验收要求"></textarea></label>
+        <div class="form-grid"><label>状态<select id="taskStatus"><option value="todo">待开始</option><option value="doing">进行中</option><option value="done">已完成</option></select></label><label>优先级<select id="taskPriority"><option value="high">高</option><option value="medium" selected>中</option><option value="low">低</option></select></label></div>
+        <label>截止日期<input id="taskDueDate" type="date"></label>
+        <div class="form-error" id="formError" role="alert"></div>
+        <div class="modal-actions"><button type="button" class="ghost-button" id="cancelModal">取消</button><button type="submit" class="primary-button" id="saveTask">保存任务</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

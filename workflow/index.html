@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>网页巡检工作台 · 作品说明</title>
+<meta name="description" content="采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告，支持单 worker 队列与 1–168 小时定时调度。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · SITE MONITOR</p>
+    <h1>网页巡检工作台</h1>
+    <p class="sub">Python 标准库 · SQLite · 后台队列</p>
+    <p class="lead">把“定期看几个网页有没有变化”做成一条可回看的流程：<b>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告</b>。单 worker 队列，支持手动运行和 1–168 小时周期调度。</p>
+    <div class="actions">
+      <a class="btn" href="https://workflow-automation.onrender.com" target="_blank" rel="noopener">在线演示（Render）</a>
+      <a class="btn ghost" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>流程</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>每次巡检</h3>
+      <ul>
+        <li>按任务配置采集目标页面</li>
+        <li>清洗正文、去掉导航与模板噪声</li>
+        <li>内容哈希去重，识别真正变化</li>
+        <li>与上一次快照比对，生成 Markdown 报告</li>
+        <li>运行记录可导出 CSV / JSON</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>调度与边界</h3>
+      <ul>
+        <li>单 worker 队列，避免并发压垮目标站</li>
+        <li>周期调度 1–168 小时</li>
+        <li>访问限制、超时、异常都有边界处理</li>
+        <li>报告保存在本地 data / reports 目录</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>在线演示说明</h2>
+  <p>Render 免费实例闲置会休眠，<b>首次打开约 30–60 秒</b>。演示实例的 SQLite 和报告目录位于临时文件系统，服务重启后重置；本地运行时数据会保留。</p>
+  <p>演示只采集公开页面，请勿用于高频轮询或绕过站点限制。</p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>巡检目标使用公开示例页面，不包含真实客户或内部系统。工具不登录、不处理验证码。</p>
+  <p>相关项目：<a href="../crawler/">公开网页采集器</a>、<a href="../order-insights/">订单洞察台</a>。</p>
+</div>
+</body>
+</html>

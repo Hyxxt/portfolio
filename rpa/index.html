@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>电商订单 RPA 自测项目 · 作品说明</title>
+<meta name="description" content="影刀 RPA 与 Python 双实现：本地模拟三个平台订单页，联合键去重、逐字段对账、三类故障注入与失败表。本地桌面项目，无在线演示。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · RPA SELF-TEST</p>
+    <h1>电商订单 RPA 自测项目</h1>
+    <p class="sub">影刀 RPA · Python · SQLite · 2026.11</p>
+    <p class="lead">本地模拟三个平台的订单页，用影刀和 Python 各实现一套采集：<b>联合键去重 → 逐字段对账 → 三类故障注入 → 失败表</b>。不是客户交付项目，但流程、异常处理和六份文档按交付标准做。</p>
+    <div class="actions">
+      <span class="btn ghost">本地桌面 RPA · 无公网演示</span>
+      <a class="btn" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>测试对象与规模</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>模拟环境</h3>
+      <ul>
+        <li>本地模拟三个平台的订单页</li>
+        <li><b>20 条订单</b>，待审核 <b>9 条</b></li>
+        <li>合计金额 <b>2792.30 元</b></li>
+        <li>影刀与 Python 两套实现，结果互相对照</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>验证结果</h3>
+      <ul>
+        <li>DAY1 / DAY2 / DAY3 <b>全部 PASS</b></li>
+        <li>三类故障注入均按预期处理</li>
+        <li>失败表 <b>22 条</b>，可按批次 / 订单号 / 错误类型查询</li>
+        <li>六份交付文档</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>异常处理设计</h2>
+  <ul>
+    <li>错误分三类，<b>只有一类值得重试</b>：元素超时可重试；数据错误和页面结构错误不重试，直接进失败表。</li>
+    <li>同一字段在 ≥80% 行缺失 → 判定「疑似页面改版」，整批失败告警，而不是把 20 行空值写进库。</li>
+    <li>失败记录保留原始行定位与错误原因，方便人工补录后重跑单批。</li>
+  </ul>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>RPA 依赖影刀客户端和本地模拟网页，<b>无法在浏览器里在线运行</b>，所以这里提供的是作品说明而不是假演示。页面上的订单、金额和平台均为本地模拟数据，不连接任何真实店铺后台。</p>
+  <p>相关项目：<a href="../accessory-pipeline/">服装辅料订单流水线</a>、<a href="../crawler/">公开网页采集器</a>（可在线试跑）。</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>询价转报价工作流 · 作品说明</title>
+<meta name="description" content="Coze 五节点报价工作流：客户微信原话 → 报价草稿 + 待确认清单，金额由代码价目表计算。附四步操作卡。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · COZE WORKFLOW</p>
+    <h1>询价转报价工作流</h1>
+    <p class="sub">Coze 低代码 · 五节点 · v0.0.4 已发布</p>
+    <p class="lead">业务员把客户微信原话整段粘进去，出来两份东西：<b>给客户的报价草稿</b>和<b>给业务的待确认清单</b>。单价与金额由代码节点内嵌的价目表计算，模型不参与任何金额。</p>
+    <div class="actions">
+      <a class="btn" href="../img/coze.png" target="_blank" rel="noopener">查看四步操作卡</a>
+      <span class="btn ghost">Coze 云端运行 · 分享需登录</span>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>五个节点</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>处理链</h3>
+      <ul>
+        <li>抽取结构：从口语里取型号、数量、交期等字段</li>
+        <li>查价核算：代码节点按 11 款 SKU 价目表算价，含起订量</li>
+        <li>成文：生成给客户的报价草稿</li>
+        <li>双路输出：报价草稿 + 待确认清单</li>
+        <li>缺型号不出价，直接进 issues</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>实测结果</h3>
+      <ul>
+        <li>客户压价“上次给我报 1 块 2”，<b>单价一分没动</b></li>
+        <li>待确认清单由代码原文透传，模型看不到——它会把这个清单润色成“无”</li>
+        <li>合计 <b>25950</b> 一分不差</li>
+        <li>三条回归测试通过</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>四步操作卡</h2>
+  <p>实际使用路径：打开工作流 → 粘客户原话 → 跑一次 → 先看 issues 再发 output。</p>
+  <p><a href="../img/coze.png" target="_blank" rel="noopener">打开大图 →</a></p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>工作流运行在 Coze 云端，直接分享需要 Coze 账号和空间权限，<b>不适合作为公开在线演示</b>，因此这里提供操作卡与说明。价目表为演示数据，不涉及真实供应商报价。</p>
+  <p>同一思路的本地实现：<a href="../accessory-pipeline/">服装辅料订单流水线</a>；更完整的报价产品：<a href="../#projects">AI 报价工作台</a>。</p>
+</div>
+</body>
+</html>

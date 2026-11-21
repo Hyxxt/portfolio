@@ -1,0 +1,57 @@
+# Render Blueprint：在 Render 控制台选择 New > Blueprint，指向本仓库即可一次创建五个演示服务。
+# 均为免费实例，闲置会休眠，首次打开约 30–60 秒；SQLite 数据在重启后重置为演示数据。
+services:
+  - type: web
+    name: ai-delivery-board
+    runtime: python
+    plan: free
+    rootDir: apps/ai-delivery-board
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+
+  - type: web
+    name: order-insights
+    runtime: python
+    plan: free
+    rootDir: apps/order-insights
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+
+  - type: web
+    name: workflow-automation
+    runtime: python
+    plan: free
+    rootDir: apps/workflow-automation
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+
+  - type: web
+    name: public-crawler
+    runtime: python
+    plan: free
+    rootDir: apps/public-crawler
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
+
+  - type: web
+    name: qingyan-booking
+    runtime: python
+    plan: free
+    rootDir: apps/qingyan-booking
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6

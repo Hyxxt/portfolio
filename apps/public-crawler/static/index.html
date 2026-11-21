@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>公开网页采集器</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <div class="brand-name">公开网页采集器</div>
+          <div class="brand-caption">PUBLIC WEB COLLECTOR</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="local-indicator"><i></i> 仅本机运行</span>
+        <span class="build-label">Python 标准库 · SQLite</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow">WEB DATA WORKBENCH</p>
+          <h1>把公开网页整理成可用数据</h1>
+          <p class="intro-copy">输入起始网址，自动发现同站链接，提取标题、摘要和正文，并保存为本地数据。</p>
+        </div>
+        <div class="compliance-badge">
+          <div class="shield" aria-hidden="true">✓</div>
+          <div><strong>按站点规则采集</strong><span>读取 robots.txt · 同源限速</span></div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="primary-column">
+          <section class="card setup-card">
+            <div class="card-heading">
+              <div class="step-icon">01</div>
+              <div><h2>新建采集任务</h2><p>每行填写一个公开网页网址</p></div>
+            </div>
+            <label class="field-label" for="seeds">起始网址</label>
+            <textarea id="seeds" rows="3" placeholder="https://www.example.com/&#10;https://docs.example.org/start"></textarea>
+            <div class="form-hint"><span class="hint-dot"></span>只访问公开 HTML 页面；不处理登录内容，也不绕过验证码或访问限制。</div>
+
+            <div class="options-grid">
+              <label class="option-field"><span>最多页面数</span><div class="input-suffix"><input id="maxPages" type="number" min="1" max="500" value="100"><em>页</em></div></label>
+              <label class="option-field"><span>链接深度</span><div class="input-suffix"><input id="maxDepth" type="number" min="0" max="5" value="2"><em>层</em></div></label>
+              <label class="option-field"><span>请求间隔</span><div class="input-suffix"><input id="delay" type="number" min="1" max="30" step="0.5" value="1.5"><em>秒</em></div></label>
+            </div>
+
+            <div class="task-actions">
+              <button id="startButton" class="button button-primary"><span class="play-icon">▶</span> 开始采集</button>
+              <button id="stopButton" class="button button-stop" disabled>停止任务</button>
+              <span id="formMessage" class="form-message" role="status"></span>
+            </div>
+          </section>
+
+          <section class="card results-card">
+            <div class="results-heading">
+              <div class="card-heading compact">
+                <div class="step-icon muted">02</div>
+                <div><h2>采集结果</h2><p id="resultSubline">暂无任务记录</p></div>
+              </div>
+              <div class="export-actions">
+                <button class="button button-outline" id="exportCsv" disabled>导出 CSV</button>
+                <button class="button button-outline" id="exportJson" disabled>导出 JSON</button>
+              </div>
+            </div>
+            <div class="metrics-row">
+              <div class="metric"><span>已处理</span><strong id="metricSeen">0</strong><small>页</small></div>
+              <div class="metric"><span>提取成功</span><strong id="metricOk">0</strong><small>页</small></div>
+              <div class="metric"><span>已发现</span><strong id="metricFound">0</strong><small>链接</small></div>
+              <div class="metric metric-status"><span>任务状态</span><strong id="runStatus" class="status-pill idle">待开始</strong></div>
+            </div>
+            <div class="progress-track"><div id="progressBar"></div></div>
+
+            <div class="table-toolbar">
+              <div class="table-caption">页面列表 <span id="tableCount">0</span></div>
+              <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="搜索标题或网址"></label>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>页面</th><th>来源网址</th><th>深度</th><th>状态</th><th>采集时间</th></tr></thead>
+                <tbody id="resultsBody"><tr class="empty-row"><td colspan="5"><div class="empty-state"><div class="empty-icon">↗</div><strong>结果会显示在这里</strong><span>填写网址并开始任务后，页面摘要会自动保存。</span></div></td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <aside class="side-column">
+          <section class="card live-card">
+            <div class="side-card-heading"><div><span class="eyebrow">LIVE ACTIVITY</span><h2>采集动态</h2></div><span id="liveDot" class="live-dot"></span></div>
+            <div id="eventList" class="event-list"><div class="event-placeholder">开始任务后，这里会显示采集进度和站点规则。</div></div>
+          </section>
+          <section class="guide-card">
+            <div class="guide-icon" aria-hidden="true">i</div>
+            <div><strong>使用范围</strong><p>适合采集无需登录、且 robots.txt 允许访问的公开网页。页面按同站链接逐层发现，每个站点串行访问并遵守站点声明的抓取间隔。</p></div>
+          </section>
+          <section class="storage-note">
+            <div class="storage-icon" aria-hidden="true">▤</div>
+            <div><strong>结果保存在本机</strong><span>SQLite 数据库，可随时导出 CSV 或 JSON。</span></div>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="footer"><span>公开网页采集器</span><span>本地数据 · 可控速率 · 遵守站点规则</span></footer>
+    </main>
+  </div>
+
+  <dialog id="detailDialog" class="detail-dialog">
+    <div class="dialog-head"><div><span class="eyebrow">PAGE DETAIL</span><h2 id="detailTitle">网页详情</h2></div><button id="closeDialog" class="close-button" aria-label="关闭">×</button></div>
+    <a id="detailUrl" class="detail-url" href="#" target="_blank" rel="noreferrer"></a>
+    <div class="detail-meta"><span id="detailStatus"></span><span id="detailDepth"></span><span id="detailSize"></span></div>
+    <div class="detail-section"><label>页面摘要</label><p id="detailDescription"></p></div>
+    <div class="detail-section"><label>正文预览</label><div id="detailText" class="detail-text"></div></div>
+  </dialog>
+</body>
+</html>

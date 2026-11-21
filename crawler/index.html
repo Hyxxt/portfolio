@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>公开网页采集器 · 作品说明</title>
+<meta name="description" content="只用 Python 标准库的公开网页采集器：同源按深度发现、遵守 robots、按站点限速、正文提取入 SQLite、导出 CSV/JSON。">
+<link rel="stylesheet" href="../case.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../"><i>黄</i><span>黄佑雄 · 作品集</span></a>
+    <a class="back" href="../#other">← 返回作品集</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">CASE · WEB CRAWLER</p>
+    <h1>公开网页采集器</h1>
+    <p class="sub">Python 标准库 · SQLite · 单文件 exe</p>
+    <p class="lead">只用 Python 标准库实现的公开网页采集器：<b>同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON</b>。已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</p>
+    <div class="actions">
+      <a class="btn" href="https://public-crawler.onrender.com" target="_blank" rel="noopener">在线演示（Render）</a>
+      <a class="btn ghost" href="../#other">回到作品集</a>
+    </div>
+  </section>
+
+  <h2><span class="n">01</span>能力与约束</h2>
+  <div class="grid">
+    <div class="panel">
+      <h3>采集能力</h3>
+      <ul>
+        <li>同源按深度发现链接，默认最大深度 3、最多 100 页</li>
+        <li>遵守目标站点 robots.txt</li>
+        <li>按站点要求限速，请求间隔 1.5 秒</li>
+        <li>正文提取后写入 SQLite，可导出 CSV / JSON</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>实测</h3>
+      <ul>
+        <li>单任务 <b>100 页 / 2 分 53 秒</b></li>
+        <li>7.5MB 单文件 exe，双击运行</li>
+        <li>内网地址与非法协议会被拒绝</li>
+        <li>任务与页面记录持久化，可回看</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>在线演示说明</h2>
+  <p>Render 免费实例闲置会休眠，<b>首次打开约 30–60 秒</b>。演示实例仅用于试用采集流程，默认限速；请只采集公开页面，不要用于批量抓取或绕过站点限制。演示数据在服务重启后会重置。</p>
+  <p>桌面版（exe）保留了完整的本地数据目录，适合实际使用；在线版用于快速了解界面和流程。</p>
+
+  <h2><span class="n">03</span>演示边界</h2>
+  <p>采集结果仅用于演示，不包含真实客户数据。工具不登录、不处理验证码、不采集非公开内容。</p>
+  <p>相关项目：<a href="../workflow/">网页巡检工作台</a>（定时采集 + 变化报告）、<a href="../order-insights/">订单洞察台</a>。</p>
+</div>
+</body>
+</html>
