@@ -5,6 +5,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import queue
 import sqlite3
 import threading
@@ -120,8 +121,12 @@ def log(message: str, kind: str = "info") -> None:
         del EVENTS[:-120]
 
 
+# 公开演示模式：部署到 Render 等容器时设置 PUBLIC_DEMO=1，允许非本机来源访问。
+ALLOW_REMOTE = os.environ.get("PUBLIC_DEMO") == "1"
+
+
 def local_origin_check(handler: BaseHTTPRequestHandler) -> bool:
-    return handler.client_address[0] in {"127.0.0.1", "::1"}
+    return ALLOW_REMOTE or handler.client_address[0] in {"127.0.0.1", "::1"}
 
 
 def safe_seed_urls(raw: Any) -> list[str]:
@@ -570,7 +575,7 @@ def main() -> None:
     parser.add_argument("--host",default="127.0.0.1"); parser.add_argument("--port",type=int,default=8766)
     parser.add_argument("--open-browser",action="store_true")
     args=parser.parse_args()
-    if args.host not in {"127.0.0.1","localhost","::1"}: raise SystemExit("只允许在本机启动。")
+    if args.host not in {"127.0.0.1","localhost","::1"} and not ALLOW_REMOTE: raise SystemExit("只允许在本机启动；容器部署请设置 PUBLIC_DEMO=1。")
     server=ThreadingHTTPServer((args.host,args.port),Handler)
     url=f"http://127.0.0.1:{args.port}/"
     print(f"自动化工作台已启动：{url}")

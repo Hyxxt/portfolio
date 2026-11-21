@@ -33,6 +33,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
+      - key: PUBLIC_DEMO
+        value: "1"
 
   - type: web
     name: public-crawler
@@ -44,6 +46,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
+      - key: PUBLIC_DEMO
+        value: "1"
 
   - type: web
     name: qingyan-booking

@@ -5,6 +5,7 @@ import csv
 import ipaddress
 import io
 import json
+import os
 import re
 import socket
 import sqlite3
@@ -32,6 +33,9 @@ if getattr(sys, "frozen", False):
 else:
     ROOT = Path(__file__).resolve().parent
     APP_DIR = ROOT
+
+# 公开演示模式：部署到 Render 等容器时设置 PUBLIC_DEMO=1。
+ALLOW_REMOTE = os.environ.get("PUBLIC_DEMO") == "1"
 
 STATIC = ROOT / "static"
 DATA = APP_DIR / "data"
@@ -550,7 +554,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_bytes(body, "application/json; charset=utf-8", status)
 
     def do_GET(self) -> None:
-        if self.client_address[0] not in {"127.0.0.1", "::1"}:
+        if not ALLOW_REMOTE and self.client_address[0] not in {"127.0.0.1", "::1"}:
             self.send_json({"error": "仅允许本机访问。"}, 403)
             return
         parsed = urllib.parse.urlsplit(self.path)
@@ -602,7 +606,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_bytes(path.read_bytes(), content_type)
 
     def do_POST(self) -> None:
-        if self.client_address[0] not in {"127.0.0.1", "::1"}:
+        if not ALLOW_REMOTE and self.client_address[0] not in {"127.0.0.1", "::1"}:
             self.send_json({"error": "仅允许本机访问。"}, 403)
             return
         length = min(int(self.headers.get("Content-Length", "0") or 0), 100_000)
@@ -634,8 +638,8 @@ def main() -> None:
     cli.add_argument("--port", type=int, default=8765)
     cli.add_argument("--open-browser", action="store_true", help="启动后打开本地界面")
     args = cli.parse_args()
-    if args.host not in {"127.0.0.1", "localhost", "::1"}:
-        raise SystemExit("出于安全考虑，界面只监听本机回环地址。")
+    if args.host not in {"127.0.0.1", "localhost", "::1"} and not ALLOW_REMOTE:
+        raise SystemExit("出于安全考虑，界面只监听本机回环地址；容器部署请设置 PUBLIC_DEMO=1。")
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     address = f"http://127.0.0.1:{args.port}/"
     print(f"公开网页采集器已启动：{address}")
