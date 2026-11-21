@@ -647,8 +647,8 @@
       <span class="brand-name">黄佑雄<small>AI 全栈 · 应用与自动化</small></span>
     </a>
     <nav class="nav" aria-label="页面导航">
-      <a href="#ops">电商运营</a>
       <a href="#work">主项目</a>
+      <a href="#ops">电商运营</a>
       <a href="#other">其他项目</a>
       <a href="#scope">边界说明</a>
       <a href="#contact">联系</a>
@@ -696,8 +696,8 @@
       <aside class="hero-aside" aria-label="最近更新">
         <p class="aside-label">LATEST · 2026.11</p>
         <ol class="aside-list">
-          <li><a href="#ops"><span class="no">01</span><b>搜索词体检</b><small>亚马逊广告复盘 · 浪费榜与动作清单</small></a></li>
-          <li><a href="#ops"><span class="no">02</span><b>商品页改稿台 · 团队版</b><small>按 SKU 写稿、双人复核与版本留痕</small></a></li>
+          <li><a href="#work"><span class="no">01</span><b>理赔通 · 理赔 AI Agent</b><small>Function Calling · BM25 检索 · MCP Server</small></a></li>
+          <li><a href="#work"><span class="no">02</span><b>RAG 知识库问答</b><small>中文 bigram · BM25 · 带引用回答</small></a></li>
           <li><a href="#bag-doctor-case"><span class="no">03</span><b>Bag Doctor</b><small>机器人日志体检 · TF 断段与时钟偏移</small></a></li>
         </ol>
         <p class="aside-foot">26 个作品 · 全部有入口<br>本页 2026.11 更新</p>
@@ -727,9 +727,469 @@
     </div>
   </section>
 
+  <section class="wrap" id="work" aria-labelledby="work-title">
+    <h2 class="sec" id="work-title">
+      <span class="num">01</span><span class="sec-title">主项目</span><span class="en">SELECTED WORK</span>
+    </h2>
+    <p class="sec-lead">十三个重点项目：一个机器人日志工具、一个电商运营演示、七个 AI / 全栈项目和四个自动化工具；个人项目与模拟数据均注明边界。</p>
+
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">01</span>
+        <h3>理赔通 · 保险理赔 AI Agent</h3>
+        <span class="stack">Next.js 16 · DeepSeek function calling · BM25 RAG · MCP Server</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            用户描述事故（“骑车摔伤花了 800 元”）→ Agent 自主调用<b>条款检索</b>与<b>理赔流程查询</b>两个工具、最多六轮 → 给出带条款号引用的回答，<b>每一步工具调用在界面可视化</b>。
+            酒驾、高风险运动等<b>免责场景明确拒赔</b>，不给虚假希望；同一套查询能力还做成了 <b>MCP Server</b>，Claude Code 可直接调用条款库。
+          </p>
+          <ul class="pts">
+            <li>条款检索用中文 bigram 倒排索引 + BM25，node:sqlite 零外部服务；检索和引用留在代码侧，模型只基于给定片段回答。</li>
+            <li>赔付金额全由条款规则计算：800 元门诊 =（800−100 免赔）× 90% = <b>630 元</b>，答案带【第一条】引用。</li>
+            <li>内置 MCP stdio server（条款检索 / 流程查询 / 类型列表），冒烟测试覆盖赔付计算、酒驾拒赔、MCP 调用，全部断言通过。</li>
+          </ul>
+          <div class="nums">
+            <span><b>2</b> 个 Agent 工具</span>
+            <span>样例赔付 <b>630 元</b></span>
+            <span>免责场景 <b>明确拒赔</b></span>
+          </div>
+          <p class="card-links"><a href="https://claims-agent-2e93.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/claims-agent" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看理赔通大图">
+            <img src="img/claims-agent-result.png" alt="理赔通：骑车摔伤 800 元的赔付计算、条款引用与 Agent 工具调用轨迹" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">800 元门诊 → 630 元赔付；条款、流程、产品均为虚构演示数据。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">02</span>
+        <h3>RAG 知识库问答</h3>
+        <span class="stack">Next.js 16 · TypeScript · DeepSeek · BM25 · SQLite / Turso · Render</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            上传或粘贴文档后自动切块、建中文倒排索引；提问时先检索 Top-4 片段，再让 DeepSeek 基于片段回答，并标注 [编号] 引用；资料不足时明确拒答。
+          </p>
+          <ul class="pts">
+            <li>中文不引入分词服务：按<b>字符二元组（bigram）</b>建倒排索引，英文和数字按词切分；自己实现 <b>BM25</b>（k1=1.5、b=0.75）排序。</li>
+            <li>提示词限定只使用给定片段，回答带引用；<b>资料不足时拒答</b>，不补外部知识；无 Key、模型超时或报错时自动退回检索结果。</li>
+            <li>本地 node:sqlite / 线上可切 Turso；空库自动载入 3 份虚构示例文档；内置 10 题评测，检索与答案命中均 <b>10/10</b>。</li>
+          </ul>
+          <div class="nums">
+            <span>10/10 检索命中</span>
+            <span>10/10 答案命中</span>
+            <span>Top-4 <b>引用片段</b></span>
+          </div>
+          <p class="card-links"><a href="https://rag-kb-nr1a.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/rag-kb" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 RAG 知识库问答大图">
+            <img src="img/rag-home.png" alt="RAG 知识库问答：回答带引用来源与 BM25 分数" width="1416" height="1008" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">回答带 [1] 引用与 4 条来源片段；示例文档均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">03</span>
+        <h3>AI 报价工作台</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso · Render</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            客户口语询价 → 大模型提取结构化 JSON → 确定性代码查价目表算钱 → 逐行报价、合计、阻断/待确认清单，历史报价可回看。已部署为公开演示站。
+          </p>
+          <ul class="pts">
+            <li>模型只做结构化提取：用 JSON 模式解析产品、规格、颜色、数量、交期，返回值经服务端校验；<b>价格、MOQ、色卡、SKU 白名单全在代码里</b>，模型输出不含价格字段，返回的价格不会被采用。</li>
+            <li>型号不在价目表直接「阻断」不出价；无 Key、网络失败或 JSON 解析失败时<b>自动回退规则提取</b>，页面明确标注当前模式。</li>
+            <li>本地 node:sqlite 零配置，配置 TURSO_DATABASE_URL 可切 Turso；处理 Next.js 16 Cache Components 预渲染陷阱，GET 接口先 await connection()。</li>
+          </ul>
+          <div class="nums">
+            <span>3 个样例金额回归</span>
+            <span>无 Key 可降级</span>
+            <span>已部署 <b>Render</b></span>
+          </div>
+          <p class="card-links"><a href="https://ai-quote-app.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-quote-app" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 报价工作台大图">
+            <img src="img/quote-result.png" alt="AI 报价工作台：客户询价与逐行报价结果" width="1416" height="1508" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">客户询价 → 逐行报价与待确认清单；截图中的价目表和客户均为虚构示例。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">04</span>
+        <h3>AI 求职作战台</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            JD + 简历 → 大模型只提取岗位和候选人画像 → 确定性代码算<b>六维匹配分、技能缺口和原句证据</b> → 生成简历改写、面试追问与 7 天计划。已部署为公开演示站，已开源；无 Key 时自动走规则模式。
+          </p>
+          <ul class="pts">
+            <li>模型不参与打分：六维权重固定在代码里，同一输入同一分数；技能命中必须能在简历原文找到句子。</li>
+            <li>修正过“js”误命中 Next.js / React.js 的别名问题；年限、学历只信规则，避免把“2027 届”读成 7 年经验。</li>
+            <li>模型提取的假技能、假项目会回查原文丢弃；无 Key、超时、JSON 异常自动回退规则提取。</li>
+          </ul>
+          <div class="nums">
+            <span><b>6</b> 维匹配诊断</span>
+            <span>高/低匹配样例 <b>79 / 45</b></span>
+            <span>无 Key 可降级</span>
+          </div>
+          <p class="card-links"><a href="https://ai-job-match-8d6w.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-job-match" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 求职作战台大图">
+            <img src="img/job-match-result.png" alt="AI 求职作战台：JD 与简历的匹配分、六维诊断、技能缺口和行动建议" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">JD + 简历 → 匹配分与六维诊断；示例 JD、公司、简历均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">05</span>
+        <h3>AI 订单跟进助手</h3>
+        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            客户发来“拉链改 6000 米、交期提前 25 天、扣子换藏青” → 大模型只提取意图和变更 → 规则改单、重算金额、检查交期与单位 → 给出<b>可编辑回复草稿和跟进待办</b>。已部署为公开演示站，两个虚构订单、六条示例消息。
+          </p>
+          <ul class="pts">
+            <li>金额、生产周期、订金比例全由规则计算；数量单位“米 / 粒”不一致直接阻断，不按错误口径改单。</li>
+            <li>整单取消金额归零并提示订金退款；交期早于最长生产周期直接阻断；数量变动超过 20% 要求确认。</li>
+            <li>无 Key 完整跑规则模式；CI 覆盖 11 组冒烟，包括取消、问进度、多变更和确定性。</li>
+          </ul>
+          <div class="nums">
+            <span><b>11</b> 组接口冒烟</span>
+            <span>样例金额 <b>14960 → 17760</b></span>
+            <span>交期风险 <b>直接阻断</b></span>
+          </div>
+          <p class="card-links"><a href="https://ai-order-followup.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-order-followup" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 AI 订单跟进助手大图">
+            <img src="img/order-followup-result.png" alt="AI 订单跟进助手：数量、颜色、交期变更对照，交期风险阻断和回复草稿" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">3 项变更 + 1 个交期阻断 + 回复草稿；订单、客户、地址均为虚构。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">06</span>
+        <h3>医院后勤制度助手</h3>
+        <span class="stack">FastAPI · PostgreSQL / pgvector · ONNX Runtime · BM25 + RRF · Docker / Helm · Prometheus</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            面向后勤服务台的制度检索：查设备报修、物资采购、库房管理和设施巡检，回答附条款原文和来源，方便核对。后端是 FastAPI + PostgreSQL/pgvector，向量检索和 BM25 融合，支持岗位权限过滤；同时提供 Docker Compose 和 Helm 两套部署。
+          </p>
+          <ul class="pts">
+            <li>检索链路：BGE-Small-ZH ONNX 向量 + pgvector 余弦排序，与 BM25 做 RRF 融合；公开评测 Recall@3 混合 <b>12/12</b>，4 道范围外问题全部拒答。</li>
+            <li>部署与运维：Compose 和 Helm 双形态，配 healthz/readyz 探针、资源限制、PVC、NetworkPolicy；Prometheus 记录检索耗时与 P95，CI 实跑 Compose 与 Kubernetes 验收。</li>
+            <li>生成边界：vLLM 只接收排名最高的可访问条款，引用由应用回填条款 ID；超时、中断或资料不足时回退原文；CPU 压测报告记录并发 1 / 4 的首 token P95 与 token/s。</li>
+          </ul>
+          <div class="nums">
+            <span>Recall@3 混合 <b>12/12</b></span>
+            <span>范围外 <b>全部拒答</b></span>
+            <span>Compose + <b>Helm</b></span>
+          </div>
+          <p class="card-links"><a href="https://fde-hospital-ops.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/fde-hospital-ops" target="_blank" rel="noopener">源码</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看医院后勤制度助手大图">
+            <img src="img/fde-hospital.png" alt="医院后勤制度助手：制度检索首页、推荐问题和检索评测入口" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">制度检索首页；演示条款为虚构样本。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">07</span>
+        <h3>LabelCare · 门店售后排障工作台</h3>
+        <span class="stack">原生 JavaScript · 浏览器端 BGE · Qwen2.5-1.5B · llama.cpp · Node.js</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            门店标签打印机售后排障：店员自然语言报障，助手追问设备型号和故障现象，按 5 条结构化手册给出带厂商出处的排查步骤；排查未解决时生成可编辑、可复制、可下载的工单草稿。
+          </p>
+          <ul class="pts">
+            <li>公网静态版在浏览器加载 BGE-small-zh-v1.5（约 24 MB）做语义匹配，模型加载期间自动降级规则排查；本地版接入 Qwen2.5-1.5B（llama.cpp）做条目选择。</li>
+            <li>模型只返回条目编号和证据句，应用校验型号、条目和引用后才展示；21 条模拟报障评测从单轮 V1 的 5/21 提升到多轮 V2 的 <b>21/21</b>。</li>
+            <li>工作流状态机负责型号约束、追问和转人工；<b>npm test</b> 覆盖离线工作流、引用校验和适配器边界，22/22 通过。</li>
+          </ul>
+          <div class="nums">
+            <span>报障评测 <b>21/21</b></span>
+            <span>边界测试 <b>22/22</b></span>
+            <span>浏览器端 <b>BGE</b></span>
+          </div>
+          <p class="card-links"><a href="https://labelcare-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 LabelCare 大图">
+            <img src="img/labelcare.png" alt="LabelCare 门店售后排障工作台：排障对话、进度、转人工工单和浏览器模型状态" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">门店售后排障工作台；门店、报障与工单数据均为模拟。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal" id="bag-doctor-case">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">08</span>
+        <h3>Bag Doctor · 机器人日志体检</h3>
+        <span class="stack">原生 JavaScript · ROS1 bag · TF 分析 · Web Worker · LZ4 / BZ2</span>
+        <span class="when">2026.11 · 已上线</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            在浏览器里体检 ROS1 V2.0 bag：话题记录频率、间隔、TF 动态边断段和 bag_time − header.stamp 偏移，可选正常基线对比；报告可导出 HTML 或 JSON。<b>原始数据不出电脑</b>，不需要上传或第三方运行依赖。
+          </p>
+          <ul class="pts">
+            <li>解析与性能：Worker + 分段 File 读取，支持未压缩、LZ4、BZ2 的 TF 提取；10 GiB 合成包详细分析 <b>831–957 ms</b>，800 MiB 包 325 ms，浏览器详细分析上限 1,000 万条。</li>
+            <li>定位能力：内置合成对比 596 ms，定位 <b>odom → base_link</b> 在 8.00–13.30 s 断段、当前偏移 180 ms vs 基线 40 ms，<b>/scan_tick</b> 频率 -21.7%。</li>
+            <li>验证与边界：<b>npm test 4/4</b>；用 Foxglove 的 example.bag / example-lz4.bag / example-bz2.bag 解码 2,689 条 TF 消息、3 条边、零跳过；10 GiB 级压缩现场包和 30 GB 文件还需独立压测。</li>
+          </ul>
+          <div class="nums">
+            <span>10 GiB 合成包 <b>831–957 ms</b></span>
+            <span>TF <b>2,689 / 2,689</b></span>
+            <span>解析回归 <b>4/4</b></span>
+          </div>
+          <p class="card-links"><a href="https://bag-doctor-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看 Bag Doctor 大图">
+            <img src="img/bag-doctor.png" alt="Bag Doctor 机器人日志体检：TF 断段、时间戳偏移和话题异常区间报告" width="1440" height="1200" style="aspect-ratio:auto;object-fit:contain">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看大图
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">合成对比示例：odom → base_link 断段 8.00–13.30 s，偏移 180 ms vs 基线 40 ms。</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal" id="beauty-ops-case">
+      <div class="card-head"><span class="idx" aria-hidden="true">09</span><h3>澄光美妆运营台</h3><span class="stack">AI图文策划 · JavaScript指标与利润核算 · 运营复盘</span><span class="when">2026.11 · 交互演示</span></div>
+      <div class="card-inner"><div><p class="desc">围绕美妆电商岗位，把商品事实、图文方案、经营诊断、活动测算与售后反馈放进一个可操作的工作台。品牌、商品及经营数据均为模拟。</p>
+      <ul class="pts"><li>实际使用AI生成护肤品场景图，保留原始提示词；页面按商品字段组装可编辑标题、详情文案和出图提示词，检查演示风险词与标题长度。</li><li>3款商品、两个7日周期；CTR、转化率和广告ROAS按原始数据计算。可调整优惠、预算、退款与成本，测算贡献利润并提示库存不足。</li><li>评价工单、活动执行清单、本地草稿与Markdown复盘导出；14项计算测试和12项浏览器验收通过。</li><li>个人演示，未接真实天猫后台，未声称爆款销量或点击率提升；当前页面不调用实时模型。</li></ul>
+      <div class="nums"><span><b>14</b> 项计算测试</span><span><b>12</b> 项交互验收</span><span>桌面与手机适配</span></div>
+      <p class="card-links"><a href="beauty-ops/" target="_blank" rel="noopener">打开运营台</a><a href="https://chengguang-beauty-ops.onrender.com" target="_blank" rel="noopener">独立站</a><a href="beauty-ops/case-study.md" target="_blank" rel="noopener">案例与AI使用说明</a></p></div>
+      <figure class="shot"><a href="beauty-ops/" target="_blank" rel="noopener"><img src="img/beauty-ops.png" alt="澄光美妆运营台实测截图：模拟经营指标、漏斗与商品诊断" width="1440" height="1791" style="aspect-ratio:auto;object-fit:contain"></a><figcaption class="cap">实际运行页面，展示模拟数据；不代表真实经营业绩。</figcaption></figure></div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">10</span>
+        <h3>质检报告自动整理</h3>
+        <span class="stack">Python · DeepSeek API · openpyxl</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            检验员在群里发口语记录，工具出四张 Excel 表：<b>汇总 / 缺陷明细 / 判定依据 / 原始记录</b>。
+            判定全在代码里，按 <b>GB/T 2828.1 一般检验水平 II、正常一次抽样</b>查表：批量→字码→样本量→Ac/Re。
+            模型的提示词里连“严重”“轻微”都不出现，它只负责把“拉起来卡卡的”对成标准缺陷名。
+          </p>
+          <ul class="pts">
+            <li>「判定依据」表把抽样口径写全：批量 3000 → 字码 K → 抽 125 → Ac 7 / Re 8，谁质疑结论都能手工复核</li>
+            <li>拿不准的一律标「待确认」，不替业务猜；实抽不足标「待补抽」，四个状态互斥</li>
+            <li>真实模型犯过的错写成了回归用例：把“抽 125”填成“批量 125”</li>
+          </ul>
+          <div class="nums">
+            <span>7 条样例 → <b>4 种判定全对</b></span>
+            <span><b>39</b> 项单元测试</span>
+            <span>四张 Excel 表</span>
+          </div>
+          <p class="card-links"><a href="qc-report/" target="_blank" rel="noopener">查看示例报告</a><a href="qc-report/sample-report.pdf" target="_blank" rel="noopener">PDF 版</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看质检报告工具完整操作卡大图">
+            <img src="img/qc.png" alt="质检报告工具的四步操作卡：改记录、拖到 bat 上、拿报告、只看红黄两色" decoding="async" width="2160" height="3054">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看完整操作卡
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">业务同事的实际使用路径：改记录 → 拖到 bat 上 → 看红黄两色 → 摘要发群</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">11</span>
+        <h3>服装辅料订单流水线</h3>
+        <span class="stack">Python · 标准库 · SQLite</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            一条从“业务员发来的脏 Excel”到“能发客户的报价单”的完整链路：
+            <b>台账清洗 → 对账报表 → 交期预警 → 报价单与购销合同</b>，一条命令跑完六段并自检。
+            脏数据包括缺客户名、错价、特价、小样混单、同一订单号出现在两个平台。
+          </p>
+          <ul class="pts">
+            <li>去重用<b>联合键（订单号 + 平台）</b>，只用订单号会把两个平台各一单误删一条</li>
+            <li>金额按<b>分</b>存整数，避免浮点误差；对账时两边都转分比对</li>
+            <li>出单前六道校验，60 单里拦下 24 单</li>
+          </ul>
+          <div class="nums">
+            <span>六段流程 → <b>5 段通过</b>（推送缺 webhook）</span>
+            <span>五张报表</span>
+            <span>拦下 <b>24</b> 单</span>
+          </div>
+          <p class="card-links"><a href="accessory-pipeline/" target="_blank" rel="noopener">查看流程说明</a></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">12</span>
+        <h3>电商订单 RPA 自测项目</h3>
+        <span class="stack">影刀 RPA · Python · SQLite</span>
+        <span class="when">2026.11</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            本地模拟三个平台的订单页（<b>20 条订单、待审核 9 条、合计 2792.30 元</b>），
+            用影刀和 Python 各实现一套采集，做联合键去重、逐字段对账、<b>三类故障注入</b>与失败表。
+            不是客户交付项目，但流程、异常处理和六份文档是按交付标准做的。
+          </p>
+          <ul class="pts">
+            <li>错误分三类，<b>只有一类值得重试</b>：元素超时可重试，数据错误和结构错误不重试</li>
+            <li>同一字段在 ≥80% 行缺失 → 判定「疑似页面改版」，整批失败告警，而不是把 20 行空值写进库</li>
+            <li>失败表 22 条，可按批次 / 订单号 / 错误类型查询</li>
+          </ul>
+          <div class="nums">
+            <span>DAY1 / DAY2 / DAY3 <b>全部 PASS</b></span>
+            <span>三类故障注入</span>
+            <span>六份文档</span>
+          </div>
+          <p class="card-links"><a href="rpa/" target="_blank" rel="noopener">查看测试说明</a></p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card has-shot reveal">
+      <div class="card-head">
+        <span class="idx" aria-hidden="true">13</span>
+        <h3>询价转报价工作流</h3>
+        <span class="stack">Coze 低代码 · 五节点</span>
+        <span class="when">2026.11 · v0.0.4 已发布</span>
+      </div>
+      <div class="card-inner">
+        <div>
+          <p class="desc">
+            业务员把客户微信原话整段粘进去，出来两份东西：<b>给客户的报价草稿</b>和<b>给业务的待确认清单</b>。
+            五个节点：抽取结构 / 查价核算 / 成文 / 双路输出。
+            单价与金额由代码节点内嵌的价目表计算（11 款 SKU，含起订量），模型不参与任何金额。
+          </p>
+          <ul class="pts">
+            <li>实测客户压价“上次给我报 1 块 2”，<b>单价一分没动</b></li>
+            <li>待确认清单由代码原文透传，模型看不到——因为它会把这个清单润色成“无”</li>
+            <li>缺型号不出价，直接进 issues</li>
+          </ul>
+          <div class="nums">
+            <span><b>11</b> 款 SKU 价目表</span>
+            <span>三条回归测试</span>
+            <span>合计 <b>25950</b> 一分不差</span>
+          </div>
+          <p class="card-links"><a href="coze-quote/" target="_blank" rel="noopener">查看操作卡与说明</a></p>
+        </div>
+        <figure class="shot">
+          <button class="shot-open" type="button" aria-label="查看询价转报价工作流完整操作卡大图">
+            <img src="img/coze.png" alt="Coze 报价工作流的四步操作卡：打开工作流、粘客户原话、跑一次、先看 issues 再发 output" decoding="async" width="2160" height="3040">
+            <span class="shot-overlay" aria-hidden="true">
+              <span class="shot-pill">查看完整操作卡
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </span>
+          </button>
+          <figcaption class="cap">四步操作卡：找对入口 → 粘贴原话 → 运行 → 先看 issues 再发 output</figcaption>
+        </figure>
+      </div>
+    </article>
+  </section>
+
   <section class="wrap" id="ops" aria-labelledby="ops-title">
     <h2 class="sec" id="ops-title">
-      <span class="num">01</span><span class="sec-title">跨境电商运营</span><span class="en">CROSS-BORDER OPS · 2026.11</span>
+      <span class="num">02</span><span class="sec-title">跨境电商运营</span><span class="en">CROSS-BORDER OPS · 2026.11</span>
     </h2>
     <p class="sec-lead">两个运营工具：一个把广告搜索词变成可执行清单，一个把商品页文案变成可复核的协作流程。两边都用模拟数据，不连接真实店铺后台。</p>
 
@@ -820,466 +1280,6 @@
     </div>
   </section>
 
-  <section class="wrap" id="work" aria-labelledby="work-title">
-    <h2 class="sec" id="work-title">
-      <span class="num">02</span><span class="sec-title">主项目</span><span class="en">SELECTED WORK</span>
-    </h2>
-    <p class="sec-lead">十三个重点项目：一个机器人日志工具、一个电商运营演示、七个 AI / 全栈项目和四个自动化工具；个人项目与模拟数据均注明边界。</p>
-
-
-    <article class="card has-shot reveal" id="bag-doctor-case">
-      <div class="card-head">
-        <span class="idx">NEW</span>
-        <h3>Bag Doctor · 机器人日志体检</h3>
-        <span class="stack">原生 JavaScript · ROS1 bag · TF 分析 · Web Worker · LZ4 / BZ2</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            在浏览器里体检 ROS1 V2.0 bag：话题记录频率、间隔、TF 动态边断段和 bag_time − header.stamp 偏移，可选正常基线对比；报告可导出 HTML 或 JSON。<b>原始数据不出电脑</b>，不需要上传或第三方运行依赖。
-          </p>
-          <ul class="pts">
-            <li>解析与性能：Worker + 分段 File 读取，支持未压缩、LZ4、BZ2 的 TF 提取；10 GiB 合成包详细分析 <b>831–957 ms</b>，800 MiB 包 325 ms，浏览器详细分析上限 1,000 万条。</li>
-            <li>定位能力：内置合成对比 596 ms，定位 <b>odom → base_link</b> 在 8.00–13.30 s 断段、当前偏移 180 ms vs 基线 40 ms，<b>/scan_tick</b> 频率 -21.7%。</li>
-            <li>验证与边界：<b>npm test 4/4</b>；用 Foxglove 的 example.bag / example-lz4.bag / example-bz2.bag 解码 2,689 条 TF 消息、3 条边、零跳过；10 GiB 级压缩现场包和 30 GB 文件还需独立压测。</li>
-          </ul>
-          <div class="nums">
-            <span>10 GiB 合成包 <b>831–957 ms</b></span>
-            <span>TF <b>2,689 / 2,689</b></span>
-            <span>解析回归 <b>4/4</b></span>
-          </div>
-          <p class="card-links"><a href="https://bag-doctor-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 Bag Doctor 大图">
-            <img src="img/bag-doctor.png" alt="Bag Doctor 机器人日志体检：TF 断段、时间戳偏移和话题异常区间报告" width="1440" height="1200" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">合成对比示例：odom → base_link 断段 8.00–13.30 s，偏移 180 ms vs 基线 40 ms。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal" id="beauty-ops-case">
-      <div class="card-head"><span class="idx">NEW</span><h3>澄光美妆运营台</h3><span class="stack">AI图文策划 · JavaScript指标与利润核算 · 运营复盘</span><span class="when">2026.11 · 交互演示</span></div>
-      <div class="card-inner"><div><p class="desc">围绕美妆电商岗位，把商品事实、图文方案、经营诊断、活动测算与售后反馈放进一个可操作的工作台。品牌、商品及经营数据均为模拟。</p>
-      <ul class="pts"><li>实际使用AI生成护肤品场景图，保留原始提示词；页面按商品字段组装可编辑标题、详情文案和出图提示词，检查演示风险词与标题长度。</li><li>3款商品、两个7日周期；CTR、转化率和广告ROAS按原始数据计算。可调整优惠、预算、退款与成本，测算贡献利润并提示库存不足。</li><li>评价工单、活动执行清单、本地草稿与Markdown复盘导出；14项计算测试和12项浏览器验收通过。</li><li>个人演示，未接真实天猫后台，未声称爆款销量或点击率提升；当前页面不调用实时模型。</li></ul>
-      <div class="nums"><span><b>14</b> 项计算测试</span><span><b>12</b> 项交互验收</span><span>桌面与手机适配</span></div>
-      <p class="card-links"><a href="beauty-ops/" target="_blank" rel="noopener">打开运营台</a><a href="https://chengguang-beauty-ops.onrender.com" target="_blank" rel="noopener">独立站</a><a href="beauty-ops/case-study.md" target="_blank" rel="noopener">案例与AI使用说明</a></p></div>
-      <figure class="shot"><a href="beauty-ops/" target="_blank" rel="noopener"><img src="img/beauty-ops.png" alt="澄光美妆运营台实测截图：模拟经营指标、漏斗与商品诊断" width="1440" height="1791" style="aspect-ratio:auto;object-fit:contain"></a><figcaption class="cap">实际运行页面，展示模拟数据；不代表真实经营业绩。</figcaption></figure></div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">01</span>
-        <h3>AI 报价工作台</h3>
-        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso · Render</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            客户口语询价 → 大模型提取结构化 JSON → 确定性代码查价目表算钱 → 逐行报价、合计、阻断/待确认清单，历史报价可回看。已部署为公开演示站。
-          </p>
-          <ul class="pts">
-            <li>模型只做结构化提取：用 JSON 模式解析产品、规格、颜色、数量、交期，返回值经服务端校验；<b>价格、MOQ、色卡、SKU 白名单全在代码里</b>，模型输出不含价格字段，返回的价格不会被采用。</li>
-            <li>型号不在价目表直接「阻断」不出价；无 Key、网络失败或 JSON 解析失败时<b>自动回退规则提取</b>，页面明确标注当前模式。</li>
-            <li>本地 node:sqlite 零配置，配置 TURSO_DATABASE_URL 可切 Turso；处理 Next.js 16 Cache Components 预渲染陷阱，GET 接口先 await connection()。</li>
-          </ul>
-          <div class="nums">
-            <span>3 个样例金额回归</span>
-            <span>无 Key 可降级</span>
-            <span>已部署 <b>Render</b></span>
-          </div>
-          <p class="card-links"><a href="https://ai-quote-app.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-quote-app" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 AI 报价工作台大图">
-            <img src="img/quote-result.png" alt="AI 报价工作台：客户询价与逐行报价结果" width="1416" height="1508" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">客户询价 → 逐行报价与待确认清单；截图中的价目表和客户均为虚构示例。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">02</span>
-        <h3>RAG 知识库问答</h3>
-        <span class="stack">Next.js 16 · TypeScript · DeepSeek · BM25 · SQLite / Turso · Render</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            上传或粘贴文档后自动切块、建中文倒排索引；提问时先检索 Top-4 片段，再让 DeepSeek 基于片段回答，并标注 [编号] 引用；资料不足时明确拒答。
-          </p>
-          <ul class="pts">
-            <li>中文不引入分词服务：按<b>字符二元组（bigram）</b>建倒排索引，英文和数字按词切分；自己实现 <b>BM25</b>（k1=1.5、b=0.75）排序。</li>
-            <li>提示词限定只使用给定片段，回答带引用；<b>资料不足时拒答</b>，不补外部知识；无 Key、模型超时或报错时自动退回检索结果。</li>
-            <li>本地 node:sqlite / 线上可切 Turso；空库自动载入 3 份虚构示例文档；内置 10 题评测，检索与答案命中均 <b>10/10</b>。</li>
-          </ul>
-          <div class="nums">
-            <span>10/10 检索命中</span>
-            <span>10/10 答案命中</span>
-            <span>Top-4 <b>引用片段</b></span>
-          </div>
-          <p class="card-links"><a href="https://rag-kb-nr1a.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/rag-kb" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 RAG 知识库问答大图">
-            <img src="img/rag-home.png" alt="RAG 知识库问答：回答带引用来源与 BM25 分数" width="1416" height="1008" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">回答带 [1] 引用与 4 条来源片段；示例文档均为虚构。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">03</span>
-        <h3>AI 求职作战台</h3>
-        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            JD + 简历 → 大模型只提取岗位和候选人画像 → 确定性代码算<b>六维匹配分、技能缺口和原句证据</b> → 生成简历改写、面试追问与 7 天计划。已部署为公开演示站，已开源；无 Key 时自动走规则模式。
-          </p>
-          <ul class="pts">
-            <li>模型不参与打分：六维权重固定在代码里，同一输入同一分数；技能命中必须能在简历原文找到句子。</li>
-            <li>修正过“js”误命中 Next.js / React.js 的别名问题；年限、学历只信规则，避免把“2027 届”读成 7 年经验。</li>
-            <li>模型提取的假技能、假项目会回查原文丢弃；无 Key、超时、JSON 异常自动回退规则提取。</li>
-          </ul>
-          <div class="nums">
-            <span><b>6</b> 维匹配诊断</span>
-            <span>高/低匹配样例 <b>79 / 45</b></span>
-            <span>无 Key 可降级</span>
-          </div>
-          <p class="card-links"><a href="https://ai-job-match-8d6w.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-job-match" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 AI 求职作战台大图">
-            <img src="img/job-match-result.png" alt="AI 求职作战台：JD 与简历的匹配分、六维诊断、技能缺口和行动建议" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">JD + 简历 → 匹配分与六维诊断；示例 JD、公司、简历均为虚构。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">04</span>
-        <h3>AI 订单跟进助手</h3>
-        <span class="stack">Next.js 16 · TypeScript · OpenAI 兼容 API · SQLite / Turso</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            客户发来“拉链改 6000 米、交期提前 25 天、扣子换藏青” → 大模型只提取意图和变更 → 规则改单、重算金额、检查交期与单位 → 给出<b>可编辑回复草稿和跟进待办</b>。已部署为公开演示站，两个虚构订单、六条示例消息。
-          </p>
-          <ul class="pts">
-            <li>金额、生产周期、订金比例全由规则计算；数量单位“米 / 粒”不一致直接阻断，不按错误口径改单。</li>
-            <li>整单取消金额归零并提示订金退款；交期早于最长生产周期直接阻断；数量变动超过 20% 要求确认。</li>
-            <li>无 Key 完整跑规则模式；CI 覆盖 11 组冒烟，包括取消、问进度、多变更和确定性。</li>
-          </ul>
-          <div class="nums">
-            <span><b>11</b> 组接口冒烟</span>
-            <span>样例金额 <b>14960 → 17760</b></span>
-            <span>交期风险 <b>直接阻断</b></span>
-          </div>
-          <p class="card-links"><a href="https://ai-order-followup.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/ai-order-followup" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 AI 订单跟进助手大图">
-            <img src="img/order-followup-result.png" alt="AI 订单跟进助手：数量、颜色、交期变更对照，交期风险阻断和回复草稿" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">3 项变更 + 1 个交期阻断 + 回复草稿；订单、客户、地址均为虚构。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">05</span>
-        <h3>理赔通 · 保险理赔 AI Agent</h3>
-        <span class="stack">Next.js 16 · DeepSeek function calling · BM25 RAG · MCP Server</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            用户描述事故（“骑车摔伤花了 800 元”）→ Agent 自主调用<b>条款检索</b>与<b>理赔流程查询</b>两个工具、最多六轮 → 给出带条款号引用的回答，<b>每一步工具调用在界面可视化</b>。
-            酒驾、高风险运动等<b>免责场景明确拒赔</b>，不给虚假希望；同一套查询能力还做成了 <b>MCP Server</b>，Claude Code 可直接调用条款库。
-          </p>
-          <ul class="pts">
-            <li>条款检索用中文 bigram 倒排索引 + BM25，node:sqlite 零外部服务；检索和引用留在代码侧，模型只基于给定片段回答。</li>
-            <li>赔付金额全由条款规则计算：800 元门诊 =（800−100 免赔）× 90% = <b>630 元</b>，答案带【第一条】引用。</li>
-            <li>内置 MCP stdio server（条款检索 / 流程查询 / 类型列表），冒烟测试覆盖赔付计算、酒驾拒赔、MCP 调用，全部断言通过。</li>
-          </ul>
-          <div class="nums">
-            <span><b>2</b> 个 Agent 工具</span>
-            <span>样例赔付 <b>630 元</b></span>
-            <span>免责场景 <b>明确拒赔</b></span>
-          </div>
-          <p class="card-links"><a href="https://claims-agent-2e93.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/claims-agent" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看理赔通大图">
-            <img src="img/claims-agent-result.png" alt="理赔通：骑车摔伤 800 元的赔付计算、条款引用与 Agent 工具调用轨迹" width="1440" height="1150" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">800 元门诊 → 630 元赔付；条款、流程、产品均为虚构演示数据。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">06</span>
-        <h3>医院后勤制度助手</h3>
-        <span class="stack">FastAPI · PostgreSQL / pgvector · ONNX Runtime · BM25 + RRF · Docker / Helm · Prometheus</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            面向后勤服务台的制度检索：查设备报修、物资采购、库房管理和设施巡检，回答附条款原文和来源，方便核对。后端是 FastAPI + PostgreSQL/pgvector，向量检索和 BM25 融合，支持岗位权限过滤；同时提供 Docker Compose 和 Helm 两套部署。
-          </p>
-          <ul class="pts">
-            <li>检索链路：BGE-Small-ZH ONNX 向量 + pgvector 余弦排序，与 BM25 做 RRF 融合；公开评测 Recall@3 混合 <b>12/12</b>，4 道范围外问题全部拒答。</li>
-            <li>部署与运维：Compose 和 Helm 双形态，配 healthz/readyz 探针、资源限制、PVC、NetworkPolicy；Prometheus 记录检索耗时与 P95，CI 实跑 Compose 与 Kubernetes 验收。</li>
-            <li>生成边界：vLLM 只接收排名最高的可访问条款，引用由应用回填条款 ID；超时、中断或资料不足时回退原文；CPU 压测报告记录并发 1 / 4 的首 token P95 与 token/s。</li>
-          </ul>
-          <div class="nums">
-            <span>Recall@3 混合 <b>12/12</b></span>
-            <span>范围外 <b>全部拒答</b></span>
-            <span>Compose + <b>Helm</b></span>
-          </div>
-          <p class="card-links"><a href="https://fde-hospital-ops.onrender.com" target="_blank" rel="noopener">在线演示</a><a href="https://github.com/Hyxxt/fde-hospital-ops" target="_blank" rel="noopener">源码</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看医院后勤制度助手大图">
-            <img src="img/fde-hospital.png" alt="医院后勤制度助手：制度检索首页、推荐问题和检索评测入口" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">制度检索首页；演示条款为虚构样本。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">07</span>
-        <h3>LabelCare · 门店售后排障工作台</h3>
-        <span class="stack">原生 JavaScript · 浏览器端 BGE · Qwen2.5-1.5B · llama.cpp · Node.js</span>
-        <span class="when">2026.11 · 已上线</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            门店标签打印机售后排障：店员自然语言报障，助手追问设备型号和故障现象，按 5 条结构化手册给出带厂商出处的排查步骤；排查未解决时生成可编辑、可复制、可下载的工单草稿。
-          </p>
-          <ul class="pts">
-            <li>公网静态版在浏览器加载 BGE-small-zh-v1.5（约 24 MB）做语义匹配，模型加载期间自动降级规则排查；本地版接入 Qwen2.5-1.5B（llama.cpp）做条目选择。</li>
-            <li>模型只返回条目编号和证据句，应用校验型号、条目和引用后才展示；21 条模拟报障评测从单轮 V1 的 5/21 提升到多轮 V2 的 <b>21/21</b>。</li>
-            <li>工作流状态机负责型号约束、追问和转人工；<b>npm test</b> 覆盖离线工作流、引用校验和适配器边界，22/22 通过。</li>
-          </ul>
-          <div class="nums">
-            <span>报障评测 <b>21/21</b></span>
-            <span>边界测试 <b>22/22</b></span>
-            <span>浏览器端 <b>BGE</b></span>
-          </div>
-          <p class="card-links"><a href="https://labelcare-desk.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">在线演示</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看 LabelCare 大图">
-            <img src="img/labelcare.png" alt="LabelCare 门店售后排障工作台：排障对话、进度、转人工工单和浏览器模型状态" width="1440" height="1000" style="aspect-ratio:auto;object-fit:contain">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看大图
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">门店售后排障工作台；门店、报障与工单数据均为模拟。</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">08</span>
-        <h3>质检报告自动整理</h3>
-        <span class="stack">Python · DeepSeek API · openpyxl</span>
-        <span class="when">2026.11</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            检验员在群里发口语记录，工具出四张 Excel 表：<b>汇总 / 缺陷明细 / 判定依据 / 原始记录</b>。
-            判定全在代码里，按 <b>GB/T 2828.1 一般检验水平 II、正常一次抽样</b>查表：批量→字码→样本量→Ac/Re。
-            模型的提示词里连“严重”“轻微”都不出现，它只负责把“拉起来卡卡的”对成标准缺陷名。
-          </p>
-          <ul class="pts">
-            <li>「判定依据」表把抽样口径写全：批量 3000 → 字码 K → 抽 125 → Ac 7 / Re 8，谁质疑结论都能手工复核</li>
-            <li>拿不准的一律标「待确认」，不替业务猜；实抽不足标「待补抽」，四个状态互斥</li>
-            <li>真实模型犯过的错写成了回归用例：把“抽 125”填成“批量 125”</li>
-          </ul>
-          <div class="nums">
-            <span>7 条样例 → <b>4 种判定全对</b></span>
-            <span><b>39</b> 项单元测试</span>
-            <span>四张 Excel 表</span>
-          </div>
-          <p class="card-links"><a href="qc-report/" target="_blank" rel="noopener">查看示例报告</a><a href="qc-report/sample-report.pdf" target="_blank" rel="noopener">PDF 版</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看质检报告工具完整操作卡大图">
-            <img src="img/qc.png" alt="质检报告工具的四步操作卡：改记录、拖到 bat 上、拿报告、只看红黄两色" decoding="async" width="2160" height="3054">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看完整操作卡
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">业务同事的实际使用路径：改记录 → 拖到 bat 上 → 看红黄两色 → 摘要发群</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <article class="card reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">09</span>
-        <h3>服装辅料订单流水线</h3>
-        <span class="stack">Python · 标准库 · SQLite</span>
-        <span class="when">2026.11</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            一条从“业务员发来的脏 Excel”到“能发客户的报价单”的完整链路：
-            <b>台账清洗 → 对账报表 → 交期预警 → 报价单与购销合同</b>，一条命令跑完六段并自检。
-            脏数据包括缺客户名、错价、特价、小样混单、同一订单号出现在两个平台。
-          </p>
-          <ul class="pts">
-            <li>去重用<b>联合键（订单号 + 平台）</b>，只用订单号会把两个平台各一单误删一条</li>
-            <li>金额按<b>分</b>存整数，避免浮点误差；对账时两边都转分比对</li>
-            <li>出单前六道校验，60 单里拦下 24 单</li>
-          </ul>
-          <div class="nums">
-            <span>六段流程 → <b>5 段通过</b>（推送缺 webhook）</span>
-            <span>五张报表</span>
-            <span>拦下 <b>24</b> 单</span>
-          </div>
-          <p class="card-links"><a href="accessory-pipeline/" target="_blank" rel="noopener">查看流程说明</a></p>
-        </div>
-      </div>
-    </article>
-
-    <article class="card reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">10</span>
-        <h3>电商订单 RPA 自测项目</h3>
-        <span class="stack">影刀 RPA · Python · SQLite</span>
-        <span class="when">2026.11</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            本地模拟三个平台的订单页（<b>20 条订单、待审核 9 条、合计 2792.30 元</b>），
-            用影刀和 Python 各实现一套采集，做联合键去重、逐字段对账、<b>三类故障注入</b>与失败表。
-            不是客户交付项目，但流程、异常处理和六份文档是按交付标准做的。
-          </p>
-          <ul class="pts">
-            <li>错误分三类，<b>只有一类值得重试</b>：元素超时可重试，数据错误和结构错误不重试</li>
-            <li>同一字段在 ≥80% 行缺失 → 判定「疑似页面改版」，整批失败告警，而不是把 20 行空值写进库</li>
-            <li>失败表 22 条，可按批次 / 订单号 / 错误类型查询</li>
-          </ul>
-          <div class="nums">
-            <span>DAY1 / DAY2 / DAY3 <b>全部 PASS</b></span>
-            <span>三类故障注入</span>
-            <span>六份文档</span>
-          </div>
-          <p class="card-links"><a href="rpa/" target="_blank" rel="noopener">查看测试说明</a></p>
-        </div>
-      </div>
-    </article>
-
-    <article class="card has-shot reveal">
-      <div class="card-head">
-        <span class="idx" aria-hidden="true">11</span>
-        <h3>询价转报价工作流</h3>
-        <span class="stack">Coze 低代码 · 五节点</span>
-        <span class="when">2026.11 · v0.0.4 已发布</span>
-      </div>
-      <div class="card-inner">
-        <div>
-          <p class="desc">
-            业务员把客户微信原话整段粘进去，出来两份东西：<b>给客户的报价草稿</b>和<b>给业务的待确认清单</b>。
-            五个节点：抽取结构 / 查价核算 / 成文 / 双路输出。
-            单价与金额由代码节点内嵌的价目表计算（11 款 SKU，含起订量），模型不参与任何金额。
-          </p>
-          <ul class="pts">
-            <li>实测客户压价“上次给我报 1 块 2”，<b>单价一分没动</b></li>
-            <li>待确认清单由代码原文透传，模型看不到——因为它会把这个清单润色成“无”</li>
-            <li>缺型号不出价，直接进 issues</li>
-          </ul>
-          <div class="nums">
-            <span><b>11</b> 款 SKU 价目表</span>
-            <span>三条回归测试</span>
-            <span>合计 <b>25950</b> 一分不差</span>
-          </div>
-          <p class="card-links"><a href="coze-quote/" target="_blank" rel="noopener">查看操作卡与说明</a></p>
-        </div>
-        <figure class="shot">
-          <button class="shot-open" type="button" aria-label="查看询价转报价工作流完整操作卡大图">
-            <img src="img/coze.png" alt="Coze 报价工作流的四步操作卡：打开工作流、粘客户原话、跑一次、先看 issues 再发 output" decoding="async" width="2160" height="3040">
-            <span class="shot-overlay" aria-hidden="true">
-              <span class="shot-pill">查看完整操作卡
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </span>
-            </span>
-          </button>
-          <figcaption class="cap">四步操作卡：找对入口 → 粘贴原话 → 运行 → 先看 issues 再发 output</figcaption>
-        </figure>
-      </div>
-    </article>
-  </section>
-
   <section class="wrap" id="other" aria-labelledby="other-title">
     <h2 class="sec" id="other-title">
       <span class="num">03</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
@@ -1288,67 +1288,67 @@
 
     <div class="mini-grid">
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">12</span><h3>公开网页采集器</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>公开网页采集器</h3></div>
         <p>只用 Python 标准库：同源按深度发现、遵守 robots、按站点要求限速、正文提取入 SQLite、导出 CSV/JSON。<b>已打包成 7.5MB 单文件 exe，同事双击就能跑，不用装 Python。</b>实测单任务 100 页 / 2 分 53 秒。<a class="mini-link" href="crawler/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python 标准库</span><span>SQLite</span><span>单文件 exe</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">13</span><h3>网页巡检工作台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>网页巡检工作台</h3></div>
         <p>采集 → 文本清洗 → 内容哈希去重 → 历史快照比对 → Markdown 报告。单 worker 队列 + 1–168 小时定时调度，异常与访问限制都有边界处理。<a class="mini-link" href="workflow/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>定时调度</span><span>Markdown 报告</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">14</span><h3>订单洞察台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">16</span><h3>订单洞察台</h3></div>
         <p>订单 CSV 导入校验去重，按频次 / 金额 / 间隔做客户分层，生成复购回访提醒与跟进名单导出。Python + SQLite + 原生前端，无第三方依赖。<a class="mini-link" href="order-insights/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>Python</span><span>SQLite</span><span>原生前端</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">15</span><h3>AI 开发交付看板</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">17</span><h3>AI 开发交付看板</h3></div>
         <p>三列拖拽看板 + REST API + SQLite 参数化查询 + 输入校验，把需求拆成任务并完成交付复盘。<a class="mini-link" href="delivery-board/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>REST API</span><span>SQLite</span><span>拖拽看板</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">16</span><h3>海外独立站 Luma Studio</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>海外独立站 Luma Studio</h3></div>
         <p>英文品牌前台 + 运营工作台 + SEO 检查，WordPress 与本地两套运行时；另有 Elementor / WooCommerce 练习环境。<b>一页作品说明含后台与 SEO 截图。</b> <a class="mini-link" href="luma/Luma-Studio-one-pager.pdf" target="_blank" rel="noopener">查看作品说明</a></p>
         <div class="tags" aria-label="技术标签"><span>WordPress</span><span>Elementor</span><span>WooCommerce</span><span>SEO</span><span>英文前台</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">17</span><h3>美容预约助手 MVP</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>美容预约助手 MVP</h3></div>
         <p>顾客咨询、服务项目、预约意向提交，门店侧预约查看与确认，本地可跑。<a class="mini-link" href="booking/">在线演示与说明</a></p>
         <div class="tags" aria-label="技术标签"><span>预约流程</span><span>门店后台</span><span>MVP</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">18</span><h3>提示词安全评测台</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">20</span><h3>提示词安全评测台</h3></div>
         <p>把提示词安全要求拆成六类越权 / 诱导场景的可执行用例与评测记录，单页原型。<a class="mini-link" href="safety-eval/">打开原型</a></p>
         <div class="tags" aria-label="技术标签"><span>Prompt 安全</span><span>六类场景</span><span>单页原型</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">19</span><h3>电商广告数据分析 Demo</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">21</span><h3>电商广告数据分析 Demo</h3></div>
         <p>用 pandas + numpy 把销售、广告、关键词三张带脏数据的日报清洗成可复核指标，按 ASIN / 广告活动 / 关键词 / 周趋势给结论和异常清单，输出 Markdown、响应式 HTML 和 8 个 sheet 的 Excel 报告；<b>8 个 pytest 全过，GitHub Actions 每次 push 跑完整流水线</b>。数据全部为程序生成的模拟数据。<a class="mini-link" href="ecom-report/">在线报告</a> · <a class="mini-link" href="https://github.com/Hyxxt/ecom-analysis" target="_blank" rel="noopener">源码</a></p>
         <div class="tags" aria-label="技术标签"><span>pandas / numpy</span><span>数据清洗</span><span>自动化报告</span><span>pytest</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">20</span><h3>FluxOps 流序 · CSV 双表核对工具</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">22</span><h3>FluxOps 流序 · CSV 双表核对工具</h3></div>
         <p>免登录核对两份 CSV / TSV：列名不同也能自由映射，支持联合键、金额容差、币种 / 单位与按键汇总；自动识别 UTF-8、GB18030 和 UTF-16LE，结果可导出差异 CSV、无效行清单和 JSON。<b>文件全程在浏览器本地处理，不上传；国内静态镜像已上线。</b> <a class="mini-link" href="https://fluxops-10g3k3ol.maozi.io" target="_blank" rel="noopener">打开国内版</a> · <a class="mini-link" href="https://fluxops-data-workbench-hyx.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">原站</a></p>
         <div class="tags" aria-label="技术标签"><span>React / Vite</span><span>CSV / GB18030</span><span>数据核对</span><span>本地处理</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">21</span><h3>ParcelPilot 派送前 · 发货数据检查工具</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">23</span><h3>ParcelPilot 派送前 · 发货数据检查工具</h3></div>
         <p>导入 Excel / CSV / TSV，检查缺失地址、电话格式、重复订单、异常数量和运单冲突；支持列名映射、规则调整、逐行修正和导出通过记录。<b>文件只在浏览器本地处理，不上传；镜像已上线。</b> <a class="mini-link" href="https://parcelpilot-ls02.onrender.com" target="_blank" rel="noopener">打开镜像</a> · <a class="mini-link" href="https://parcelpilot-dispatch-hyx.glacialbowl3.chatgpt.site/" target="_blank" rel="noopener">原站</a></p>
         <div class="tags" aria-label="技术标签"><span>Excel / CSV</span><span>数据校验</span><span>发货运营</span><span>本地处理</span></div>
       </article>
 
       <article class="mini reveal">
-        <div class="mini-head"><span class="idx" aria-hidden="true">22</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
+        <div class="mini-head"><span class="idx" aria-hidden="true">24</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
         <p>面向制造企业来料检验场景，把异常单从登记、质量评审、处置执行做到复验关闭：六个状态、四类角色，覆盖退回补充、评审驳回和复验不合格重开。交付 PRD、业务泳道图和可交互 HTML 原型。<b>自主设计练习，全部为演示数据。</b> <a class="mini-link" href="qms/" target="_blank" rel="noopener">打开案例</a> · <a class="mini-link" href="qms/prd.html" target="_blank" rel="noopener">PRD</a></p>
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
       </article>
