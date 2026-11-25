@@ -12,3 +12,6 @@ __pycache__/
 apps/*/data/*.sqlite3
 apps/*/data/*.sqlite3-*
 apps/*/data/*.log
+
+/_archive/
+/*.zip
