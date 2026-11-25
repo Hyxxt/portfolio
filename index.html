@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>黄佑雄 · AI 全栈开发作品集</title>
-<meta name="description" content="黄佑雄的项目作品集：26 个个人项目，9 个线上演示。含 AI 报价、RAG 知识库、AI 求职、订单跟进、理赔 Agent、医院后勤、LabelCare、Bag Doctor，以及跨境电商运营双工具（亚马逊搜索词体检、商品页改稿台团队版）、QMS、FluxOps、ParcelPilot 等案例。算钱与判合格交给代码，模型只负责听懂人话。">
+<meta name="description" content="黄佑雄的项目作品集：28 个个人项目，10 个线上演示。含 AI 报价、RAG 知识库、AI 求职、订单跟进、理赔 Agent、医院后勤、LabelCare、Bag Doctor，以及跨境电商运营双工具（亚马逊搜索词体检、商品页改稿台团队版）、QMS、FluxOps、ParcelPilot、榕益多语言目录站等案例。算钱与判合格交给代码，模型只负责听懂人话。">
 <meta name="author" content="黄佑雄">
 <meta name="theme-color" content="#132e45">
 <meta property="og:type" content="website">
 <meta property="og:title" content="黄佑雄 · AI 全栈开发作品集">
-<meta property="og:description" content="26 个个人项目、9 个线上演示：7 个 AI / 全栈项目、跨境电商广告复盘与商品页协作双工具、机器人日志体检、业务自动化与数据分析案例。金额与判定在代码里可复核。">
+<meta property="og:description" content="28 个个人项目、10 个线上演示：7 个 AI / 全栈项目、跨境电商广告复盘与商品页协作双工具、机器人日志体检、业务自动化与数据分析案例。金额与判定在代码里可复核。">
 <meta property="og:url" content="https://huangyouxiong-10m3k3ol.maozi.io/">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://huangyouxiong-10m3k3ol.maozi.io/img/og.png">
@@ -632,6 +632,171 @@
     footer{margin-bottom:0}
     footer .top-link{display:none}
   }
+
+  /* ============ 视觉增强层 ============ */
+  /* 首屏：暗色沉浸区 */
+  .hero{position:relative;isolation:isolate;padding-top:96px;padding-bottom:48px}
+  .hero::before{
+    content:"";position:absolute;z-index:-2;left:50%;top:-84px;
+    width:100vw;height:calc(100% + 156px);transform:translateX(-50%);
+    pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px),
+      radial-gradient(900px 520px at 16% 6%,rgba(216,178,113,.22),transparent 62%),
+      radial-gradient(820px 480px at 84% -4%,rgba(58,124,196,.26),transparent 60%),
+      linear-gradient(180deg,#060e18 0%,#0d2135 56%,rgba(247,244,237,0) 100%);
+    background-size:64px 64px,64px 64px,auto,auto,auto;
+    animation:gridDrift 34s linear infinite;
+  }
+  @keyframes gridDrift{
+    0%{background-position:0 0,0 0,0 0,0 0,0 0}
+    100%{background-position:64px 128px,128px 64px,0 0,0 0,0 0}
+  }
+  /* 鼠标跟随暖光 */
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(540px 400px at var(--mx,50%) var(--my,24%),rgba(216,178,113,.24),transparent 64%);
+  }
+
+  /* 顶栏：顶部融入暗色，滚动后恢复浅底 */
+  .topbar{background:transparent;border-bottom-color:transparent}
+  .topbar .brand-name{color:#f8f4ec}
+  .topbar .brand-name small{color:rgba(248,244,236,.6)}
+  .topbar .nav a{color:rgba(248,244,236,.72)}
+  .topbar .nav a:hover,.topbar .nav a.active{color:#fff}
+  .topbar .nav a::after{background:#d8b271}
+  .topbar .nav a.nav-service{color:#e6c689}
+  .topbar .mono{background:#f8f4ec;color:#0d2135}
+  .topbar .print-btn{border-color:rgba(248,244,236,.26);color:#f8f4ec}
+  .topbar .print-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(248,244,236,.5)}
+  .topbar.scrolled{background:rgba(247,245,240,.93)}
+  .topbar.scrolled .brand-name{color:#17212a}
+  .topbar.scrolled .brand-name small{color:#5c6875}
+  .topbar.scrolled .nav a{color:#5c6875}
+  .topbar.scrolled .nav a:hover,.topbar.scrolled .nav a.active{color:#132e45}
+  .topbar.scrolled .nav a::after{background:#132e45}
+  .topbar.scrolled .nav a.nav-service{color:#96661c}
+  .topbar.scrolled .mono{background:#132e45;color:#fffdf9}
+  .topbar.scrolled .print-btn{border-color:#d8d2c5;color:#132e45}
+  .topbar.scrolled .print-btn:hover{background:#efebe2;border-color:#c9c0af}
+
+  /* 首屏文字反白 */
+  .hero .eyebrow{color:#d8b271}
+  .hero .eyebrow::before{background:#d8b271;opacity:.85}
+  .hero h1{color:#f8f4ec;text-shadow:0 0 58px rgba(216,178,113,.38),0 3px 20px rgba(0,0,0,.4)}
+  .hero .role{color:#ece2cf}
+  .hero .role i{color:rgba(216,178,113,.7)}
+  .hero .contact li{color:rgba(248,244,236,.62)}
+  .hero .contact .ico{color:rgba(216,178,113,.75)}
+  .hero .contact a:hover{color:#f8f4ec;border-bottom-color:rgba(216,178,113,.6)}
+  .hero .lead{color:rgba(248,244,236,.78)}
+  .hero .lead b{color:#f4dcae}
+  .hero-aside{border-top-color:rgba(216,178,113,.45)}
+  .hero-aside .aside-label{color:#d8b271}
+  .hero-aside .aside-list li{border-bottom-color:rgba(255,255,255,.1)}
+  .hero-aside .aside-list a{color:#f2ebdd}
+  .hero-aside .aside-list b{color:#fffdf9}
+  .hero-aside .aside-list small{color:rgba(248,244,236,.52)}
+  .hero-aside .aside-list .no{color:rgba(216,178,113,.75)}
+  .hero-aside .aside-foot{color:rgba(248,244,236,.48)}
+
+  /* 姓名逐字入场 */
+  .hero h1 .ch{
+    display:inline-block;opacity:0;transform:translateY(28px) rotate(2.5deg);
+    animation:chIn .95s cubic-bezier(.2,.72,.25,1) forwards;
+  }
+  @keyframes chIn{to{opacity:1;transform:translateY(0) rotate(0)}}
+
+  /* 滚动入场：位移加大、缓动更柔 */
+  .js .reveal{
+    transform:translateY(34px) scale(.985);
+    transition:opacity .9s cubic-bezier(.2,.72,.25,1),transform .9s cubic-bezier(.2,.72,.25,1);
+  }
+  .js .reveal.in{transform:none}
+
+  /* 章节标题：金色短线缓慢长出 */
+  .sec{position:relative}
+  .sec::after{
+    content:"";position:absolute;left:0;bottom:-1px;height:2px;width:0;
+    background:linear-gradient(90deg,var(--accent),rgba(150,102,28,0));
+    transition:width 1s cubic-bezier(.2,.72,.25,1);
+  }
+  .sec.drawn::after{width:84px}
+
+  /* 首屏视觉重量：姓名放大、数字加重 */
+  .hero h1{font-size:clamp(44px,7.2vw,74px);letter-spacing:.08em}
+  .stat b{font-size:34px}
+  .topbar-in{transition:min-height .32s cubic-bezier(.2,.72,.25,1)}
+  .topbar.scrolled .topbar-in{min-height:56px}
+
+  /* 卡片悬浮质感 */
+  .card{
+    transition:box-shadow .5s cubic-bezier(.2,.72,.25,1),border-color .5s ease,transform .5s cubic-bezier(.2,.72,.25,1);
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 30px 64px -38px rgba(19,46,69,.55);
+    border-color:#d3c7b3;
+  }
+  .mini{
+    transition:transform .45s cubic-bezier(.2,.72,.25,1),box-shadow .45s ease,border-color .45s ease;
+  }
+  .mini:hover{
+    transform:translateY(-4px);
+    box-shadow:0 22px 46px -34px rgba(19,46,69,.45);
+  }
+
+  /* 卡片：悬浮 + 光泽扫过 */
+  .card{position:relative;overflow:hidden}
+  .card::after{
+    content:"";position:absolute;top:-60%;left:-70%;width:38%;height:220%;
+    background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.62),rgba(255,255,255,0));
+    transform:skewX(-16deg);opacity:0;pointer-events:none;
+  }
+  .card:hover::after{animation:sheen 1.05s cubic-bezier(.3,.6,.4,1) forwards}
+  @keyframes sheen{
+    0%{opacity:0;left:-70%}
+    12%{opacity:.85}
+    100%{opacity:0;left:135%}
+  }
+
+  /* 截图：浮起 + 暗角 */
+  .shot-open{position:relative}
+  .shot-open img{transition:transform .9s cubic-bezier(.2,.72,.25,1)}
+  .card:hover .shot-open img{transform:scale(1.03)}
+  .shot-open::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(6,14,24,0) 34%,rgba(6,14,24,.62) 100%);
+    opacity:0;transition:opacity .45s ease;
+  }
+  .card:hover .shot-open::after{opacity:1}
+
+  /* 数字等宽，滚动时不抖 */
+  .stat b{font-variant-numeric:tabular-nums}
+
+  /* 进度条微光 */
+  .progress i{box-shadow:0 0 12px rgba(150,102,28,.5)}
+
+  /* 首屏元素依次入场（由 JS 加类，无 JS 不受影响） */
+  .hero-in{
+    opacity:0;transform:translateY(18px);
+    animation:heroIn .9s cubic-bezier(.2,.72,.25,1) forwards;
+  }
+  @keyframes heroIn{to{opacity:1;transform:none}}
+
+  /* 顶栏滚动时投影 */
+  .topbar.scrolled{box-shadow:0 10px 26px -22px rgba(19,46,69,.55)}
+
+  /* 右侧目录项依次亮起 */
+  .hero-aside a{transition:color .2s ease,transform .3s ease}
+  .hero-aside a:hover{transform:translateX(3px)}
+
+  @media (prefers-reduced-motion:reduce){
+    .hero::before,.hero h1 .ch{animation:none!important;opacity:1!important;transform:none!important}
+    .sec::after{width:84px!important}
+    .card:hover,.mini:hover{transform:none!important}
+  }
 </style>
 <script>document.documentElement.classList.replace('no-js','js');</script>
 </head>
@@ -688,7 +853,7 @@
           </li>
         </ul>
         <p class="lead">
-          做过 <b>26 个个人项目</b>，现在每个都能在作品集里点开：<b>9 个已部署的在线演示</b>、<b>5 个部署在 Render 的本地应用</b>（免费实例，首次打开约 1 分钟）、若干静态报告与交互原型，其余本地工具提供流程、测试或操作说明。
+          做过 <b>28 个个人项目</b>，现在每个都能在作品集里点开：<b>10 个已部署的在线演示</b>、<b>5 个部署在 Render 的本地应用</b>（免费实例，首次打开约 1 分钟）、若干静态报告与交互原型，其余本地工具提供流程、测试或操作说明。
           做法是同一条：<b>算钱的、判合格的环节交给代码，模型只负责听懂人话</b>；RAG 里把检索和引用留在代码侧，模型只基于给定片段回答。
           因为判错一批货要退货赔钱——这种环节得有人担责，不能交给一个概率模型。
         </p>
@@ -700,12 +865,12 @@
           <li><a href="#work"><span class="no">02</span><b>RAG 知识库问答</b><small>中文 bigram · BM25 · 带引用回答</small></a></li>
           <li><a href="#bag-doctor-case"><span class="no">03</span><b>Bag Doctor</b><small>机器人日志体检 · TF 断段与时钟偏移</small></a></li>
         </ol>
-        <p class="aside-foot">26 个作品 · 全部有入口<br>本页 2026.11 更新</p>
+        <p class="aside-foot">28 个作品 · 全部有入口<br>本页 2026.11 更新</p>
       </aside>
     </div>
     <div class="stats" role="list" aria-label="项目数据">
-      <div class="stat" role="listitem"><b>26</b><span>个个人项目</span></div>
-      <div class="stat" role="listitem"><b>14</b><span>个在线演示 · 含 1 私有</span></div>
+      <div class="stat" role="listitem"><b>28</b><span>个个人项目</span></div>
+      <div class="stat" role="listitem"><b>15</b><span>个在线演示 · 含 1 私有</span></div>
       <div class="stat" role="listitem"><b>10/10</b><span>RAG 检索评测</span></div>
       <div class="stat" role="listitem"><b>39</b><span>项单元测试（质检）</span></div>
       <div class="stat" role="listitem"><b>10</b><span>项规则单测（广告）</span></div>
@@ -1284,7 +1449,7 @@
     <h2 class="sec" id="other-title">
       <span class="num">03</span><span class="sec-title">其他项目</span><span class="en">OTHER WORK</span>
     </h2>
-    <p class="sec-lead">十一个更具体的项目，各自解决一个具体场景。</p>
+    <p class="sec-lead">十三个更具体的项目，各自解决一个具体场景。</p>
 
     <div class="mini-grid">
       <article class="mini reveal">
@@ -1351,6 +1516,18 @@
         <div class="mini-head"><span class="idx" aria-hidden="true">24</span><h3>QMS 来料异常管理 · 产品设计案例</h3></div>
         <p>面向制造企业来料检验场景，把异常单从登记、质量评审、处置执行做到复验关闭：六个状态、四类角色，覆盖退回补充、评审驳回和复验不合格重开。交付 PRD、业务泳道图和可交互 HTML 原型。<b>自主设计练习，全部为演示数据。</b> <a class="mini-link" href="qms/" target="_blank" rel="noopener">打开案例</a> · <a class="mini-link" href="qms/prd.html" target="_blank" rel="noopener">PRD</a></p>
         <div class="tags" aria-label="案例内容"><span>产品设计</span><span>PRD</span><span>业务泳道图</span><span>可交互原型</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">25</span><h3>目录数据巡检台</h3></div>
+        <p>验收一次网页采集的结果：离线快照、实时巡检、本地故障样本三种模式，核对 HTTP 状态、价格与询价信号、跨语言 MOQ 口径、canonical 预期地址和 hreflang 覆盖；也能导入 Chrome / Edge 导出的 HAR，看失败、慢请求和 P95 并给排查方向。<b>纯 Python 标准库：全局限速 400 ms、遇 429 停止派发、连接失败与临时 5xx 退避重试、心跳超时自动清理运行中批次，带单元测试。</b>本机运行，也可按 README 部署到 Render。</p>
+        <div class="tags" aria-label="技术标签"><span>Python 标准库</span><span>SQLite</span><span>hreflang 校验</span><span>HAR 诊断</span></div>
+      </article>
+
+      <article class="mini reveal">
+        <div class="mini-head"><span class="idx" aria-hidden="true">26</span><h3>榕益瓷砖收边条 · 多语言目录站</h3></div>
+        <p>英、西、巴西葡三语共 21 个目录页面的公开站：每页带 canonical 与互链 hreflang，站点提供 sitemap.xml，商品数据取自公开挂牌、配图为型材示意；买家的 RFQ 文案在浏览器本地生成，复制后走页面给出的供应商入口提交。<b>已上线，Render 静态站跟仓库 main 分支，由产品站源项目按 catalog 模式重建产出。</b> <a class="mini-link" href="https://rongyi-tile-trim.onrender.com" target="_blank" rel="noopener">打开线上站</a></p>
+        <div class="tags" aria-label="技术标签"><span>多语言 SEO</span><span>hreflang / sitemap</span><span>静态站构建</span></div>
       </article>
     </div>
   </section>
@@ -1553,5 +1730,115 @@
 })();
 </script>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+(function () {
+  if (!window.matchMedia) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* 1. 姓名逐字入场 */
+  var h1 = document.querySelector('.hero h1');
+  if (h1 && h1.childElementCount === 0) {
+    var txt = (h1.textContent || '').trim();
+    if (txt) {
+      h1.setAttribute('aria-label', txt);
+      h1.textContent = '';
+      for (var i = 0; i < txt.length; i++) {
+        var ch = txt.charAt(i);
+        var s = document.createElement('span');
+        s.className = 'ch';
+        s.setAttribute('aria-hidden', 'true');
+        s.textContent = ch === ' ' ? '\u00A0' : ch;
+        s.style.animationDelay = (0.08 + i * 0.09).toFixed(2) + 's';
+        h1.appendChild(s);
+      }
+    }
+  }
+
+  /* 1.5 首屏其余元素依次入场 */
+  var heroMain = document.querySelector('.hero-main');
+  if (heroMain) {
+    var kids = heroMain.children, afterH1 = false, step = 0;
+    for (var k = 0; k < kids.length; k++) {
+      var el = kids[k];
+      if (el.tagName === 'H1') { afterH1 = true; continue; }
+      var d = afterH1 ? (0.42 + step * 0.1) : (0.04 + step * 0.06);
+      el.style.animationDelay = d.toFixed(2) + 's';
+      el.classList.add('hero-in');
+      if (afterH1) step++;
+    }
+  }
+
+  /* 2. 统计数字滚动 */
+  function countUp(el) {
+    var raw = (el.textContent || '').trim();
+    if (!/^\d{1,4}$/.test(raw)) return;
+    var target = parseInt(raw, 10);
+    if (target < 3) return;
+    var dur = 1200, start = null, done = false;
+    function finish() { if (!done) { done = true; el.textContent = String(target); } }
+    setTimeout(finish, dur + 500);
+    el.textContent = '0';
+    requestAnimationFrame(function tick(ts) {
+      if (done) return;
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(eased * target));
+      if (p < 1) requestAnimationFrame(tick); else finish();
+    });
+  }
+
+  var statsBox = document.querySelector('.stats');
+  if (statsBox && 'IntersectionObserver' in window) {
+    var statObs = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        obs.unobserve(e.target);
+        Array.prototype.forEach.call(e.target.querySelectorAll('.stat b'), countUp);
+      });
+    }, { threshold: 0.4 });
+    statObs.observe(statsBox);
+  }
+
+  /* 3. 章节标题金线 */
+  var secs = document.querySelectorAll('.sec');
+  if ('IntersectionObserver' in window && secs.length) {
+    var secObs = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('drawn');
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.55 });
+    Array.prototype.forEach.call(secs, function (s) { secObs.observe(s); });
+  }
+
+  /* 4. 网格子项依次入场 */
+  Array.prototype.forEach.call(document.querySelectorAll('.mini-grid'), function (grid) {
+    Array.prototype.forEach.call(grid.children, function (child, i) {
+      if (child.classList && child.classList.contains('reveal')) {
+        child.style.transitionDelay = Math.min(i * 0.055, 0.33).toFixed(3) + 's';
+      }
+    });
+  });
+
+  /* 5. 首屏鼠标跟随暖光 */
+  var heroEl = document.querySelector('.hero');
+  if (heroEl && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    var hraf = null, hx = 0, hy = 0;
+    heroEl.addEventListener('mousemove', function (e) {
+      var r = heroEl.getBoundingClientRect();
+      hx = e.clientX - r.left;
+      hy = e.clientY - r.top;
+      if (hraf) return;
+      hraf = requestAnimationFrame(function () {
+        hraf = null;
+        heroEl.style.setProperty('--mx', hx + 'px');
+        heroEl.style.setProperty('--my', hy + 'px');
+      });
+    }, { passive: true });
+  }
+})();
+</script>
 </body>
 </html>
